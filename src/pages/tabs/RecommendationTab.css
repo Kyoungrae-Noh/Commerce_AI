@@ -1,0 +1,133 @@
+.rec-tab-header {
+  margin-bottom: 28px;
+}
+
+.rec-tab-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.rec-tab-desc {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.rec-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.rec-body {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: start;
+}
+
+.rec-section-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.rec-list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rec-list-item-wrap {
+  cursor: pointer;
+  border-radius: 12px;
+  transition: outline 0.15s;
+}
+
+.rec-list-item-wrap.selected {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+  border-radius: 12px;
+}
+
+/* Detail panel */
+.rec-detail {
+  position: sticky;
+  top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rec-detail-header {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.rec-detail-name {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 12px;
+  letter-spacing: -0.3px;
+}
+
+.rec-detail-info {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.rec-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.rec-detail-item {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.rec-detail-item-label {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 4px;
+}
+
+.rec-detail-item-value {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text);
+}
+
+@media (max-width: 900px) {
+  .rec-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rec-body {
+    grid-template-columns: 1fr;
+  }
+
+  .rec-detail {
+    position: static;
+  }
+}

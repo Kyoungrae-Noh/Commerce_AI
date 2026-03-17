@@ -1,0 +1,74 @@
+.comp-tab-header {
+  margin-bottom: 28px;
+}
+
+.comp-tab-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.comp-tab-desc {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.comp-keyword-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.comp-keyword-label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.comp-keyword-value {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--accent);
+}
+
+.comp-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.comp-body {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.comp-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comp-section-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 900px) {
+  .comp-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .comp-body {
+    grid-template-columns: 1fr;
+  }
+}

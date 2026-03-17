@@ -555,10 +555,10 @@
 }
 
 .proof-stat-val {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
+  font-family: 'JetBrains Mono', 'Noto Sans KR', monospace;
+  font-weight: 700;
   font-size: 48px;
-  letter-spacing: -2px;
+  letter-spacing: -1px;
   color: var(--accent);
   line-height: 1;
   margin-bottom: 6px;

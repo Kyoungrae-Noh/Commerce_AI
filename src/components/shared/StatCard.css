@@ -20,7 +20,7 @@
 }
 
 .stat-card-value {
-  font-family: 'Syne', sans-serif;
+  font-family: 'JetBrains Mono', 'Noto Sans KR', monospace;
   font-weight: 700;
   font-size: 22px;
   color: var(--text);

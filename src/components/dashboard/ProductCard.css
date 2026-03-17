@@ -59,7 +59,7 @@
 
 .product-card-margin-val {
   display: block;
-  font-family: 'Syne', sans-serif;
+  font-family: 'JetBrains Mono', 'Noto Sans KR', monospace;
   font-weight: 700;
   font-size: 16px;
   color: var(--accent);

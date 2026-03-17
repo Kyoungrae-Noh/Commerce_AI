@@ -245,7 +245,7 @@
 .product-score { text-align: right; }
 
 .score-value {
-  font-family: 'Syne', sans-serif;
+  font-family: 'JetBrains Mono', 'Noto Sans KR', monospace;
   font-weight: 700;
   font-size: 16px;
   color: var(--accent);
@@ -291,7 +291,7 @@
 }
 
 .stat-pill-val {
-  font-family: 'Syne', sans-serif;
+  font-family: 'JetBrains Mono', 'Noto Sans KR', monospace;
   font-weight: 700;
   font-size: 18px;
   color: var(--text);
@@ -362,7 +362,7 @@
 .pos-card.card-3::after { background: var(--accent3); }
 
 .pos-num {
-  font-family: 'Syne', sans-serif;
+  font-family: 'JetBrains Mono', 'Noto Sans KR', monospace;
   font-weight: 800;
   font-size: 48px;
   line-height: 1;
@@ -457,7 +457,7 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto 20px;
-  font-family: 'Syne', sans-serif;
+  font-family: 'JetBrains Mono', 'Noto Sans KR', monospace;
   font-weight: 800;
   font-size: 18px;
   position: relative;
@@ -663,7 +663,7 @@
 }
 
 .plan-price {
-  font-family: 'Syne', sans-serif;
+  font-family: 'JetBrains Mono', 'Noto Sans KR', monospace;
   font-weight: 800;
   font-size: 36px;
   letter-spacing: -1.5px;

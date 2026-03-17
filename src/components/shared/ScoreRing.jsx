@@ -28,7 +28,7 @@ export default function ScoreRing({ score, size = 48, strokeWidth = 3, label }) 
           x={size / 2} y={size / 2 + 5}
           textAnchor="middle" fill="var(--text)"
           fontSize={size * 0.3} fontWeight="700"
-          fontFamily="'Syne', sans-serif"
+          fontFamily="'JetBrains Mono', monospace"
           style={{ transform: 'rotate(90deg)', transformOrigin: `${size / 2}px ${size / 2}px` }}
         >
           {score}

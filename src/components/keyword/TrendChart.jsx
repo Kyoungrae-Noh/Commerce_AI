@@ -3,8 +3,9 @@ import './TrendChart.css'
 export default function TrendChart({ data, label = '월간 검색량 추이' }) {
   if (!data || data.length === 0) return null
 
-  const maxVol = Math.max(...data.map(d => d.volume))
-  const minVol = Math.min(...data.map(d => d.volume))
+  const getValue = (d) => d.volume ?? d.ratio ?? 0
+  const maxVol = Math.max(...data.map(getValue))
+  const minVol = Math.min(...data.map(getValue))
 
   const W = 600
   const H = 200
@@ -15,7 +16,7 @@ export default function TrendChart({ data, label = '월간 검색량 추이' }) 
 
   const points = data.map((d, i) => ({
     x: padX + (i / (data.length - 1)) * chartW,
-    y: padY + chartH - ((d.volume - minVol) / (maxVol - minVol || 1)) * chartH,
+    y: padY + chartH - ((getValue(d) - minVol) / (maxVol - minVol || 1)) * chartH,
   }))
 
   const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'}${p.x},${p.y}`).join(' ')

@@ -1,0 +1,124 @@
+.kw-margin-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.kw-margin-title {
+  font-family: 'Syne', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.kw-margin-platforms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.kw-margin-platform {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.kw-margin-platform-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.kw-margin-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.kw-margin-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.kw-margin-row-label {
+  color: var(--muted);
+}
+
+.kw-margin-row-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.kw-margin-row.total {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-weight: 600;
+}
+
+.kw-margin-profit {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.kw-margin-profit.positive {
+  background: rgba(0, 229, 160, 0.1);
+  border: 1px solid rgba(0, 229, 160, 0.2);
+}
+
+.kw-margin-profit.negative {
+  background: rgba(255, 77, 77, 0.1);
+  border: 1px solid rgba(255, 77, 77, 0.2);
+}
+
+.kw-margin-profit-label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.kw-margin-profit-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.kw-margin-profit.positive .kw-margin-profit-value {
+  color: var(--accent);
+}
+
+.kw-margin-profit.negative .kw-margin-profit-value {
+  color: var(--accent3);
+}
+
+.kw-margin-rate {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  margin-left: 8px;
+}
+
+.kw-margin-note {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 12px;
+  font-style: italic;
+}
+
+@media (max-width: 700px) {
+  .kw-margin-platforms {
+    grid-template-columns: 1fr;
+  }
+}

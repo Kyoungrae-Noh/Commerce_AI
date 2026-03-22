@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import KeywordSearch from '../../components/dashboard/KeywordSearch'
 import ScoreBreakdown from '../../components/dashboard/ScoreBreakdown'
 import VerdictBadge from '../../components/dashboard/VerdictBadge'
@@ -8,6 +8,7 @@ import { LoadingState, ErrorState, EmptyState } from '../../components/shared/St
 import TrendingCard from '../../components/recommendation/TrendingCard'
 import CategoryFilter from '../../components/recommendation/CategoryFilter'
 import BestSellers from '../../components/recommendation/BestSellers'
+import SellerProfileSetup, { loadProfile, ProfileSummary } from '../../components/profile/SellerProfileSetup'
 import { analyzeProduct, getTrending, getBestSellers } from '../../api/products'
 import './RecommendationTab.css'
 
@@ -16,6 +17,10 @@ export default function RecommendationTab() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [result, setResult] = useState(null)
+
+  // 프로필 상태
+  const [profile, setProfile] = useState(() => loadProfile())
+  const [showProfileSetup, setShowProfileSetup] = useState(false)
 
   // 트렌딩 상태 (신규)
   const [trending, setTrending] = useState(null)
@@ -86,6 +91,38 @@ export default function RecommendationTab() {
     setResult(null)
     setError(null)
   }
+
+  const handleProfileSave = (newProfile) => {
+    setProfile(newProfile)
+    setShowProfileSetup(false)
+  }
+
+  // 프로필 기반 필터링
+  const filteredItems = useMemo(() => {
+    if (!trending?.items) return []
+    if (!profile) return trending.items
+
+    return trending.items.filter(item => {
+      // 자본금 필터: 소싱가 + 배송비 < 자본금의 10%
+      const investLimit = profile.capital * 0.1
+      const itemCost = (item.sourcingCost?.estimatedPrice || 0) + (item.sourcingCost?.shippingEstimate || 3000)
+      if (itemCost > investLimit) return false
+
+      // 경험 필터: 난이도 제한
+      const difficulty = item.difficulty?.overall || item.difficulty || 5
+      if (profile.experience === 'beginner' && difficulty > 5) return false
+      if (profile.experience === 'intermediate' && difficulty > 7) return false
+
+      // 리스크 필터: verdict 기반
+      if (profile.risk === 'safe' && item.verdict !== 'recommended') return false
+      if (profile.risk === 'balanced' && item.verdict === 'not_recommended') return false
+
+      // 카테고리 필터: 선호 카테고리가 있으면 적용
+      if (profile.categories?.length > 0 && !profile.categories.includes(item.category)) return false
+
+      return true
+    })
+  }, [trending, profile])
 
   return (
     <div className="rec-tab">
@@ -170,12 +207,22 @@ export default function RecommendationTab() {
         </>
       )}
 
+      {/* 프로필 설정 뷰 */}
+      {!result && !loading && !error && (!profile || showProfileSetup) && (
+        <SellerProfileSetup
+          onSave={handleProfileSave}
+          initialProfile={profile}
+        />
+      )}
+
       {/* 트렌딩 목록 뷰 (기본) */}
-      {!result && !loading && !error && (
+      {!result && !loading && !error && profile && !showProfileSetup && (
         <>
+          <ProfileSummary profile={profile} onEdit={() => setShowProfileSetup(true)} />
+
           {trendingLoading ? (
-            <LoadingState message="추천 상품 불러오는 중..." />
-          ) : trending?.items?.length > 0 ? (
+            <LoadingState message="맞춤 추천 상품 불러오는 중..." />
+          ) : filteredItems.length > 0 ? (
             <>
               <CategoryFilter
                 categories={trending.categories}
@@ -183,7 +230,7 @@ export default function RecommendationTab() {
                 onSelect={handleCategorySelect}
               />
               <div className="trending-grid">
-                {trending.items.map((item, i) => (
+                {filteredItems.map((item, i) => (
                   <TrendingCard
                     key={`${item.keyword}-${i}`}
                     item={item}
@@ -196,6 +243,12 @@ export default function RecommendationTab() {
                 <BestSellers data={bestSellers} />
               )}
             </>
+          ) : trending?.items?.length > 0 ? (
+            <EmptyState
+              icon="🔍"
+              message="프로필 조건에 맞는 추천 상품이 없습니다"
+              hint="프로필 조건을 조정하거나 키워드를 직접 검색해보세요"
+            />
           ) : trending?.isRefreshing ? (
             <EmptyState
               icon="📊"

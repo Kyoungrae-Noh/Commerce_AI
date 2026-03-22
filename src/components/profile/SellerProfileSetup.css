@@ -1,0 +1,169 @@
+.seller-profile-setup {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.seller-profile-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.seller-profile-icon {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+.seller-profile-title {
+  font-family: 'Syne', 'Noto Sans KR', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+
+.seller-profile-desc {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* Sections */
+.seller-profile-section {
+  margin-bottom: 24px;
+}
+
+.seller-profile-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+/* Option buttons */
+.seller-profile-options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.seller-profile-opt {
+  padding: 10px 18px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.seller-profile-opt:hover {
+  border-color: var(--accent);
+}
+
+.seller-profile-opt.selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #000;
+  font-weight: 600;
+}
+
+/* Category multi-select */
+.seller-profile-categories {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.seller-profile-cat {
+  padding: 8px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.seller-profile-cat:hover {
+  border-color: var(--accent);
+}
+
+.seller-profile-cat.selected {
+  background: rgba(0, 229, 160, 0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Save button */
+.seller-profile-save {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 28px;
+  transition: opacity 0.15s;
+}
+
+.seller-profile-save:hover {
+  opacity: 0.9;
+}
+
+.seller-profile-save:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Summary chip bar */
+.seller-profile-summary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.seller-profile-chip {
+  padding: 4px 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.seller-profile-edit-btn {
+  padding: 4px 10px;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  color: var(--accent);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.seller-profile-edit-btn:hover {
+  border-color: var(--accent);
+}
+
+.seller-profile-match-msg {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 16px;
+  padding: 8px 12px;
+  background: rgba(0, 229, 160, 0.06);
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}

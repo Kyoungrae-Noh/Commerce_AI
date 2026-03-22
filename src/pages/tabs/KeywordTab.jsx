@@ -4,6 +4,8 @@ import KeywordTable from '../../components/keyword/KeywordTable'
 import RelatedKeywords from '../../components/keyword/RelatedKeywords'
 import TrendChart from '../../components/keyword/TrendChart'
 import TrendingKeywordTable from '../../components/keyword/TrendingKeywordTable'
+import KeywordMarginCard from '../../components/keyword/KeywordMarginCard'
+import KeywordVerdict from '../../components/keyword/KeywordVerdict'
 import StatCard from '../../components/shared/StatCard'
 import { LoadingState, ErrorState, EmptyState } from '../../components/shared/StatusStates'
 import { searchKeyword, getTrendingKeywords } from '../../api/keywords'
@@ -75,11 +77,28 @@ export default function KeywordTab() {
             <StatCard icon="🔍" value={data.primary.monthlyVolume ? data.primary.monthlyVolume.toLocaleString() : '추정 불가'} label="월간 검색량" />
             <StatCard icon="📦" value={data.primary.competitorCount.toLocaleString() + '개'} label="경쟁 상품 수" />
             <StatCard icon="💰" value={'₩' + data.primary.avgPrice.toLocaleString()} label="평균 판매가" />
+            {data.sourcing && (
+              <StatCard icon="🏭" value={'₩' + data.sourcing.estimatedPrice?.toLocaleString()} label="예상 소싱가" />
+            )}
           </div>
 
           {data.monthlyTrend && data.monthlyTrend.length > 0 && (
             <TrendChart data={data.monthlyTrend} label={`"${data.primary.keyword}" 검색 트렌드`} />
           )}
+
+          {/* 원스톱 분석: 마진 + AI 판정 */}
+          <div className="kw-analysis-section">
+            <KeywordMarginCard
+              sourcing={data.sourcing}
+              margin={data.margin}
+              avgPrice={data.primary.avgPrice}
+            />
+            <KeywordVerdict
+              score={data.score}
+              verdict={data.verdict}
+              scores={data.scores}
+            />
+          </div>
 
           <div className="kw-bottom">
             <div className="kw-table-section">

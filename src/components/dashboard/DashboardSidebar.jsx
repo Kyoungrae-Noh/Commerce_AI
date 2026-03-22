@@ -39,6 +39,17 @@ export default function DashboardSidebar() {
         </NavLink>
       </nav>
       <div className="dash-sidebar-bottom">
+        <NavLink
+          to="/dashboard/recommendations"
+          className="dash-sidebar-link"
+          onClick={() => {
+            // 프로필 설정으로 이동하기 위한 이벤트
+            window.dispatchEvent(new CustomEvent('open-seller-profile'))
+          }}
+        >
+          <span className="dash-sidebar-icon">👤</span>
+          셀러 프로필
+        </NavLink>
         <NavLink to="/" className="dash-sidebar-link back-link">
           ← 홈으로
         </NavLink>

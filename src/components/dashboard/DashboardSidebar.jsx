@@ -3,8 +3,12 @@ import './DashboardSidebar.css'
 
 const tabs = [
   { to: '/dashboard/recommendations', icon: '⚡', label: 'AI 상품 추천' },
+  { to: '/dashboard/discovery', icon: '💎', label: '아이템 발굴' },
   { to: '/dashboard/keywords', icon: '🔍', label: '키워드 분석' },
   { to: '/dashboard/competition', icon: '📊', label: '경쟁 분석' },
+  { to: '/dashboard/ranking', icon: '🏆', label: '랭킹추적' },
+  { to: '/dashboard/sourcing', icon: '🏭', label: '1688 소싱' },
+  { to: '/dashboard/utility', icon: '🛠️', label: '유틸리티' },
 ]
 
 export default function DashboardSidebar() {

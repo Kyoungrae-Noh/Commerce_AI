@@ -17,7 +17,7 @@ const columns = [
   { key: 'keyword', label: '키워드' },
   {
     key: 'monthlyVolume', label: '월간 검색량', align: 'right',
-    render: (v) => v.toLocaleString(),
+    render: (v) => v != null ? v.toLocaleString() : '추정 불가',
   },
   {
     key: 'competitorCount', label: '경쟁 상품', align: 'right',

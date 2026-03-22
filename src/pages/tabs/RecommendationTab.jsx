@@ -1,21 +1,77 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import KeywordSearch from '../../components/dashboard/KeywordSearch'
-import ProductCard from '../../components/dashboard/ProductCard'
 import ScoreBreakdown from '../../components/dashboard/ScoreBreakdown'
 import VerdictBadge from '../../components/dashboard/VerdictBadge'
 import ScoreRing from '../../components/shared/ScoreRing'
 import StatCard from '../../components/shared/StatCard'
-import { analyzeProduct } from '../../api/products'
+import { LoadingState, ErrorState, EmptyState } from '../../components/shared/StatusStates'
+import TrendingCard from '../../components/recommendation/TrendingCard'
+import CategoryFilter from '../../components/recommendation/CategoryFilter'
+import BestSellers from '../../components/recommendation/BestSellers'
+import { analyzeProduct, getTrending, getBestSellers } from '../../api/products'
 import './RecommendationTab.css'
 
 export default function RecommendationTab() {
+  // 수동 검색 상태 (기존)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [result, setResult] = useState(null)
 
+  // 트렌딩 상태 (신규)
+  const [trending, setTrending] = useState(null)
+  const [trendingLoading, setTrendingLoading] = useState(true)
+  const [selectedCategory, setSelectedCategory] = useState(null)
+  const [bestSellers, setBestSellers] = useState(null)
+
+  useEffect(() => {
+    loadTrending()
+    loadBestSellers()
+  }, [])
+
+  const loadTrending = async (category = null) => {
+    setTrendingLoading(true)
+    try {
+      const data = await getTrending(category)
+      setTrending(data)
+    } catch (err) {
+      console.error('Trending load error:', err)
+    } finally {
+      setTrendingLoading(false)
+    }
+  }
+
+  const loadBestSellers = async () => {
+    try {
+      const data = await getBestSellers()
+      setBestSellers(data.bestSellers)
+    } catch (err) {
+      console.error('Best sellers error:', err)
+    }
+  }
+
+  const handleCategorySelect = (categoryId) => {
+    setSelectedCategory(categoryId)
+    loadTrending(categoryId)
+  }
+
+  const handleTrendingClick = async (item) => {
+    setLoading(true)
+    setError(null)
+    setResult(null)
+    try {
+      const data = await analyzeProduct(item.keyword)
+      setResult(data)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleSearch = async (keyword) => {
     setLoading(true)
     setError(null)
+    setResult(null)
     try {
       const data = await analyzeProduct(keyword)
       setResult(data)
@@ -26,40 +82,49 @@ export default function RecommendationTab() {
     }
   }
 
+  const handleBackToList = () => {
+    setResult(null)
+    setError(null)
+  }
+
   return (
     <div className="rec-tab">
       <div className="rec-tab-header">
-        <h2 className="rec-tab-title">AI 상품 분석</h2>
-        <p className="rec-tab-desc">키워드를 입력하면 수익성을 분석해드립니다</p>
+        <h2 className="rec-tab-title">
+          {result ? 'AI 상품 분석' : 'AI 상품 추천'}
+        </h2>
+        <p className="rec-tab-desc">
+          {result
+            ? '키워드 분석 결과'
+            : '트렌딩 상품을 자동으로 분석하여 추천합니다'}
+        </p>
+        {trending?.lastUpdated && !result && (
+          <span className="rec-last-updated">
+            마지막 업데이트: {new Date(trending.lastUpdated).toLocaleString('ko-KR')}
+          </span>
+        )}
       </div>
 
       <KeywordSearch onSearch={handleSearch} loading={loading} placeholder="분석할 상품 키워드를 입력하세요  예: 미니 가습기" />
 
-      {error && (
-        <div className="rec-error">
-          <span>⚠️ {error}</span>
-        </div>
-      )}
+      {error && <ErrorState message={error} />}
+      {loading && <LoadingState />}
 
-      {loading && (
-        <div className="rec-loading">
-          <div className="rec-loading-spinner" />
-          <span>데이터 분석 중...</span>
-        </div>
-      )}
-
+      {/* 상세 분석 뷰 */}
       {result && !loading && (
         <>
-          {/* 요약 통계 */}
+          <button className="rec-back-btn" onClick={handleBackToList}>
+            ← 추천 목록으로 돌아가기
+          </button>
+
           <div className="rec-stats">
             <StatCard icon="🎯" value={result.sourcelyScore} label="소싱 점수" />
-            <StatCard icon="📦" value={result.competitorCount?.toLocaleString() + '개'} label="경쟁 상품" />
+            <StatCard icon="📦" value={(result.competitorCount || 0).toLocaleString() + '개'} label="경쟁 상품" />
             <StatCard icon="💰" value={'₩' + (result.avgPrice || 0).toLocaleString()} label="평균 판매가" />
             <StatCard icon="🏭" value={'₩' + (result.sourcingCost?.estimatedPrice || 0).toLocaleString()} label="예상 소싱가" />
           </div>
 
           <div className="rec-body">
-            {/* 분석 결과 */}
             <div className="rec-detail" style={{ flex: 1 }}>
               <div className="rec-detail-header">
                 <div>
@@ -105,12 +170,46 @@ export default function RecommendationTab() {
         </>
       )}
 
+      {/* 트렌딩 목록 뷰 (기본) */}
       {!result && !loading && !error && (
-        <div className="rec-empty">
-          <span className="rec-empty-icon">🔍</span>
-          <p>키워드를 입력하면 AI가 수익성을 분석합니다</p>
-          <p className="rec-empty-hint">예: 미니 가습기, 블루투스 이어폰, 강아지 자동 급식기</p>
-        </div>
+        <>
+          {trendingLoading ? (
+            <LoadingState message="추천 상품 불러오는 중..." />
+          ) : trending?.items?.length > 0 ? (
+            <>
+              <CategoryFilter
+                categories={trending.categories}
+                selected={selectedCategory}
+                onSelect={handleCategorySelect}
+              />
+              <div className="trending-grid">
+                {trending.items.map((item, i) => (
+                  <TrendingCard
+                    key={`${item.keyword}-${i}`}
+                    item={item}
+                    onClick={handleTrendingClick}
+                  />
+                ))}
+              </div>
+
+              {bestSellers && bestSellers.length > 0 && (
+                <BestSellers data={bestSellers} />
+              )}
+            </>
+          ) : trending?.isRefreshing ? (
+            <EmptyState
+              icon="📊"
+              message="추천 데이터를 준비 중입니다"
+              hint="서버에서 상품을 분석 중입니다. 약 1-2분 소요됩니다."
+            />
+          ) : (
+            <EmptyState
+              icon="🔍"
+              message="추천 데이터가 아직 없습니다"
+              hint="서버를 시작하면 자동으로 분석이 시작됩니다. 키워드를 직접 검색할 수도 있습니다."
+            />
+          )}
+        </>
       )}
     </div>
   )

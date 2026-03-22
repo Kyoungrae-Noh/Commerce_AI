@@ -1,18 +1,65 @@
+import crypto from 'crypto'
 import SalesPlatformAdapter from '../base/SalesPlatformAdapter.js'
 
 const NAVER_API_BASE = 'https://openapi.naver.com'
+const SEARCHAD_API_BASE = 'https://api.searchad.naver.com'
 
 export default class NaverAdapter extends SalesPlatformAdapter {
   constructor() {
     super('Naver')
     this.clientId = process.env.NAVER_CLIENT_ID
     this.clientSecret = process.env.NAVER_CLIENT_SECRET
+    // 검색광고 API (선택사항)
+    this.searchAdApiKey = process.env.NAVER_SEARCHAD_API_KEY
+    this.searchAdSecretKey = process.env.NAVER_SEARCHAD_SECRET_KEY
+    this.searchAdCustomerId = process.env.NAVER_SEARCHAD_CUSTOMER_ID
+  }
+
+  get hasSearchAdApi() {
+    return !!(this.searchAdApiKey && this.searchAdSecretKey && this.searchAdCustomerId)
   }
 
   get headers() {
     return {
       'X-Naver-Client-Id': this.clientId,
       'X-Naver-Client-Secret': this.clientSecret,
+    }
+  }
+
+  /** 검색광고 API 서명 생성 */
+  _generateSearchAdSignature(timestamp, method, path) {
+    const message = `${timestamp}.${method}.${path}`
+    return crypto.createHmac('sha256', this.searchAdSecretKey)
+      .update(message)
+      .digest('base64')
+  }
+
+  /** 검색광고 API 헤더 */
+  _getSearchAdHeaders(method, path) {
+    const timestamp = String(Date.now())
+    return {
+      'X-API-KEY': this.searchAdApiKey,
+      'X-Customer': this.searchAdCustomerId,
+      'X-Timestamp': timestamp,
+      'X-Signature': this._generateSearchAdSignature(timestamp, method, path),
+    }
+  }
+
+  /** 검색광고 키워드 도구 API - 월간 검색량 + 연관 키워드 */
+  async getKeywordStats(keyword) {
+    if (!this.hasSearchAdApi) return null
+
+    const path = '/keywordstool'
+    const url = `${SEARCHAD_API_BASE}${path}?hintKeywords=${encodeURIComponent(keyword)}&showDetail=1`
+
+    try {
+      const res = await fetch(url, {
+        headers: this._getSearchAdHeaders('GET', path),
+      })
+      if (!res.ok) return null
+      return res.json()
+    } catch {
+      return null
     }
   }
 
@@ -50,9 +97,10 @@ export default class NaverAdapter extends SalesPlatformAdapter {
 
   /** searchKeyword 구현 */
   async searchKeyword(keyword) {
-    const [shopping, trend] = await Promise.all([
+    const [shopping, trend, keywordStats] = await Promise.all([
       this.searchShopping(keyword),
       this.getSearchTrend(keyword),
+      this.getKeywordStats(keyword),
     ])
 
     const items = shopping.items || []
@@ -63,24 +111,58 @@ export default class NaverAdapter extends SalesPlatformAdapter {
     const trendData = trend.results?.[0]?.data || []
     const monthlyTrend = trendData.map(d => ({
       month: d.period,
-      ratio: d.ratio, // 상대값 (0-100)
+      ratio: d.ratio,
     }))
 
-    // 검색량은 네이버가 정확한 수치를 안 주므로 total(검색 결과 수)로 경쟁 지표 활용
     const competitorCount = shopping.total || 0
+
+    // 검색광고 API에서 검색량 + 연관 키워드 추출
+    let monthlyVolume = null
+    let relatedKeywords = []
+
+    if (keywordStats?.keywordList) {
+      const primary = keywordStats.keywordList.find(
+        k => k.relKeyword === keyword
+      ) || keywordStats.keywordList[0]
+
+      if (primary) {
+        const pc = primary.monthlyPcQcCnt === '< 10' ? 5 : Number(primary.monthlyPcQcCnt) || 0
+        const mobile = primary.monthlyMobileQcCnt === '< 10' ? 5 : Number(primary.monthlyMobileQcCnt) || 0
+        monthlyVolume = pc + mobile
+      }
+
+      // 연관 키워드 (검색량 포함)
+      relatedKeywords = keywordStats.keywordList
+        .filter(k => k.relKeyword !== keyword)
+        .slice(0, 10)
+        .map(k => {
+          const pc = k.monthlyPcQcCnt === '< 10' ? 5 : Number(k.monthlyPcQcCnt) || 0
+          const mobile = k.monthlyMobileQcCnt === '< 10' ? 5 : Number(k.monthlyMobileQcCnt) || 0
+          return { keyword: k.relKeyword, volume: pc + mobile }
+        })
+    }
+
+    // 검색광고 API 없으면 쇼핑검색 상품명에서 연관 키워드 추출
+    if (relatedKeywords.length === 0) {
+      relatedKeywords = items.slice(0, 8).map(i => ({
+        keyword: i.title.replace(/<[^>]*>/g, ''),
+        volume: null,
+      }))
+    }
 
     return {
       keyword,
-      monthlyVolume: null, // 네이버 API는 정확한 검색량 미제공, 별도 추정 필요
+      monthlyVolume,
       competitorCount,
       avgPrice,
       items: items.slice(0, 10).map(i => ({
         title: i.title.replace(/<[^>]*>/g, ''),
         price: parseInt(i.lprice),
         mallName: i.mallName,
-        reviewCount: 0, // 쇼핑 검색 API에는 리뷰수 없음
+        reviewCount: 0,
         image: i.image,
       })),
+      relatedKeywords,
       monthlyTrend,
     }
   }

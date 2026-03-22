@@ -1,0 +1,78 @@
+.trending-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.trending-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.trending-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.trending-card-category {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.trending-card-keyword {
+  font-family: 'Syne', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 16px;
+  letter-spacing: -0.3px;
+  color: var(--text);
+}
+
+.trending-card-bottom {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.trending-card-stats {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.trending-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.trending-stat-label {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.trending-stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.trend-up {
+  color: var(--accent) !important;
+}
+
+.trend-down {
+  color: var(--accent3) !important;
+}
+
+.trend-flat {
+  color: var(--muted) !important;
+}

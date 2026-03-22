@@ -8,7 +8,7 @@ export default function RelatedKeywords({ keywords, onSelect }) {
         {keywords.map((kw, i) => (
           <button key={i} className="related-kw-chip" onClick={() => onSelect?.(kw.keyword)}>
             <span className="related-kw-text">{kw.keyword}</span>
-            <span className="related-kw-vol">{kw.volume.toLocaleString()}</span>
+            {kw.volume != null && <span className="related-kw-vol">{kw.volume.toLocaleString()}</span>}
           </button>
         ))}
       </div>

@@ -1,0 +1,45 @@
+.status-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3rem;
+  color: var(--muted);
+}
+
+.status-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: status-spin 0.6s linear infinite;
+}
+
+@keyframes status-spin {
+  to { transform: rotate(360deg); }
+}
+
+.status-error {
+  color: var(--accent3);
+  padding: 1rem;
+  text-align: center;
+}
+
+.status-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 4rem 2rem;
+  color: var(--muted);
+}
+
+.status-empty-icon {
+  font-size: 2.5rem;
+}
+
+.status-empty-hint {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}

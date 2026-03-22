@@ -1,0 +1,260 @@
+.util-tab-header {
+  margin-bottom: 28px;
+}
+
+.util-tab-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 28px;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.util-tab-desc {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* Tool grid */
+.util-tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.util-tool-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.util-tool-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.util-tool-card.soon {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.util-tool-card.soon:hover {
+  border-color: var(--border);
+  transform: none;
+}
+
+.util-tool-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.util-tool-name {
+  font-family: 'Syne', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.util-tool-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.util-soon-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--accent3);
+  color: #fff;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* Back button */
+.util-back-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  margin-bottom: 16px;
+  transition: all 0.15s;
+}
+
+.util-back-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+/* Active tool header */
+.util-active-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.util-active-icon {
+  font-size: 36px;
+}
+
+.util-active-name {
+  font-family: 'Syne', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 4px;
+}
+
+.util-active-desc {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* Tool panel */
+.util-tool-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.util-tool-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.util-input-group label {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.util-input-group input,
+.util-input-group textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.util-input-group input:focus,
+.util-input-group textarea:focus {
+  border-color: var(--accent);
+}
+
+.util-generate-btn {
+  padding: 10px 24px;
+  background: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: opacity 0.15s;
+}
+
+.util-generate-btn:hover {
+  opacity: 0.9;
+}
+
+/* Results */
+.util-results {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.util-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.util-copy-btn {
+  padding: 6px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.util-copy-btn:hover {
+  border-color: var(--accent);
+}
+
+.util-copy-btn.small {
+  padding: 4px 10px;
+  font-size: 11px;
+}
+
+.util-keyword-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.util-keyword-chip {
+  padding: 4px 10px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+.util-title-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.util-title-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--card);
+  border-radius: 8px;
+}
+
+.util-title-text {
+  font-size: 13px;
+  flex: 1;
+}
+
+@media (max-width: 900px) {
+  .util-tool-inputs {
+    grid-template-columns: 1fr;
+  }
+}

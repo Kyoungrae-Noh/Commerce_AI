@@ -1,9 +1,26 @@
 import './TrendChart.css'
 
+/** "2025-03-01" → "3월", "4월" → "4월" (이미 한글이면 그대로) */
+function formatMonth(month) {
+  if (!month) return ''
+  if (month.includes('월')) return month
+  const match = month.match(/-(\d{2})-/)
+  if (match) return `${parseInt(match[1])}월`
+  return month
+}
+
+/** Y축 라벨 포맷 (volume이면 k 단위, ratio면 상대값) */
+function formatYLabel(val, isRatio) {
+  if (isRatio) return Math.round(val)
+  if (val >= 1000) return (val / 1000).toFixed(0) + 'k'
+  return val
+}
+
 export default function TrendChart({ data, label = '월간 검색량 추이' }) {
   if (!data || data.length === 0) return null
 
   const getValue = (d) => d.volume ?? d.ratio ?? 0
+  const isRatio = data[0]?.ratio !== undefined && data[0]?.volume === undefined
   const maxVol = Math.max(...data.map(getValue))
   const minVol = Math.min(...data.map(getValue))
 
@@ -41,7 +58,7 @@ export default function TrendChart({ data, label = '월간 검색량 추이' }) 
             <g key={i}>
               <line x1={padX} y1={y} x2={W - padX} y2={y} stroke="var(--border)" strokeDasharray="4" />
               <text x={padX - 8} y={y + 4} textAnchor="end" fill="var(--muted)" fontSize="9" fontFamily="'JetBrains Mono', monospace">
-                {(val / 1000).toFixed(0)}k
+                {formatYLabel(val, isRatio)}
               </text>
             </g>
           )
@@ -61,7 +78,7 @@ export default function TrendChart({ data, label = '월간 검색량 추이' }) 
         {/* Month labels */}
         {data.map((d, i) => (
           <text key={i} x={points[i].x} y={H + 10} textAnchor="middle" fill="var(--muted)" fontSize="10" fontFamily="'JetBrains Mono', monospace">
-            {d.month}
+            {formatMonth(d.month)}
           </text>
         ))}
       </svg>

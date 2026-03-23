@@ -12,7 +12,9 @@
   z-index: 50;
 }
 
-.dash-sidebar-logo {
+.dash-sidebar-logo,
+.dash-sidebar-logo:link,
+.dash-sidebar-logo:visited {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -21,10 +23,18 @@
   text-decoration: none;
   cursor: pointer;
   transition: opacity 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  position: relative;
+  z-index: 10;
 }
 
 .dash-sidebar-logo:hover {
   opacity: 0.8;
+}
+
+.dash-sidebar-logo:active {
+  opacity: 0.6;
 }
 
 .dash-sidebar-brand {

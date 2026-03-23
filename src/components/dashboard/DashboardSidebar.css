@@ -13,7 +13,14 @@
 }
 
 .dash-sidebar-logo-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
   margin-bottom: 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .dash-sidebar-logo-link:hover {

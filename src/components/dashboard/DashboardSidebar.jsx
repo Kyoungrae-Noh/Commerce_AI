@@ -14,11 +14,11 @@ const tabs = [
 export default function DashboardSidebar() {
   return (
     <aside className="dash-sidebar">
-      <NavLink to="/" className="dash-sidebar-logo">
-        <span className="dash-sidebar-brand">Source<span>ly</span></span>
-        <span className="dash-sidebar-tag">Dashboard</span>
-      </NavLink>
       <nav className="dash-sidebar-nav">
+        <NavLink to="/" className="dash-sidebar-link dash-sidebar-logo-link">
+          <span className="dash-sidebar-brand">Source<span>ly</span></span>
+          <span className="dash-sidebar-tag">Dashboard</span>
+        </NavLink>
         {tabs.map(tab => (
           <NavLink
             key={tab.to}

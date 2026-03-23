@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import './DashboardSidebar.css'
 
 const tabs = [
@@ -12,14 +12,12 @@ const tabs = [
 ]
 
 export default function DashboardSidebar() {
-  const navigate = useNavigate()
-
   return (
     <aside className="dash-sidebar">
-      <a href="/" className="dash-sidebar-logo" onClick={(e) => { e.preventDefault(); navigate('/') }}>
+      <div className="dash-sidebar-logo" onClick={() => { window.location.href = '/' }}>
         <span className="dash-sidebar-brand">Source<span>ly</span></span>
         <span className="dash-sidebar-tag">Dashboard</span>
-      </a>
+      </div>
       <nav className="dash-sidebar-nav">
         {tabs.map(tab => (
           <NavLink

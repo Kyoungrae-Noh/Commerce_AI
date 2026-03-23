@@ -51,6 +51,7 @@ export default function Calculator() {
       <DashboardSidebar />
       {/* Mobile tab bar */}
       <div className="dash-mobile-tabs">
+        <NavLink to="/" className={({ isActive }) => `dash-mobile-tab dash-mobile-home ${isActive ? 'active' : ''}`}>Source<span>ly</span></NavLink>
         <NavLink to="/dashboard/recommendations" className="dash-mobile-tab">⚡ AI 추천</NavLink>
         <NavLink to="/dashboard/keywords" className="dash-mobile-tab">🔍 키워드</NavLink>
         <NavLink to="/dashboard/competition" className="dash-mobile-tab">📊 경쟁 분석</NavLink>

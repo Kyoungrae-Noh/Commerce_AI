@@ -7,10 +7,12 @@
 }
 
 .footer .logo-small {
+  display: inline-flex;
   font-family: 'Syne', sans-serif;
   font-weight: 800;
   font-size: 18px;
   color: var(--muted);
+  text-decoration: none;
 }
 
 .footer .logo-small span { color: var(--accent); }

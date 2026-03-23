@@ -42,6 +42,12 @@ export default function Dashboard() {
       <DashboardSidebar />
       {/* Mobile tab bar */}
       <div className="dash-mobile-tabs">
+        <NavLink
+          to="/"
+          className={({ isActive }) => `dash-mobile-tab dash-mobile-home ${isActive ? 'active' : ''}`}
+        >
+          Source<span>ly</span>
+        </NavLink>
         {mobileTabs.map(t => (
           <NavLink
             key={t.to}

@@ -18,12 +18,20 @@
   gap: 10px;
   padding: 0 8px;
   margin-bottom: 32px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.dash-sidebar-logo:hover {
+  opacity: 0.8;
 }
 
 .dash-sidebar-brand {
-  font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: 20px;
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.5px;
   color: var(--text);
 }
 

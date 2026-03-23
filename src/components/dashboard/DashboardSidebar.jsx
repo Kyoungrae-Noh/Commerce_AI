@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import './DashboardSidebar.css'
 
 const tabs = [
@@ -14,10 +14,10 @@ const tabs = [
 export default function DashboardSidebar() {
   return (
     <aside className="dash-sidebar">
-      <div className="dash-sidebar-logo">
+      <Link to="/" className="dash-sidebar-logo">
         <span className="dash-sidebar-brand">Source<span>ly</span></span>
         <span className="dash-sidebar-tag">Dashboard</span>
-      </div>
+      </Link>
       <nav className="dash-sidebar-nav">
         {tabs.map(tab => (
           <NavLink

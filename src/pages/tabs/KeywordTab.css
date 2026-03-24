@@ -43,17 +43,47 @@
   margin-top: 8px;
 }
 
-.kw-trending-section-title {
-  font-family: 'Syne', 'Noto Sans KR', sans-serif;
-  font-weight: 700;
-  font-size: 18px;
+.kw-trending-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 16px;
 }
 
-.kw-trending-tables {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+.kw-trending-section-title {
+  font-family: 'Inter', 'Noto Sans KR', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.kw-period-tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 3px;
+}
+
+.kw-period-tab {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.kw-period-tab:hover {
+  color: var(--text);
+}
+
+.kw-period-tab.active {
+  background: rgba(0, 229, 160, 0.1);
+  color: var(--accent);
 }
 
 /* Back button */
@@ -86,8 +116,10 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .kw-trending-tables {
-    grid-template-columns: 1fr;
+  .kw-trending-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
   }
 
   .kw-analysis-section {

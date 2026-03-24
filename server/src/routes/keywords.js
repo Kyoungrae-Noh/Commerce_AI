@@ -110,6 +110,7 @@ router.get('/trending', (req, res) => {
     const trend = item.monthlyTrend || []
     let dailyChange = 0
     let weeklyChange = 0
+    let monthlyChange = 0
 
     if (trend.length >= 2) {
       const last = trend[trend.length - 1]?.ratio || 0
@@ -121,6 +122,12 @@ router.get('/trending', (req, res) => {
       const recentWeek = (trend.slice(-2).reduce((a, b) => a + b.ratio, 0)) / 2
       const prevWeek = (trend.slice(-4, -2).reduce((a, b) => a + b.ratio, 0)) / 2
       weeklyChange = prevWeek > 0 ? ((recentWeek - prevWeek) / prevWeek) * 100 : 0
+    }
+
+    if (trend.length >= 6) {
+      const recentMonth = trend.slice(-2).reduce((a, b) => a + b.ratio, 0) / 2
+      const oldMonth = trend.slice(0, 2).reduce((a, b) => a + b.ratio, 0) / 2
+      monthlyChange = oldMonth > 0 ? ((recentMonth - oldMonth) / oldMonth) * 100 : 0
     }
 
     const competitorCount = item.competitorCount || 0
@@ -139,6 +146,7 @@ router.get('/trending', (req, res) => {
       sourcelyScore: item.sourcelyScore,
       dailyChange: Math.round(dailyChange * 10) / 10,
       weeklyChange: Math.round(weeklyChange * 10) / 10,
+      monthlyChange: Math.round(monthlyChange * 10) / 10,
     }
   })
 
@@ -154,7 +162,13 @@ router.get('/trending', (req, res) => {
     .slice(0, 10)
     .map((item, i) => ({ rank: i + 1, ...item }))
 
-  res.json({ daily, weekly, lastUpdated, categories })
+  // 월간: monthlyChange 기준 내림차순
+  const monthly = [...withTrend]
+    .sort((a, b) => b.monthlyChange - a.monthlyChange)
+    .slice(0, 10)
+    .map((item, i) => ({ rank: i + 1, ...item }))
+
+  res.json({ daily, weekly, monthly, lastUpdated, categories })
 })
 
 export default router

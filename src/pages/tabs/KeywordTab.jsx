@@ -19,6 +19,7 @@ export default function KeywordTab() {
   // 트렌드 키워드
   const [trending, setTrending] = useState(null)
   const [trendingLoading, setTrendingLoading] = useState(true)
+  const [trendPeriod, setTrendPeriod] = useState('daily')
 
   useEffect(() => {
     loadTrending()
@@ -120,21 +121,31 @@ export default function KeywordTab() {
             <LoadingState message="트렌드 키워드 불러오는 중..." />
           ) : trending?.daily?.length > 0 ? (
             <div className="kw-trending-section">
-              <h3 className="kw-trending-section-title">트렌드 키워드</h3>
-              <div className="kw-trending-tables">
-                <TrendingKeywordTable
-                  data={trending.daily}
-                  title="일간 트렌드 키워드"
-                  timestamp={trending.lastUpdated}
-                  onKeywordClick={handleSearch}
-                />
-                <TrendingKeywordTable
-                  data={trending.weekly}
-                  title="주간 트렌드 키워드"
-                  timestamp={trending.lastUpdated}
-                  onKeywordClick={handleSearch}
-                />
+              <div className="kw-trending-header">
+                <h3 className="kw-trending-section-title">트렌드 키워드</h3>
+                <div className="kw-period-tabs">
+                  {[
+                    { key: 'daily', label: '일간' },
+                    { key: 'weekly', label: '주간' },
+                    { key: 'monthly', label: '월간' },
+                  ].map(tab => (
+                    <button
+                      key={tab.key}
+                      className={`kw-period-tab ${trendPeriod === tab.key ? 'active' : ''}`}
+                      onClick={() => setTrendPeriod(tab.key)}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
               </div>
+              <TrendingKeywordTable
+                data={trending[trendPeriod] || []}
+                title={trendPeriod === 'daily' ? '일간 트렌드 키워드' : trendPeriod === 'weekly' ? '주간 트렌드 키워드' : '월간 트렌드 키워드'}
+                timestamp={trending.lastUpdated}
+                period={trendPeriod}
+                onKeywordClick={handleSearch}
+              />
             </div>
           ) : (
             <EmptyState

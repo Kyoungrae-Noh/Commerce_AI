@@ -1,0 +1,61 @@
+.design-app-shell {
+  position: relative;
+  min-height: 100vh;
+  background: #f7f9fb;
+}
+
+.design-frame {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+  border: 0;
+}
+
+.design-switcher {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 1000;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: min(420px, calc(100vw - 32px));
+  padding: 8px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.design-switcher-button {
+  border: 0;
+  border-radius: 8px;
+  background: #e6e8ea;
+  color: #334155;
+  cursor: pointer;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: lowercase;
+}
+
+.design-switcher-button.active {
+  background: #0050cb;
+  color: #ffffff;
+}
+
+@media (max-width: 720px) {
+  .design-switcher {
+    top: auto;
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    max-width: none;
+  }
+
+  .design-switcher-button {
+    flex: 1 1 calc(50% - 8px);
+  }
+}

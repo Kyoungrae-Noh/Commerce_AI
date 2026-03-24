@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Noto+Sans+KR:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#93000a",
+              "tertiary": "#a42f03",
+              "error": "#ba1a1a",
+              "on-secondary-fixed": "#002204",
+              "inverse-surface": "#2d3133",
+              "on-primary-fixed": "#001849",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed": "#dae1ff",
+              "surface": "#f7f9fb",
+              "secondary-fixed-dim": "#88d982",
+              "surface-variant": "#e0e3e5",
+              "surface-dim": "#d8dadc",
+              "on-primary-fixed-variant": "#003fa4",
+              "tertiary-container": "#c6471d",
+              "inverse-on-surface": "#eff1f3",
+              "secondary": "#1b6d24",
+              "surface-container-low": "#f2f4f6",
+              "on-primary": "#ffffff",
+              "surface-container": "#eceef0",
+              "surface-container-high": "#e6e8ea",
+              "on-secondary": "#ffffff",
+              "on-secondary-fixed-variant": "#005312",
+              "on-background": "#191c1e",
+              "outline-variant": "#c2c6d8",
+              "tertiary-fixed-dim": "#ffb59f",
+              "surface-tint": "#0054d6",
+              "surface-bright": "#f7f9fb",
+              "on-secondary-container": "#217128",
+              "on-surface-variant": "#424656",
+              "primary-container": "#0066ff",
+              "on-tertiary-container": "#fff5f3",
+              "outline": "#727687",
+              "on-surface": "#191c1e",
+              "secondary-fixed": "#a3f69c",
+              "primary": "#0050cb",
+              "inverse-primary": "#b3c5ff",
+              "error-container": "#ffdad6",
+              "secondary-container": "#a0f399",
+              "tertiary-fixed": "#ffdbd0",
+              "primary-fixed-dim": "#b3c5ff",
+              "on-tertiary": "#ffffff",
+              "on-primary-container": "#f8f7ff",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#e0e3e5",
+              "background": "#f7f9fb",
+              "on-tertiary-fixed-variant": "#852300",
+              "on-tertiary-fixed": "#3a0a00"
+            },
+            fontFamily: {
+              "headline": ["Manrope", "Noto Sans KR"],
+              "body": ["Inter", "Noto Sans KR"],
+              "label": ["Inter", "Noto Sans KR"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', 'Noto Sans KR', sans-serif; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- SideNavBar (Execution from JSON) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 flex flex-col h-full p-4 gap-2 z-40">
+<div class="flex items-center gap-3 px-2 mb-8 mt-4">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white shadow-lg">
+<span class="material-symbols-outlined" data-icon="insights">insights</span>
+</div>
+<div>
+<h1 class="font-black text-blue-700 dark:text-blue-400 text-lg leading-tight">Intelligence</h1>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Seller Pro</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 transition-all duration-200 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-semibold rounded-lg translate-x-1" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-manrope text-sm">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-800/50" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-manrope text-sm">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-800/50" href="#">
+<span class="material-symbols-outlined" data-icon="card_membership">card_membership</span>
+<span class="font-manrope text-sm">Subscriptions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-800/50" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span class="font-manrope text-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-800/50" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span class="font-manrope text-sm">Analytics</span>
+</a>
+</nav>
+<div class="mt-auto space-y-4">
+<button class="w-full bg-gradient-to-br from-primary to-primary-container text-white py-3 rounded-lg text-sm font-bold shadow-md hover:shadow-lg transition-all">
+                Upgrade Plan
+            </button>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-blue-600 transition-colors rounded-lg hover:bg-slate-200/50 dark:hover:bg-slate-800/50" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-manrope text-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen pb-20">
+<!-- TopNavBar (Execution from JSON) -->
+<header class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-30 docked full-width">
+<div class="flex justify-between items-center px-8 py-3 w-full max-w-[1440px] mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-blue-800 dark:text-blue-300">Insight Flux</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 font-manrope text-sm font-medium" href="#">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 font-manrope text-sm font-medium" href="#">Market Trends</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 font-manrope text-sm font-medium" href="#">Item Analysis</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-blue-50/50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-blue-50/50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-slate-200 overflow-hidden ml-2 border border-outline-variant/20">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="Close up portrait of a professional male business consultant in a clean modern office setting with warm natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQrNnD5YNRzCauPi_guRiiBEtuBIErmbSYPkDAu7P0xW8XcZF8e_3tyuXHQv8FkWbd5HLqJHZHga4q3BMmz9LS6CVZQKkZA8QrcMeX4TEUb-XTbW2HHFuM2dw-P3JvJJr8WhY2labISVYUDZm5gf23jeEv5DfSR4vtPom_omxCgvdmSiSo4y75-HKD5M6dhghHG5RXXpXTe-pikaHcLXfZRfADou9iF72DSqsKpWULjaMtgmy3AyxtKMSSJ_yuvLm_Us_zh39y7qge"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Settings Canvas -->
+<div class="max-w-6xl mx-auto px-12 mt-12">
+<div class="mb-10">
+<h2 class="text-4xl font-headline font-extrabold tracking-tight text-on-surface mb-2">설정</h2>
+<p class="text-on-surface-variant font-body">계정 정보, 샵 연동 및 팀 관리 기능을 제어합니다.</p>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-8">
+<!-- User Profile Management -->
+<section class="col-span-12 lg:col-span-7 bg-surface-container-low p-8 rounded-xl">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-xl font-headline font-bold text-on-surface">사용자 프로필</h3>
+<button class="text-primary font-bold text-sm hover:underline">편집하기</button>
+</div>
+<div class="flex items-start gap-8">
+<div class="relative">
+<img alt="User profile avatar" class="w-24 h-24 rounded-2xl object-cover shadow-md" data-alt="Close up portrait of a professional male business consultant in a clean modern office setting with warm natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnCtOthSD01nvrdO_HNCNBrO8E1H8xbqnvvbhtbfOdoOJKCU3jnh0ZL3x4eQruf9Ds9ZOxf4DCv7JArVtVmjTHlDCrY9h3ICzcNO0xxoFUckSAggKw-l_BnWdpWmWaZ8tFnnW384eRWIjO2UWIEjj1L21QUdMn-rIcZ7itgLgV0gjwOPzNpQffvz1KzEdlRUG8BGsydzUwleDY1lrJv14nFufCGBczg11SpbzU0dR8XVkM7OZhAoWMIohVXKvo4yAD8mD0p1rtJCiG"/>
+<button class="absolute -bottom-2 -right-2 bg-white p-2 rounded-lg shadow-lg border border-outline-variant/10 text-primary">
+<span class="material-symbols-outlined text-sm" data-icon="photo_camera">photo_camera</span>
+</button>
+</div>
+<div class="flex-1 grid grid-cols-2 gap-6">
+<div class="space-y-1">
+<p class="text-[11px] uppercase tracking-widest text-outline font-bold">이름</p>
+<p class="text-lg font-semibold text-on-surface">김인사이트</p>
+</div>
+<div class="space-y-1">
+<p class="text-[11px] uppercase tracking-widest text-outline font-bold">직책</p>
+<p class="text-lg font-semibold text-on-surface">최고 경영자</p>
+</div>
+<div class="col-span-2 space-y-1">
+<p class="text-[11px] uppercase tracking-widest text-outline font-bold">이메일 주소</p>
+<p class="text-lg font-semibold text-on-surface">ceo@insightflux.io</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Plan Summary Chip -->
+<section class="col-span-12 lg:col-span-5 bg-gradient-to-br from-primary to-primary-container p-8 rounded-xl text-white shadow-xl relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-blue-100 text-sm font-bold mb-1">현재 사용 중인 플랜</p>
+<h3 class="text-3xl font-headline font-black mb-4">Enterprise Pro</h3>
+<div class="flex items-center gap-2 mb-6">
+<span class="bg-white/20 px-2 py-0.5 rounded text-xs font-bold">Active</span>
+<span class="text-blue-100 text-xs">다음 결제일: 2024년 6월 15일</span>
+</div>
+<button class="w-full bg-white text-primary py-3 rounded-lg font-bold hover:bg-blue-50 transition-colors">
+                            플랜 관리 및 영수증 확인
+                        </button>
+</div>
+<div class="absolute -bottom-10 -right-10 opacity-10">
+<span class="material-symbols-outlined text-[12rem]" data-icon="verified">verified</span>
+</div>
+</section>
+<!-- Shop Integration -->
+<section class="col-span-12 lg:col-span-8 bg-surface-container-low p-8 rounded-xl">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-xl font-headline font-bold text-on-surface">스토어 연동 관리</h3>
+<button class="bg-surface-container-high px-4 py-2 rounded-lg text-sm font-bold text-on-surface-variant hover:bg-surface-container-highest transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                            새 스토어 추가
+                        </button>
+</div>
+<div class="space-y-4">
+<!-- Naver -->
+<div class="bg-surface-container-lowest p-6 rounded-xl flex items-center justify-between group hover:shadow-sm transition-all">
+<div class="flex items-center gap-5">
+<div class="w-12 h-12 bg-[#03C75A] rounded-xl flex items-center justify-center text-white font-bold text-xl">N</div>
+<div>
+<h4 class="font-bold text-on-surface">네이버 스마트스토어</h4>
+<p class="text-sm text-on-surface-variant">insight_official_store</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="text-right">
+<p class="text-xs font-bold text-secondary flex items-center justify-end gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                        연동 중
+                                    </p>
+<p class="text-[10px] text-outline">최근 동기화: 5분 전</p>
+</div>
+<button class="p-2 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Coupang -->
+<div class="bg-surface-container-lowest p-6 rounded-xl flex items-center justify-between group hover:shadow-sm transition-all">
+<div class="flex items-center gap-5">
+<div class="w-12 h-12 bg-[#F21212] rounded-xl flex items-center justify-center text-white font-bold text-xl">C</div>
+<div>
+<h4 class="font-bold text-on-surface">쿠팡 윙 (Coupang Wing)</h4>
+<p class="text-sm text-on-surface-variant">flux_global_seller</p>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="text-right">
+<p class="text-xs font-bold text-secondary flex items-center justify-end gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                        연동 중
+                                    </p>
+<p class="text-[10px] text-outline">최근 동기화: 12분 전</p>
+</div>
+<button class="p-2 text-outline hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Notification Preferences -->
+<section class="col-span-12 lg:col-span-4 bg-surface-container-low p-8 rounded-xl flex flex-col">
+<h3 class="text-xl font-headline font-bold text-on-surface mb-8">알림 설정</h3>
+<div class="space-y-6 flex-1">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-semibold text-on-surface">매일 성과 요약</p>
+<p class="text-[11px] text-on-surface-variant">매일 오전 9시 알림 발송</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-semibold text-on-surface">재고 임계값 경고</p>
+<p class="text-[11px] text-on-surface-variant">재고 10개 미만 시 즉시 알림</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-semibold text-on-surface">팀원 활동 로그</p>
+<p class="text-[11px] text-on-surface-variant">권한 변경 및 데이터 삭제 시</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="mt-8 p-4 bg-tertiary/10 rounded-lg">
+<p class="text-tertiary text-xs font-semibold leading-snug">
+<span class="material-symbols-outlined text-sm align-middle mr-1" data-icon="info">info</span>
+                            주요 장애 발생 시 시스템 공지는 설정과 관계없이 발송됩니다.
+                        </p>
+</div>
+</section>
+<!-- Team Management -->
+<section class="col-span-12 bg-surface-container-low p-8 rounded-xl">
+<div class="flex items-center justify-between mb-8">
+<div>
+<h3 class="text-xl font-headline font-bold text-on-surface">팀원 관리</h3>
+<p class="text-sm text-on-surface-variant mt-1">현재 사용 중인 플랜에서는 최대 10명의 팀원을 초대할 수 있습니다.</p>
+</div>
+<button class="bg-primary text-white px-6 py-2.5 rounded-lg text-sm font-bold shadow-md hover:bg-primary-container transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="person_add">person_add</span>
+                            팀원 초대하기
+                        </button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="text-[11px] uppercase tracking-widest text-outline border-b border-outline-variant/10">
+<th class="pb-4 font-bold">이름 / 이메일</th>
+<th class="pb-4 font-bold">역할</th>
+<th class="pb-4 font-bold">마지막 접속</th>
+<th class="pb-4 font-bold text-right">관리</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+<img alt="Team member profile" class="w-full h-full object-cover" data-alt="Close up portrait of a professional smiling female data analyst in a minimalist office with soft bokeh background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbw2sebiY7wYskt2HisCfpRJ2vCOlUkDQugcF2lZI9jpi38hdvySuZKOvhS1AvTyQzLBsssYnac3wR40nbTWOctFZpQSYUj0_5LZWomkGK1qIHZV-lV_6BNZPhUbWmuNUOKtW3-otzCTr_UMUstkptaNanZiXjnUJkGSBcWAvJeDV2BosnWDhN1b4rk0j2Ba977cqB2uRlHjVZe1mLHnZdenTPUvozoupDxl_zMTAzwPYVYK2E8wwR-R5hiLUSRsDgW_CIkiHgT8Dg"/>
+</div>
+<div>
+<p class="font-semibold text-on-surface">박지민</p>
+<p class="text-xs text-outline">jimin.park@insightflux.io</p>
+</div>
+</div>
+</td>
+<td class="py-5">
+<span class="bg-blue-100 text-blue-800 text-[11px] font-bold px-2 py-0.5 rounded uppercase">Admin</span>
+</td>
+<td class="py-5 text-sm text-on-surface-variant">2시간 전</td>
+<td class="py-5 text-right">
+<button class="text-outline hover:text-error transition-colors p-2">
+<span class="material-symbols-outlined text-lg" data-icon="delete_outline">delete_outline</span>
+</button>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container transition-colors">
+<td class="py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+<img alt="Team member profile" class="w-full h-full object-cover" data-alt="Close up portrait of a creative male product designer wearing glasses in a studio setting with bright indirect light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAdgZdYa8zHV3ZLeElC7KcS5MNyF3pzrVVOu3Vv4bVgVcAMrI49WJBP78u76ul4oEl3q-Xz7Hh9SMVj-vFRXPVo6L7_wfRudXkpGcb4KCvak7Jd1miUfWsmEUrJfWNPrOwpQiD_tIj-m2mU7FWqxiDwvnPm29nq3tjyGTZ_DT2nQPKxVjYhZrnxdMGa-442VN9q49DHeAtQfMUBjJ9G9bBniFbgZEnNfEt63FtGUHhJASfBp0u94RS1UrRFCW1hMmHFwFhyuxosuk7h"/>
+</div>
+<div>
+<p class="font-semibold text-on-surface">이도훈</p>
+<p class="text-xs text-outline">dh.lee@insightflux.io</p>
+</div>
+</div>
+</td>
+<td class="py-5">
+<span class="bg-slate-100 text-slate-600 text-[11px] font-bold px-2 py-0.5 rounded uppercase">Viewer</span>
+</td>
+<td class="py-5 text-sm text-on-surface-variant">어제 18:45</td>
+<td class="py-5 text-right">
+<button class="text-outline hover:text-error transition-colors p-2">
+<span class="material-symbols-outlined text-lg" data-icon="delete_outline">delete_outline</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Danger Zone -->
+<div class="mt-16 pt-8 border-t border-outline-variant/20">
+<div class="flex items-center justify-between">
+<div>
+<h4 class="text-lg font-bold text-tertiary">계정 해지</h4>
+<p class="text-sm text-on-surface-variant mt-1">계정을 삭제하면 모든 데이터와 연동 정보가 즉시 삭제되며 복구할 수 없습니다.</p>
+</div>
+<button class="px-6 py-2.5 border border-tertiary/50 text-tertiary rounded-lg text-sm font-bold hover:bg-tertiary hover:text-white transition-all">
+                        계정 삭제하기
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer for Mobile View (Supressed on Web as per hierarchy) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-slate-200 flex justify-around py-3 px-6 z-50">
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-bold">대시보드</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+<span class="material-symbols-outlined" data-icon="store">store</span>
+<span class="text-[10px] font-bold">스토어</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" data-icon="settings" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="text-[10px] font-bold">설정</span>
+</a>
+</nav>
+</body></html>

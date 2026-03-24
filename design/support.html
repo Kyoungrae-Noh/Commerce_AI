@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Insight Flux - 문의하기</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Noto+Sans+KR:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#93000a",
+              "tertiary": "#a42f03",
+              "error": "#ba1a1a",
+              "on-secondary-fixed": "#002204",
+              "inverse-surface": "#2d3133",
+              "on-primary-fixed": "#001849",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed": "#dae1ff",
+              "surface": "#f7f9fb",
+              "secondary-fixed-dim": "#88d982",
+              "surface-variant": "#e0e3e5",
+              "surface-dim": "#d8dadc",
+              "on-primary-fixed-variant": "#003fa4",
+              "tertiary-container": "#c6471d",
+              "inverse-on-surface": "#eff1f3",
+              "secondary": "#1b6d24",
+              "surface-container-low": "#f2f4f6",
+              "on-primary": "#ffffff",
+              "surface-container": "#eceef0",
+              "surface-container-high": "#e6e8ea",
+              "on-secondary": "#ffffff",
+              "on-secondary-fixed-variant": "#005312",
+              "on-background": "#191c1e",
+              "outline-variant": "#c2c6d8",
+              "tertiary-fixed-dim": "#ffb59f",
+              "surface-tint": "#0054d6",
+              "surface-bright": "#f7f9fb",
+              "on-secondary-container": "#217128",
+              "on-surface-variant": "#424656",
+              "primary-container": "#0066ff",
+              "on-tertiary-container": "#fff5f3",
+              "outline": "#727687",
+              "on-surface": "#191c1e",
+              "secondary-fixed": "#a3f69c",
+              "primary": "#0050cb",
+              "inverse-primary": "#b3c5ff",
+              "error-container": "#ffdad6",
+              "secondary-container": "#a0f399",
+              "tertiary-fixed": "#ffdbd0",
+              "primary-fixed-dim": "#b3c5ff",
+              "on-tertiary": "#ffffff",
+              "on-primary-container": "#f8f7ff",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#e0e3e5",
+              "background": "#f7f9fb",
+              "on-tertiary-fixed-variant": "#852300",
+              "on-tertiary-fixed": "#3a0a00"
+            },
+            fontFamily: {
+              "headline": ["Manrope", "Noto Sans KR"],
+              "body": ["Inter", "Noto Sans KR"],
+              "label": ["Inter", "Noto Sans KR"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', 'Noto Sans KR', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface flex min-h-screen">
+<!-- SideNavBar (Authority: Shared Components JSON) -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 flex flex-col p-4 gap-2 z-40 hidden md:flex">
+<div class="mb-8 px-2">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-sm">auto_graph</span>
+</div>
+<div>
+<h1 class="font-black text-blue-700 dark:text-blue-400 text-lg leading-tight">Intelligence</h1>
+<p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Seller Pro</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<!-- Navigation Items Mapping -->
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors font-manrope text-sm rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="inventory_2">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors font-manrope text-sm rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="monitoring">monitoring</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors font-manrope text-sm rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="card_membership">card_membership</span>
+<span>Subscriptions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors font-manrope text-sm rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<!-- Active Tab: Support (Maps to Customer Support intent) -->
+<a class="flex items-center gap-3 px-3 py-2 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-semibold rounded-lg translate-x-1 transition-transform font-manrope text-sm" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="contact_support">contact_support</span>
+<span>Support</span>
+</a>
+</nav>
+<div class="mt-auto space-y-4">
+<div class="bg-primary/5 rounded-xl p-4">
+<p class="text-xs font-bold text-primary mb-2">프리미엄 혜택</p>
+<button class="w-full py-2 bg-gradient-to-br from-primary to-primary-container text-on-primary text-xs font-bold rounded-lg shadow-sm">
+                    Upgrade Plan
+                </button>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors font-manrope text-sm rounded-lg" href="#">
+<span class="material-symbols-outlined text-lg" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 flex flex-col min-h-screen">
+<!-- TopAppBar (Authority: Shared Components JSON) -->
+<header class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md docked full-width top-0 sticky z-50 flex justify-between items-center px-8 py-3 w-full max-w-[1440px] mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-blue-800 dark:text-blue-300 font-headline">Insight Flux</span>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 font-manrope text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 font-manrope text-sm font-medium transition-colors" href="#">Market Trends</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 font-manrope text-sm font-medium transition-colors" href="#">Item Analysis</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-highest border-none rounded-full text-sm w-64 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="도움말 검색..." type="text"/>
+</div>
+<button class="p-2 text-slate-500 hover:bg-blue-50/50 rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant/30">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="Close-up professional headshot of a woman with a confident smile in a modern office setting with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcTObXVtB5gwZmieAJdqOoo1L4yM8RrWQw3-RCVr9W4iTa60P30YE571CZ6rhUxGdpRYK0EQyREKa9UGF6nUEx-U57BSwUVRInzpwVVUFaTZRp0TITsB-oWd4AIeE8F1SByaGDU9U427L8uoivcIVquhhC16xdWx7M42lpX80aPnjy2DlLRrD077rJCEuzBbW5C35pRmMMJA4fokdxjjEs2Ujc4aPHsfHaM3RNYzTrtfFtludYaQgT6VOgLH2-Pxg-VMzoxIdTd22q"/>
+</div>
+</div>
+</header>
+<!-- Page Content: 문의하기 -->
+<div class="p-8 md:p-12 max-w-[1200px] mx-auto w-full space-y-10">
+<!-- Hero Section / Editorial Intelligence -->
+<section class="flex flex-col md:flex-row justify-between items-end gap-6 mb-4">
+<div class="space-y-2">
+<span class="text-primary font-bold tracking-widest text-xs uppercase">Support Center</span>
+<h2 class="text-5xl font-extrabold font-headline tracking-tight text-on-surface">문의하기</h2>
+<p class="text-on-surface-variant text-lg max-w-lg">에디토리얼 인텔리전스 팀이 귀하의 비즈니스 성장을 돕기 위해 대기하고 있습니다. 궁금한 점을 남겨주세요.</p>
+</div>
+<div class="flex gap-3">
+<div class="flex flex-col items-end">
+<span class="text-3xl font-bold text-primary font-headline">98%</span>
+<span class="text-label-sm text-on-surface-variant">평균 응답 만족도</span>
+</div>
+</div>
+</section>
+<!-- Bento Layout: Quick Links & Documentation -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-1 bg-surface-container-lowest p-6 rounded-xl transition-all hover:translate-y-[-4px]">
+<div class="w-12 h-12 rounded-lg bg-blue-50 flex items-center justify-center text-primary mb-6">
+<span class="material-symbols-outlined text-2xl" data-icon="description">description</span>
+</div>
+<h3 class="text-xl font-bold mb-2">가이드 및 문서</h3>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">플랫폼의 모든 기능을 마스터할 수 있는 상세 매뉴얼을 확인하세요.</p>
+<a class="text-primary font-bold text-sm flex items-center gap-1 group" href="#">
+                        문서 보기 <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="md:col-span-1 bg-surface-container-lowest p-6 rounded-xl transition-all hover:translate-y-[-4px]">
+<div class="w-12 h-12 rounded-lg bg-secondary-container/20 flex items-center justify-center text-secondary mb-6">
+<span class="material-symbols-outlined text-2xl" data-icon="school">school</span>
+</div>
+<h3 class="text-xl font-bold mb-2">비디오 튜토리얼</h3>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">데이터 분석과 대시보드 활용법을 영상으로 쉽고 빠르게 배워보세요.</p>
+<a class="text-secondary font-bold text-sm flex items-center gap-1 group" href="#">
+                        강좌 보기 <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">play_circle</span>
+</a>
+</div>
+<div class="md:col-span-1 bg-surface-container-lowest p-6 rounded-xl transition-all hover:translate-y-[-4px]">
+<div class="w-12 h-12 rounded-lg bg-tertiary-fixed flex items-center justify-center text-tertiary mb-6">
+<span class="material-symbols-outlined text-2xl" data-icon="forum">forum</span>
+</div>
+<h3 class="text-xl font-bold mb-2">커뮤니티 포럼</h3>
+<p class="text-on-surface-variant text-sm mb-6 leading-relaxed">다른 셀러들과 인사이트를 공유하고 실전 팁을 나누어보세요.</p>
+<a class="text-tertiary font-bold text-sm flex items-center gap-1 group" href="#">
+                        포럼 참여 <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">groups</span>
+</a>
+</div>
+</section>
+<!-- Main Interactive Section: FAQ + Inquiry Form -->
+<section class="grid grid-cols-1 lg:grid-cols-5 gap-10">
+<!-- FAQ Accordion Style -->
+<div class="lg:col-span-2 space-y-6">
+<div>
+<h3 class="headline-sm font-bold mb-2">자주 묻는 질문 (FAQ)</h3>
+<p class="text-sm text-on-surface-variant">문의 전 확인하시면 빠른 해결이 가능합니다.</p>
+</div>
+<div class="space-y-4">
+<details class="group bg-surface-container-low rounded-xl overflow-hidden" open="">
+<summary class="flex justify-between items-center p-5 cursor-pointer list-none">
+<span class="font-bold text-sm">유료 플랜 결제는 어떻게 하나요?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-5 pb-5 pt-0 text-sm text-on-surface-variant leading-relaxed">
+                                설정 &gt; 구독 메뉴에서 카드 등록 후 즉시 이용 가능합니다. 국내 모든 신용카드 및 간편결제를 지원합니다.
+                            </div>
+</details>
+<details class="group bg-surface-container-low rounded-xl overflow-hidden">
+<summary class="flex justify-between items-center p-5 cursor-pointer list-none">
+<span class="font-bold text-sm">데이터 업데이트 주기가 궁금합니다.</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-5 pb-5 pt-0 text-sm text-on-surface-variant leading-relaxed">
+                                기본적으로 매일 오전 6시에 전일 데이터가 최종 업데이트되며, 실시간 트렌드는 1시간 단위로 갱신됩니다.
+                            </div>
+</details>
+<details class="group bg-surface-container-low rounded-xl overflow-hidden">
+<summary class="flex justify-between items-center p-5 cursor-pointer list-none">
+<span class="font-bold text-sm">여러 쇼핑몰을 연동할 수 있나요?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-5 pb-5 pt-0 text-sm text-on-surface-variant leading-relaxed">
+                                엔터프라이즈 플랜을 사용 중이시라면 최대 5개의 쇼핑몰 계정을 통합 관리하실 수 있습니다.
+                            </div>
+</details>
+<details class="group bg-surface-container-low rounded-xl overflow-hidden">
+<summary class="flex justify-between items-center p-5 cursor-pointer list-none">
+<span class="font-bold text-sm">환불 규정은 어떻게 되나요?</span>
+<span class="material-symbols-outlined transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="px-5 pb-5 pt-0 text-sm text-on-surface-variant leading-relaxed">
+                                결제 후 7일 이내, 서비스를 사용하지 않은 경우 전액 환불이 가능합니다. 상세 내용은 이용약관을 참고하세요.
+                            </div>
+</details>
+</div>
+</div>
+<!-- Inquiry Form -->
+<div class="lg:col-span-3">
+<div class="bg-surface-container-lowest rounded-2xl shadow-sm overflow-hidden p-1 shadow-primary/5">
+<div class="p-8 space-y-8">
+<div>
+<h3 class="text-2xl font-bold mb-2">1:1 문의하기</h3>
+<p class="text-sm text-on-surface-variant">업무일 기준 최대 24시간 이내에 답변 드립니다.</p>
+</div>
+<form class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant ml-1">성함 / 업체명</label>
+<input class="w-full bg-surface-container-highest border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20 transition-all" placeholder="홍길동" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant ml-1">이메일 주소</label>
+<input class="w-full bg-surface-container-highest border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20 transition-all" placeholder="example@email.com" type="email"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant ml-1">문의 유형</label>
+<select class="w-full bg-surface-container-highest border-none rounded-lg p-3 text-sm focus:ring-2 focus:ring-primary/20 transition-all appearance-none">
+<option>플랜 및 결제 문의</option>
+<option>계정 및 보안</option>
+<option>데이터 오류 보고</option>
+<option>기타 일반 문의</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="text-xs font-bold text-on-surface-variant ml-1">문의 내용</label>
+<textarea class="w-full bg-surface-container-highest border-none rounded-lg p-4 text-sm focus:ring-2 focus:ring-primary/20 transition-all resize-none" placeholder="상세한 내용을 적어주시면 더 정확한 답변이 가능합니다." rows="6"></textarea>
+</div>
+<div class="flex items-start gap-3 p-4 bg-surface-container-low rounded-lg">
+<input class="mt-1 rounded border-outline-variant text-primary focus:ring-primary" id="privacy" type="checkbox"/>
+<label class="text-xs text-on-surface-variant leading-relaxed" for="privacy">
+                                        개인정보 수집 및 이용에 동의합니다. (필수) 답변을 위한 용도로만 사용되며 관련 법령에 따라 3년간 보관됩니다.
+                                    </label>
+</div>
+<button class="w-full py-4 bg-gradient-to-r from-primary to-primary-container text-on-primary font-bold rounded-xl shadow-lg shadow-primary/10 transition-all active:scale-[0.98]" type="submit">
+                                    문의 제출하기
+                                </button>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Floating Contact Card -->
+<section class="bg-primary-container/10 border border-primary/10 rounded-2xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative">
+<div class="absolute -right-10 -bottom-10 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="space-y-2 z-10">
+<h3 class="text-xl font-bold">도움이 더 필요하신가요?</h3>
+<p class="text-sm text-on-surface-variant">긴급한 기술 지원이 필요하시다면 고객센터로 직접 연락주세요.</p>
+</div>
+<div class="flex flex-wrap gap-4 z-10">
+<div class="flex items-center gap-3 bg-surface-container-lowest px-6 py-3 rounded-full border border-outline-variant/20">
+<span class="material-symbols-outlined text-primary" data-icon="call">call</span>
+<span class="text-sm font-bold">1588-0000</span>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-lowest px-6 py-3 rounded-full border border-outline-variant/20">
+<span class="material-symbols-outlined text-secondary" data-icon="chat">chat</span>
+<span class="text-sm font-bold">카카오톡 채널 상담</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Mobile Bottom Navigation (Authority: Shared Components Logic) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-50 dark:bg-slate-900 border-t border-outline-variant/10 flex justify-around py-3 px-2 z-50">
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium">Dashboard</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">trending_up</span>
+<span class="text-[10px] font-medium">Trends</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-blue-700 font-bold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">contact_support</span>
+<span class="text-[10px]">Support</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</a>
+</nav>
+<!-- Footer Area (Subtle) -->
+<footer class="p-8 md:p-12 border-t border-outline-variant/10 mt-auto">
+<div class="max-w-[1200px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4 opacity-50">
+<p class="text-xs">© 2024 Editorial Data Intelligence. All rights reserved.</p>
+<div class="flex gap-6 text-xs font-medium">
+<a href="#">이용약관</a>
+<a href="#">개인정보처리방침</a>
+<a href="#">운영정책</a>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

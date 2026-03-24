@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Noto+Sans+KR:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#93000a",
+              "tertiary": "#a42f03",
+              "error": "#ba1a1a",
+              "on-secondary-fixed": "#002204",
+              "inverse-surface": "#2d3133",
+              "on-primary-fixed": "#001849",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed": "#dae1ff",
+              "surface": "#f7f9fb",
+              "secondary-fixed-dim": "#88d982",
+              "surface-variant": "#e0e3e5",
+              "surface-dim": "#d8dadc",
+              "on-primary-fixed-variant": "#003fa4",
+              "tertiary-container": "#c6471d",
+              "inverse-on-surface": "#eff1f3",
+              "secondary": "#1b6d24",
+              "surface-container-low": "#f2f4f6",
+              "on-primary": "#ffffff",
+              "surface-container": "#eceef0",
+              "surface-container-high": "#e6e8ea",
+              "on-secondary": "#ffffff",
+              "on-secondary-fixed-variant": "#005312",
+              "on-background": "#191c1e",
+              "outline-variant": "#c2c6d8",
+              "tertiary-fixed-dim": "#ffb59f",
+              "surface-tint": "#0054d6",
+              "surface-bright": "#f7f9fb",
+              "on-secondary-container": "#217128",
+              "on-surface-variant": "#424656",
+              "primary-container": "#0066ff",
+              "on-tertiary-container": "#fff5f3",
+              "outline": "#727687",
+              "on-surface": "#191c1e",
+              "secondary-fixed": "#a3f69c",
+              "primary": "#0050cb",
+              "inverse-primary": "#b3c5ff",
+              "error-container": "#ffdad6",
+              "secondary-container": "#a0f399",
+              "tertiary-fixed": "#ffdbd0",
+              "primary-fixed-dim": "#b3c5ff",
+              "on-tertiary": "#ffffff",
+              "on-primary-container": "#f8f7ff",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#e0e3e5",
+              "background": "#f7f9fb",
+              "on-tertiary-fixed-variant": "#852300",
+              "on-tertiary-fixed": "#3a0a00"
+            },
+            fontFamily: {
+              "headline": ["Manrope", "Noto Sans KR"],
+              "body": ["Inter", "Noto Sans KR"],
+              "label": ["Inter", "Noto Sans KR"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', 'Noto Sans KR', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar -->
+<header class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md docked full-width top-0 sticky z-50 no-border-tonal-shift bg-slate-100 dark:bg-slate-800">
+<div class="flex justify-between items-center px-8 py-3 w-full max-w-[1440px] mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-blue-800 dark:text-blue-300 font-manrope">Insight Flux</span>
+<nav class="hidden md:flex items-center gap-6 font-manrope text-sm font-medium">
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors" href="#">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors" href="#">Market Trends</a>
+<a class="text-blue-700 dark:text-blue-400 font-bold border-b-2 border-blue-600 transition-all duration-200" href="#">Item Analysis</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-highest rounded-full border-none text-sm focus:ring-2 focus:ring-primary/20 w-64 transition-all" placeholder="상품 또는 키워드 검색" type="text"/>
+</div>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 rounded-full transition-colors">
+<span class="material-symbols-outlined text-slate-600">notifications</span>
+</button>
+<button class="p-2 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 rounded-full transition-colors">
+<span class="material-symbols-outlined text-slate-600">help_outline</span>
+</button>
+</div>
+<img alt="User profile avatar" class="w-8 h-8 rounded-full border border-outline-variant/20" data-alt="Close-up professional headshot of a smiling man in a modern office environment with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAd-7rzj6CJBoIZitr_bnpzmIMJqn_kJGWOaPY6EP66h78sOh62z0x5wqOsZZJPU8yj73M8VLxbdkzoqPgTBS_FL7tI62zntCh5gZEmlkpGMfu_cbubCeaAbcuCYlYZkXlbeYUZhu1joZa7MKWyXGtkHAJPQWKGDG1FH_PGzDXlV8888wFg_LJlvrkYKJjkLZWo3MlG-WTzRLB3ousEIM_eCOf19N0u11DdiXVH9U5TsDK00udUviiQu0QNBysfF8cO7m32IUgAoPxO"/>
+</div>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 bg-slate-100 dark:bg-slate-900 z-40 pt-20">
+<div class="flex flex-col h-full p-4 gap-2 font-manrope text-sm">
+<div class="mb-6 px-2">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div>
+<p class="font-black text-blue-700 dark:text-blue-400">Intelligence</p>
+<p class="text-[10px] text-slate-500 uppercase tracking-widest">Seller Pro</p>
+</div>
+</div>
+</div>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 rounded-lg transition-transform hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-semibold rounded-lg transition-transform translate-x-1" href="#">
+<span class="material-symbols-outlined">monitoring</span>
+<span>Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 rounded-lg transition-transform hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">card_membership</span>
+<span>Subscriptions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 rounded-lg transition-transform hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 rounded-lg transition-transform hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<div class="mt-auto pb-4 px-2">
+<div class="bg-primary/10 p-4 rounded-xl mb-4 border border-primary/20">
+<p class="font-bold text-xs text-primary mb-1">PRO PLAN</p>
+<p class="text-xs text-on-surface-variant mb-3 leading-tight">고급 데이터 분석 기능을 모두 사용해보세요.</p>
+<button class="w-full py-2 bg-primary text-on-primary text-xs font-bold rounded-lg hover:shadow-lg transition-all">Upgrade Plan</button>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 hover:text-error transition-colors" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 ml-64 p-12 overflow-x-hidden">
+<!-- Header Section -->
+<section class="flex justify-between items-end mb-10">
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-primary font-medium text-sm">
+<span>상품 분석</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span>프리미엄 가구</span>
+</div>
+<h1 class="text-4xl font-extrabold tracking-tight font-headline text-on-background">상품 상세 분석</h1>
+<p class="text-on-surface-variant opacity-70">실시간 데이터 기반 마켓 성과 및 경쟁사 지표</p>
+</div>
+<div class="flex gap-3">
+<button class="px-5 py-2.5 rounded-lg bg-surface-container-high text-on-surface font-semibold flex items-center gap-2 hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">download</span>
+<span>리포트 다운로드</span>
+</button>
+<button class="px-5 py-2.5 rounded-lg bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold shadow-md hover:shadow-lg transition-all">
+                        실시간 갱신
+                    </button>
+</div>
+</section>
+<!-- Product Overview Bento Grid -->
+<div class="grid grid-cols-12 gap-6 mb-10">
+<!-- Main Product Card -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-low rounded-xl p-8 flex gap-8 items-center border border-outline-variant/10">
+<div class="w-48 h-48 rounded-lg overflow-hidden flex-shrink-0 bg-white">
+<img alt="Product Image" class="w-full h-full object-cover" data-alt="Minimalist modern ergonomic chair in a bright studio with soft shadows and clean composition" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDB-THXUo0mv1poqo46n0X_IZgRaYiMwwEb0KFCpYE2-fScmUxT_OFppBAF8CWOCkc-rYuBhVhLZxtjcJT0n-nUoevMcNKqcEZPYLYnEbx3b9pASUH3quwSkXL8b4QAsUbX070KoYk9KNxpML_h_gZE232u1MpHisbqz9kyY-pyPKDDyTiIOUi66LhJoTuP6ykbV8y3Y_ltVoXPa59zmzVtXoZlS5AqI9e5vELFA5uADrwdKP_Bx7f2UKNmm6gJDLq59oXv6QGiryZH"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-2 mb-2">
+<span class="px-2 py-0.5 bg-secondary-container text-on-secondary-container text-[10px] font-bold rounded uppercase">Hot Trend</span>
+<span class="text-outline text-xs font-medium">SKU: FUR-3029-NW</span>
+</div>
+<h2 class="text-2xl font-bold mb-4 text-on-surface">모던 미니멀 오피스 체어 (Nordic White)</h2>
+<div class="grid grid-cols-3 gap-6">
+<div class="p-4 bg-surface-container-lowest rounded-lg">
+<p class="text-xs text-outline mb-1">현재 판매가</p>
+<p class="text-xl font-black text-on-surface">₩189,000</p>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-lg">
+<p class="text-xs text-outline mb-1">평균 구매 전환율</p>
+<p class="text-xl font-black text-secondary">4.82%</p>
+</div>
+<div class="p-4 bg-surface-container-lowest rounded-lg">
+<p class="text-xs text-outline mb-1">시장 점유율</p>
+<p class="text-xl font-black text-primary">12.5%</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Metrics -->
+<div class="col-span-12 lg:col-span-4 grid grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/5 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg">trending_up</span>
+<span class="text-secondary text-xs font-bold">+12%</span>
+</div>
+<p class="text-xs text-outline mb-1">검색량 (7D)</p>
+<p class="text-2xl font-black text-on-surface">42.8k</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/5 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-tertiary bg-tertiary/10 p-2 rounded-lg">visibility</span>
+<span class="text-tertiary text-xs font-bold">-2.4%</span>
+</div>
+<p class="text-xs text-outline mb-1">노출 지수</p>
+<p class="text-2xl font-black text-on-surface">892</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/5 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-secondary bg-secondary/10 p-2 rounded-lg">star</span>
+<span class="text-secondary text-xs font-bold">4.9/5</span>
+</div>
+<p class="text-xs text-outline mb-1">리뷰 점수</p>
+<p class="text-2xl font-black text-on-surface">1,402</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/5 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<span class="material-symbols-outlined text-on-surface-variant bg-surface-container-highest p-2 rounded-lg">inventory</span>
+<span class="text-error text-xs font-bold">Low</span>
+</div>
+<p class="text-xs text-outline mb-1">현재 재고</p>
+<p class="text-2xl font-black text-on-surface">84</p>
+</div>
+</div>
+</div>
+<!-- Analysis Charts Section -->
+<div class="grid grid-cols-12 gap-8 mb-10">
+<!-- Search Volume & Price Trend -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-low rounded-xl p-8 border border-outline-variant/10">
+<div class="flex justify-between items-center mb-8">
+<div>
+<h3 class="text-xl font-bold font-headline text-on-surface">트렌드 다이나믹스</h3>
+<p class="text-sm text-outline">최근 30일간의 검색량과 가격 변동 추이</p>
+</div>
+<div class="flex gap-2 p-1 bg-surface-container-highest rounded-lg">
+<button class="px-3 py-1 bg-white shadow-sm rounded-md text-xs font-bold text-primary">7일</button>
+<button class="px-3 py-1 text-xs font-medium text-on-surface-variant">30일</button>
+<button class="px-3 py-1 text-xs font-medium text-on-surface-variant">90일</button>
+</div>
+</div>
+<div class="h-64 relative flex items-end gap-1">
+<!-- Simulated Chart -->
+<div class="flex-1 bg-primary/20 rounded-t-sm transition-all hover:bg-primary/40" style="height: 40%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm transition-all hover:bg-primary/40" style="height: 35%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm transition-all hover:bg-primary/40" style="height: 50%"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm transition-all hover:bg-primary/40" style="height: 45%"></div>
+<div class="flex-1 bg-primary/30 rounded-t-sm transition-all hover:bg-primary/40" style="height: 60%"></div>
+<div class="flex-1 bg-primary/40 rounded-t-sm transition-all hover:bg-primary/40" style="height: 75%"></div>
+<div class="flex-1 bg-primary/50 rounded-t-sm transition-all hover:bg-primary/40" style="height: 85%"></div>
+<div class="flex-1 bg-primary/60 rounded-t-sm transition-all hover:bg-primary/40" style="height: 80%"></div>
+<div class="flex-1 bg-primary/70 rounded-t-sm transition-all hover:bg-primary/40" style="height: 95%"></div>
+<div class="flex-1 bg-primary/65 rounded-t-sm transition-all hover:bg-primary/40" style="height: 90%"></div>
+<div class="flex-1 bg-primary/55 rounded-t-sm transition-all hover:bg-primary/40" style="height: 70%"></div>
+<div class="flex-1 bg-primary/50 rounded-t-sm transition-all hover:bg-primary/40" style="height: 75%"></div>
+<div class="flex-1 bg-primary/45 rounded-t-sm transition-all hover:bg-primary/40" style="height: 65%"></div>
+<div class="flex-1 bg-primary/40 rounded-t-sm transition-all hover:bg-primary/40" style="height: 55%"></div>
+<div class="flex-1 bg-primary/30 rounded-t-sm transition-all hover:bg-primary/40" style="height: 40%"></div>
+<!-- Overlay Price Line (Dashed) -->
+<div class="absolute inset-0 border-b-2 border-tertiary/40 border-dashed top-1/2"></div>
+</div>
+<div class="flex justify-between mt-4 text-[10px] text-outline font-medium px-1">
+<span>MAY 01</span>
+<span>MAY 08</span>
+<span>MAY 15</span>
+<span>MAY 22</span>
+<span>MAY 30</span>
+</div>
+<div class="mt-8 flex gap-6">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="text-xs text-on-surface-variant">검색 유입량</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-3 h-1 border-t-2 border-tertiary border-dashed"></span>
+<span class="text-xs text-on-surface-variant">평균 판매가</span>
+</div>
+</div>
+</div>
+<!-- Competitor Mapping -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-low rounded-xl p-8 border border-outline-variant/10">
+<h3 class="text-xl font-bold font-headline mb-1 text-on-surface">경쟁사 맵핑</h3>
+<p class="text-sm text-outline mb-8">주요 경쟁 상품과의 포지셔닝 비교</p>
+<div class="space-y-4">
+<div class="p-4 bg-white rounded-lg flex items-center justify-between border border-outline-variant/5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-slate-100 flex-shrink-0">
+<img class="w-full h-full object-cover rounded" data-alt="Competitive black task chair with mesh back and adjustable armrests on white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBuk4l1hW5t9dAvjtou-T3Ok3iv3RKFRug4oK05zfBte3-VhgT2mgY-dO7OoWVJtqV2aTpHYpCldCsTtCg5LnMFB8EafHwv8wMC0ZZOCg7A113XsQNps3o9S7MJfs6JaphFCNFCX6La2IZJGbmZDcLd6F3vlxdPLrvOQfBCQ9vJF46B1jhPGRXOY8BAhFDlj_kbLaUmHmIrc_ZOoQKlfK6Lr96-3V89uu6ETNbDTiXXeSZR0X7kQ_Rdfatq2IsLJe4xwq2F0TfIOmRx"/>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">A사 에르고 체어</p>
+<p class="text-[10px] text-outline">가격: ₩215,000</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-primary">High Tier</p>
+<p class="text-[10px] text-secondary">수익률 +15%</p>
+</div>
+</div>
+<div class="p-4 bg-white rounded-lg flex items-center justify-between border border-outline-variant/5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-slate-100 flex-shrink-0">
+<img class="w-full h-full object-cover rounded" data-alt="Simple wood and metal chair with minimalist design in studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzcL7a2g6YAt0j-5duge5mDpNLdaCkOqrCSaF2req3TwnBfeZddXAAZiqp5a1EF8Bilbxh_ccZSiaiYe8CxE7Eoyr_NB_y1_HfEYrJB6eYILl1EL7Vj15iIaQDapmoMcO69y1OCJyuwI8UdRHGcVi-gam1lYgbfilJT6_pL4dd2LobuUVqqmncadCmuqwO1pfIkdbkDAzH8UczvEW19w7V9njx53DYTqkbrPqn-zm3tJJxsjaytMe4c84N2nZ4VLg5Z5zIruBmk_zZ"/>
+</div>
+<div>
+<p class="text-xs font-bold text-on-surface">B사 우드 스툴</p>
+<p class="text-[10px] text-outline">가격: ₩142,000</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-on-surface-variant">Mid Tier</p>
+<p class="text-[10px] text-secondary">수익률 +8%</p>
+</div>
+</div>
+<div class="p-4 bg-white rounded-lg flex items-center justify-between border border-outline-variant/5 ring-1 ring-primary/30">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded bg-slate-100 flex-shrink-0">
+<img class="w-full h-full object-cover rounded" data-alt="Minimalist modern ergonomic chair in a bright studio" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwAlIAoBgzlqwdPMjzHDzFYo7jxJz5Iu6bYzsTPXwwhmXlASEEJ_2KD1uA6jvnwsBfAdnfl1rtFZtpnSRF4DLTX3526sHfaKOmmDAqvebpjeAtnvsYUse9hcJoAjdr3NcwFFyuUnE6dyMqyfUI5pVZ9SQgzAyGTB_GMiOIWA8mmWvZslPjsaZHfEFbK5Dn9TqtctAtXCDFz71tUx1TfQneps9B3PWt9t3s7JEdI4v8BiNrhd670EjCr67-8934dNje-MEie4K3c5Wt"/>
+</div>
+<div>
+<p class="text-xs font-bold text-primary">내 상품 (Nordic)</p>
+<p class="text-[10px] text-outline">가격: ₩189,000</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-xs font-bold text-primary">Sweet Spot</p>
+<p class="text-[10px] text-secondary">수익률 +22%</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-3 text-sm font-bold text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center gap-2">
+                        상세 경쟁 지표 더보기
+                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- AI SWOT Analysis -->
+<section class="bg-surface-container-low rounded-xl p-10 border border-outline-variant/10">
+<div class="flex items-center gap-3 mb-8">
+<div class="w-12 h-12 bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-full flex items-center justify-center text-white shadow-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+</div>
+<div>
+<h3 class="text-2xl font-black font-headline text-on-surface">AI AI-driven SWOT 전략</h3>
+<p class="text-sm text-outline">데이터 학습 모델 기반 상품 경쟁력 분석</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Strengths -->
+<div class="bg-white p-6 rounded-xl border-l-4 border-secondary shadow-sm">
+<div class="flex items-center gap-2 mb-4 text-secondary">
+<span class="material-symbols-outlined text-sm">verified</span>
+<span class="text-sm font-bold uppercase tracking-wider">Strengths</span>
+</div>
+<ul class="space-y-3">
+<li class="text-sm text-on-surface font-medium leading-relaxed">• 검색 전환율이 카테고리 평균 대비 24% 높음</li>
+<li class="text-sm text-on-surface font-medium leading-relaxed">• 4.9점의 압도적인 사용자 리뷰 평점</li>
+</ul>
+</div>
+<!-- Weaknesses -->
+<div class="bg-white p-6 rounded-xl border-l-4 border-tertiary shadow-sm">
+<div class="flex items-center gap-2 mb-4 text-tertiary">
+<span class="material-symbols-outlined text-sm">warning</span>
+<span class="text-sm font-bold uppercase tracking-wider">Weaknesses</span>
+</div>
+<ul class="space-y-3">
+<li class="text-sm text-on-surface font-medium leading-relaxed">• 낮은 재고 수준으로 인한 품절 위험</li>
+<li class="text-sm text-on-surface font-medium leading-relaxed">• 모바일 기기에서의 상세페이지 로딩 속도 저하</li>
+</ul>
+</div>
+<!-- Opportunities -->
+<div class="bg-white p-6 rounded-xl border-l-4 border-primary shadow-sm">
+<div class="flex items-center gap-2 mb-4 text-primary">
+<span class="material-symbols-outlined text-sm">lightbulb</span>
+<span class="text-sm font-bold uppercase tracking-wider">Opportunities</span>
+</div>
+<ul class="space-y-3">
+<li class="text-sm text-on-surface font-medium leading-relaxed">• 사무용 가구 교체 시즌 진입 (6월)</li>
+<li class="text-sm text-on-surface font-medium leading-relaxed">• 세트 상품 구성을 통한 객단가 상승 가능</li>
+</ul>
+</div>
+<!-- Threats -->
+<div class="bg-white p-6 rounded-xl border-l-4 border-error shadow-sm">
+<div class="flex items-center gap-2 mb-4 text-error">
+<span class="material-symbols-outlined text-sm">gpp_maybe</span>
+<span class="text-sm font-bold uppercase tracking-wider">Threats</span>
+</div>
+<ul class="space-y-3">
+<li class="text-sm text-on-surface font-medium leading-relaxed">• C사의 유사 디자인 저가형 상품 출시 예정</li>
+<li class="text-sm text-on-surface font-medium leading-relaxed">• 주요 원자재 가격 상승으로 인한 마진 압박</li>
+</ul>
+</div>
+</div>
+<div class="mt-8 p-6 bg-primary/5 rounded-xl border border-primary/20 flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">psychology</span>
+<div>
+<p class="text-primary font-bold text-sm mb-1">AI Recommendation</p>
+<p class="text-sm text-on-surface leading-relaxed">
+                            현재 높은 리뷰 평점과 전환율을 바탕으로 **6월 중순 프로모션**을 제안합니다. 품절 위험이 있으니 즉시 **재고 200개 이상을 확보**하고, C사 저가형 공세에 대비해 '품질 보증 5년' 배너를 상세페이지 최상단에 배치하여 프리미엄 이미지를 강화하십시오.
+                        </p>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-error-container": "#93000a",
+              "tertiary": "#a42f03",
+              "error": "#ba1a1a",
+              "on-secondary-fixed": "#002204",
+              "inverse-surface": "#2d3133",
+              "on-primary-fixed": "#001849",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed": "#dae1ff",
+              "surface": "#f7f9fb",
+              "secondary-fixed-dim": "#88d982",
+              "surface-variant": "#e0e3e5",
+              "surface-dim": "#d8dadc",
+              "on-primary-fixed-variant": "#003fa4",
+              "tertiary-container": "#c6471d",
+              "inverse-on-surface": "#eff1f3",
+              "secondary": "#1b6d24",
+              "surface-container-low": "#f2f4f6",
+              "on-primary": "#ffffff",
+              "surface-container": "#eceef0",
+              "surface-container-high": "#e6e8ea",
+              "on-secondary": "#ffffff",
+              "on-secondary-fixed-variant": "#005312",
+              "on-background": "#191c1e",
+              "outline-variant": "#c2c6d8",
+              "tertiary-fixed-dim": "#ffb59f",
+              "surface-tint": "#0054d6",
+              "surface-bright": "#f7f9fb",
+              "on-secondary-container": "#217128",
+              "on-surface-variant": "#424656",
+              "primary-container": "#0066ff",
+              "on-tertiary-container": "#fff5f3",
+              "outline": "#727687",
+              "on-surface": "#191c1e",
+              "secondary-fixed": "#a3f69c",
+              "primary": "#0050cb",
+              "inverse-primary": "#b3c5ff",
+              "error-container": "#ffdad6",
+              "secondary-container": "#a0f399",
+              "tertiary-fixed": "#ffdbd0",
+              "primary-fixed-dim": "#b3c5ff",
+              "on-tertiary": "#ffffff",
+              "on-primary-container": "#f8f7ff",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#e0e3e5",
+              "background": "#f7f9fb",
+              "on-tertiary-fixed-variant": "#852300",
+              "on-tertiary-fixed": "#3a0a00"
+            },
+            fontFamily: {
+              "headline": ["Manrope", "Pretendard"],
+              "body": ["Inter", "Pretendard"],
+              "label": ["Inter", "Pretendard"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', 'Pretendard', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- Top Navigation Bar -->
+<header class="bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50 no-border-tonal-shift bg-slate-100 dark:bg-slate-800">
+<div class="flex justify-between items-center px-8 py-3 w-full max-w-[1440px] mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-blue-800 dark:text-blue-300 font-headline">Insight Flux</span>
+<nav class="hidden md:flex gap-6 font-manrope text-sm font-medium">
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors" href="#">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors" href="#">Market Trends</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-blue-600 transition-colors" href="#">Item Analysis</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined text-slate-500 p-2 hover:bg-blue-50/50 rounded-full cursor-pointer transition-all" data-icon="notifications">notifications</span>
+</div>
+<span class="material-symbols-outlined text-slate-500 p-2 hover:bg-blue-50/50 rounded-full cursor-pointer transition-all" data-icon="help_outline">help_outline</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="close-up portrait of a professional woman with a friendly expression in a modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo557EyPqWZdtdjNMwycaUBzhy-MKKu6Bnhe4ebFudDuuHFdixJ8baei0owhrfrmYCNeun3HuwS-_VK9NVtU6MZOJsxtKmt5HF16mTGu1xYCgneujcfpEw2dMnWXwuRffXv6ZaufM0NkBO_a5Mr2ll8SqFVJVtKvc1VGhyCChfcsDjyEdLbMd_34IJKmHYGTflgguydHoMsd9ylTM7NtBSd6qN_4ugsuDlnsrdkS49ltDr60MFYuqR18McJduzUOcMJpqEXqPwHQQd"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex max-w-[1440px] mx-auto">
+<!-- Side Navigation Bar -->
+<aside class="hidden md:flex flex-col h-[calc(100vh-60px)] w-64 sticky top-[60px] p-4 gap-2 bg-slate-50 dark:bg-slate-950">
+<div class="mb-6 px-2">
+<div class="flex items-center gap-3 mb-1">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-sm" data-icon="monitoring">monitoring</span>
+</div>
+<span class="font-black text-blue-700 dark:text-blue-400 font-headline">Intelligence</span>
+</div>
+<span class="text-xs text-slate-500 font-medium px-1">Seller Pro</span>
+</div>
+<div class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="font-manrope text-sm">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-semibold rounded-lg translate-x-1 transition-transform" href="#">
+<span class="material-symbols-outlined" data-icon="card_membership">card_membership</span>
+<span class="font-manrope text-sm">Subscriptions</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="monitoring">monitoring</span>
+<span class="font-manrope text-sm">Analytics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span class="font-manrope text-sm">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 hover:bg-slate-200/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="font-manrope text-sm">Settings</span>
+</a>
+</div>
+<div class="mt-auto pt-4 border-t border-slate-200 dark:border-slate-800">
+<button class="w-full bg-primary text-on-primary py-2 rounded-lg font-semibold text-sm mb-4 hover:opacity-90 transition-opacity">Upgrade Plan</button>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:text-error rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span class="font-manrope text-sm">Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 p-8 lg:p-12 bg-surface">
+<!-- Header Section -->
+<div class="max-w-5xl mx-auto mb-16 text-center">
+<span class="text-primary font-bold tracking-widest text-xs uppercase mb-4 block">Pricing Plans</span>
+<h1 class="text-4xl lg:text-5xl font-black text-on-surface font-headline mb-6 tracking-tight">이용권 안내</h1>
+<p class="text-on-surface-variant text-lg max-w-2xl mx-auto font-body">셀러의 성장을 위한 최적의 파트너. 데이터 분석을 통해 비즈니스 인사이트를 발견하세요.</p>
+<!-- Toggle Switch (Visual Only) -->
+<div class="mt-10 inline-flex items-center p-1 bg-surface-container-high rounded-full">
+<button class="px-6 py-2 rounded-full bg-surface-container-lowest shadow-sm text-sm font-bold text-primary">월간 결제</button>
+<button class="px-6 py-2 rounded-full text-sm font-medium text-on-surface-variant hover:text-on-surface">연간 결제 (20% 할인)</button>
+</div>
+</div>
+<!-- Pricing Bento Grid -->
+<div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Starter Plan -->
+<div class="bg-surface-container-low rounded-xl p-8 flex flex-col transition-all hover:translate-y-[-4px]">
+<div class="mb-8">
+<h3 class="text-xl font-bold font-headline mb-2">Starter</h3>
+<p class="text-on-surface-variant text-sm h-10">개인 셀러를 위한 기초 데이터 분석 도구</p>
+</div>
+<div class="mb-8">
+<div class="flex items-baseline gap-1">
+<span class="text-4xl font-black font-headline">₩0</span>
+<span class="text-on-surface-variant text-sm">/월</span>
+</div>
+</div>
+<ul class="flex-1 space-y-4 mb-10">
+<li class="flex items-start gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle">check_circle</span>
+<span class="text-on-surface">일일 트렌드 리포트 (3회)</span>
+</li>
+<li class="flex items-start gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle">check_circle</span>
+<span class="text-on-surface">기본 아이템 분석 도구</span>
+</li>
+<li class="flex items-start gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle">check_circle</span>
+<span class="text-on-surface">커뮤니티 지원</span>
+</li>
+<li class="flex items-start gap-3 text-sm opacity-40">
+<span class="material-symbols-outlined text-lg" data-icon="cancel">cancel</span>
+<span class="text-on-surface">실시간 시장 감시</span>
+</li>
+</ul>
+<button class="w-full py-3 px-4 rounded-lg bg-surface-container-high text-on-surface font-bold text-sm hover:bg-surface-container-highest transition-colors">현재 플랜</button>
+</div>
+<!-- Professional Plan (Featured) -->
+<div class="relative bg-surface-container-lowest rounded-xl p-8 flex flex-col shadow-[0px_20px_50px_rgba(0,80,203,0.12)] border border-primary/10 ring-2 ring-primary transition-all hover:translate-y-[-4px]">
+<div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-primary to-primary-container text-on-primary text-[10px] font-black tracking-widest px-4 py-1 rounded-full uppercase">Most Popular</div>
+<div class="mb-8">
+<h3 class="text-xl font-bold font-headline mb-2 text-primary">Professional</h3>
+<p class="text-on-surface-variant text-sm h-10">성장하는 비즈니스를 위한 전문 분석 시스템</p>
+</div>
+<div class="mb-8">
+<div class="flex items-baseline gap-1">
+<span class="text-4xl font-black font-headline text-on-surface">₩49,000</span>
+<span class="text-on-surface-variant text-sm">/월</span>
+</div>
+</div>
+<ul class="flex-1 space-y-4 mb-10">
+<li class="flex items-start gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-on-surface font-semibold">무제한 일일 트렌드 리포트</span>
+</li>
+<li class="flex items-start gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-on-surface">고급 아이템 분석 및 예측</span>
+</li>
+<li class="flex items-start gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-on-surface">실시간 시장 감시 알림</span>
+</li>
+<li class="flex items-start gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-on-surface">경쟁사 추적 시스템</span>
+</li>
+<li class="flex items-start gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-on-surface">1:1 기술 지원</span>
+</li>
+</ul>
+<button class="w-full py-3 px-4 rounded-lg bg-gradient-to-br from-primary to-primary-container text-on-primary font-bold text-sm shadow-lg shadow-primary/20 hover:opacity-90 transition-all">지금 업그레이드</button>
+</div>
+<!-- Enterprise Plan -->
+<div class="bg-surface-container-low rounded-xl p-8 flex flex-col transition-all hover:translate-y-[-4px]">
+<div class="mb-8">
+<h3 class="text-xl font-bold font-headline mb-2">Enterprise</h3>
+<p class="text-on-surface-variant text-sm h-10">대규모 팀을 위한 맞춤형 데이터 솔루션</p>
+</div>
+<div class="mb-8">
+<div class="flex items-baseline gap-1">
+<span class="text-4xl font-black font-headline text-on-surface">별도 문의</span>
+</div>
+</div>
+<ul class="flex-1 space-y-4 mb-10">
+<li class="flex items-start gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle">check_circle</span>
+<span class="text-on-surface">Professional 모든 기능 포함</span>
+</li>
+<li class="flex items-start gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle">check_circle</span>
+<span class="text-on-surface">맞춤형 API 통합 지원</span>
+</li>
+<li class="flex items-start gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle">check_circle</span>
+<span class="text-on-surface">전담 계정 매니저 배정</span>
+</li>
+<li class="flex items-start gap-3 text-sm">
+<span class="material-symbols-outlined text-secondary text-lg" data-icon="check_circle">check_circle</span>
+<span class="text-on-surface">맞춤형 데이터 대시보드</span>
+</li>
+</ul>
+<button class="w-full py-3 px-4 rounded-lg bg-on-surface text-surface-bright font-bold text-sm hover:opacity-90 transition-colors">도입 문의하기</button>
+</div>
+</div>
+<!-- Detailed Comparison Table -->
+<section class="mt-24 max-w-5xl mx-auto">
+<h2 class="text-2xl font-bold font-headline mb-10 text-center">기능 비교</h2>
+<div class="bg-surface-container-low rounded-2xl overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container">
+<th class="p-6 text-sm font-bold text-on-surface">기능 상세</th>
+<th class="p-6 text-sm font-bold text-on-surface text-center">Starter</th>
+<th class="p-6 text-sm font-bold text-primary text-center bg-primary/5">Professional</th>
+<th class="p-6 text-sm font-bold text-on-surface text-center">Enterprise</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr>
+<td class="p-6 text-sm font-medium">데이터 분석 한도</td>
+<td class="p-6 text-sm text-center">일 3회</td>
+<td class="p-6 text-sm text-center bg-primary/5">무제한</td>
+<td class="p-6 text-sm text-center">무제한</td>
+</tr>
+<tr>
+<td class="p-6 text-sm font-medium">실시간 알림</td>
+<td class="p-6 text-sm text-center text-outline-variant">
+<span class="material-symbols-outlined text-lg" data-icon="horizontal_rule">horizontal_rule</span>
+</td>
+<td class="p-6 text-sm text-center bg-primary/5 text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="check" data-weight="fill">check</span>
+</td>
+<td class="p-6 text-sm text-center text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="check" data-weight="fill">check</span>
+</td>
+</tr>
+<tr>
+<td class="p-6 text-sm font-medium">다중 사용자 접속</td>
+<td class="p-6 text-sm text-center">1명</td>
+<td class="p-6 text-sm text-center bg-primary/5">최대 5명</td>
+<td class="p-6 text-sm text-center">무제한</td>
+</tr>
+<tr>
+<td class="p-6 text-sm font-medium">데이터 보관 기간</td>
+<td class="p-6 text-sm text-center">3개월</td>
+<td class="p-6 text-sm text-center bg-primary/5">12개월</td>
+<td class="p-6 text-sm text-center">영구</td>
+</tr>
+<tr>
+<td class="p-6 text-sm font-medium">커스텀 리포트</td>
+<td class="p-6 text-sm text-center text-outline-variant">
+<span class="material-symbols-outlined text-lg" data-icon="horizontal_rule">horizontal_rule</span>
+</td>
+<td class="p-6 text-sm text-center bg-primary/5 text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="check" data-weight="fill">check</span>
+</td>
+<td class="p-6 text-sm text-center text-secondary">
+<span class="material-symbols-outlined text-lg" data-icon="check" data-weight="fill">check</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Social Proof / Trust Section -->
+<section class="mt-24 border-t border-outline-variant/10 pt-16 text-center">
+<p class="text-sm font-bold text-on-surface-variant mb-10 tracking-widest uppercase">Trusted by 2,000+ TOP SELLERS</p>
+<div class="flex flex-wrap justify-center gap-12 opacity-40 grayscale">
+<img alt="Partner Logo" class="h-8" data-alt="minimalist corporate logo for a tech company, clean typography and geometric shape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2XIYmvYohmSD3zYdkqoNiHbtnetWNUudXdgilcwvMJOQb-qGGYM0Arg8m8BzGqAVXh4Qx4Q7KUNbrfcXXsWH5FotKRsLZICK_NzI6bB05IUzsWtUarpvlYIhnaXcMsulptx0Ti7NL_HgD8IK97OI-2G9OkGnyVc2mx3kekvKJn4Zxtla2lr0CXG8FIW2wo69VmGGbt_kxbgIwJqU0poLf30D5YO0Rz-FIFVbMiniqC4-ERvbvtvXch_LKuMxzNuInDGSot2txxWju"/>
+<img alt="Partner Logo" class="h-8" data-alt="modern retail brand logo with sleek sans-serif font and abstract icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZq2upd1l5dJ7tAU2kmX50RFyvEC4NuHzThRJVNz_pUo87NhVG5ynDJci0CyRjskzZiXH06QZjZScCrWrdkSAFZfGjd89-dlcEA6JqL0hL15X02qwW5Z4-sYb8ngcS-tYGeyCsZfXUjy52szaeamutd0LJ5CzP6sxYa1ZaoFCXP8_Dfu78BFvUHdZExKgKStpvVk9sUWt7CL09c8LYYwk_Z8tADQZZfbgFapG0ZDJsLUqtmTlnSNvv_DaPNjhYuOdJifDFsdgchVk1"/>
+<img alt="Partner Logo" class="h-8" data-alt="e-commerce platform logo with soft rounded edges and professional blue tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1_Mnb9lY2_SAy-C7xP1HneJPoP0zZemh-Bg2LQxE5HGYgFXCFvWl2shptpMBNXVVSBSmwF_m1nWUdYYmkvIderLPZlBRAT7-2zhuhUtOKytUoATY2KYFVRwVE9HVnY1SEvkstvu_BhsPdUtsgIFziYQ0As2EudbBRi6K-R1XBac6zbJwuQuTrxIBznua8yY3a-wkm0038SNTnl5rkD4KMcOsfyo9fS66JYgFJjEqsfn-_sgVHE7gpyhOWCkDMmUIENOtafjPpbjHf"/>
+<img alt="Partner Logo" class="h-8" data-alt="logistics company logo featuring dynamic movement lines and bold lettering" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJZzXuS-HOzLN7apKY3HEzuDstZJLa4cvIuHX5QhqHpBqnaU0PdVJ1ix-uPpBurrkK6FbGVWInGTXOXTzO7mz4RXF44_aTVs88Ce85B_9hhc1NZLb6DnM6rAdHtdp3tIazyvSweR9xrtYY85fivVAsE5grmY2CW3--xbr1BU1IUUhcsjKi2BTAqzxtD7Iwx84Ek-iqnxswPnRITOmLdpQbKqgIfzy-yXPzYv5EbjX2Slyl6qDWsf29ab1HkDTZTiOPS13MsPpSFDW7"/>
+</div>
+</section>
+</main>
+</div>
+<!-- Mobile Navigation Bar -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-50 dark:bg-slate-900 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] px-6 py-3 flex justify-between items-center z-50">
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-medium">대시보드</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined" data-icon="trending_up">trending_up</span>
+<span class="text-[10px] font-medium">트렌드</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-blue-700" href="#">
+<span class="material-symbols-outlined" data-icon="card_membership" style="font-variation-settings: 'FILL' 1;">card_membership</span>
+<span class="text-[10px] font-bold">이용권</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px] font-medium">프로필</span>
+</a>
+</nav>
+</body></html>

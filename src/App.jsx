@@ -1,9 +1,10 @@
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import analysisHtml from '../design/analysis.html?raw'
 import notiHtml from '../design/noti.html?raw'
 import settingHtml from '../design/setting.html?raw'
 import subscriptionHtml from '../design/subscription.html?raw'
 import supportHtml from '../design/support.html?raw'
+import './App.css'
 
 const designPages = [
   { path: '/analysis', label: 'analysis', title: '상품 분석', html: analysisHtml },
@@ -23,18 +24,41 @@ function DesignFrame({ html, title }) {
   )
 }
 
+function DesignSwitcher() {
+  const location = useLocation()
+  const navigate = useNavigate()
+
+  return (
+    <div className="design-switcher">
+      {designPages.map((page) => (
+        <button
+          key={page.path}
+          className={location.pathname === page.path ? 'design-switcher-button active' : 'design-switcher-button'}
+          onClick={() => navigate(page.path)}
+          type="button"
+        >
+          {page.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 function AppRoutes() {
   return (
-    <Routes>
-      <Route path="/" element={<Navigate to="/analysis" replace />} />
-      {designPages.map((page) => (
-        <Route
-          key={page.path}
-          path={page.path}
-          element={<DesignFrame html={page.html} title={page.title} />}
-        />
-      ))}
-    </Routes>
+    <div className="design-app-shell">
+      <DesignSwitcher />
+      <Routes>
+        <Route path="/" element={<Navigate to="/analysis" replace />} />
+        {designPages.map((page) => (
+          <Route
+            key={page.path}
+            path={page.path}
+            element={<DesignFrame html={page.html} title={page.title} />}
+          />
+        ))}
+      </Routes>
+    </div>
   )
 }
 

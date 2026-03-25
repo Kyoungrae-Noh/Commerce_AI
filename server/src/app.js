@@ -6,6 +6,7 @@ import calculatorRouter from './routes/calculator.js'
 import productsRouter from './routes/products.js'
 import sourcingRouter from './routes/sourcing.js'
 import rankingRouter from './routes/ranking.js'
+import aiRouter from './routes/ai.js'
 import { refreshTrendingCache, isCacheStale } from './services/trendingService.js'
 
 const app = express()
@@ -20,6 +21,7 @@ app.use('/api/calculator', calculatorRouter)
 app.use('/api/products', productsRouter)
 app.use('/api/sourcing', sourcingRouter)
 app.use('/api/ranking', rankingRouter)
+app.use('/api/ai', aiRouter)
 
 // Health check
 app.get('/api/health', (req, res) => {

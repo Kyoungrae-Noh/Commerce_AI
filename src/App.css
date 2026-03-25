@@ -17,10 +17,10 @@
   right: 16px;
   z-index: 1000;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-wrap: nowrap;
+  gap: 6px;
   max-width: min(420px, calc(100vw - 32px));
-  padding: 8px;
+  padding: 6px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
@@ -55,7 +55,11 @@
     max-width: none;
   }
 
+  .design-switcher {
+    flex-wrap: wrap;
+  }
+
   .design-switcher-button {
-    flex: 1 1 calc(50% - 8px);
+    flex: 1 1 calc(33.33% - 6px);
   }
 }

@@ -1,4 +1,6 @@
-import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import Home from './pages/Home'
+import Result from './pages/Result'
 import analysisHtml from '../design/analysis.html?raw'
 import notiHtml from '../design/noti.html?raw'
 import settingHtml from '../design/setting.html?raw'
@@ -27,6 +29,8 @@ function DesignFrame({ html, title }) {
 function DesignSwitcher() {
   const location = useLocation()
   const navigate = useNavigate()
+  const isDesignPage = designPages.some((p) => p.path === location.pathname)
+  if (!isDesignPage) return null
 
   return (
     <div className="design-switcher">
@@ -49,7 +53,8 @@ function AppRoutes() {
     <div className="design-app-shell">
       <DesignSwitcher />
       <Routes>
-        <Route path="/" element={<Navigate to="/analysis" replace />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/result" element={<Result />} />
         {designPages.map((page) => (
           <Route
             key={page.path}

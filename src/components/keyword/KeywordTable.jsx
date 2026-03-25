@@ -2,8 +2,8 @@ import DataTable from '../shared/DataTable'
 import './KeywordTable.css'
 
 const levelColors = {
-  low: 'var(--success)',
-  medium: 'var(--warning)',
+  low: 'var(--accent)',
+  medium: '#FFD000',
   high: 'var(--accent3)',
 }
 

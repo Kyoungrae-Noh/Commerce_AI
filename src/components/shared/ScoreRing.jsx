@@ -1,9 +1,9 @@
 import './ScoreRing.css'
 
 function getScoreColor(score) {
-  if (score >= 80) return 'var(--success)'
-  if (score >= 60) return 'var(--accent)'
-  if (score >= 40) return 'var(--warning)'
+  if (score >= 80) return 'var(--accent)'
+  if (score >= 60) return 'var(--accent2)'
+  if (score >= 40) return '#FFD000'
   return 'var(--accent3)'
 }
 
@@ -16,7 +16,7 @@ export default function ScoreRing({ score, size = 48, strokeWidth = 3, label }) 
   return (
     <div className="score-ring-wrap">
       <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
-        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="var(--bg2)" strokeWidth={strokeWidth} />
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="var(--border)" strokeWidth={strokeWidth} />
         <circle
           cx={size / 2} cy={size / 2} r={radius} fill="none"
           stroke={color} strokeWidth={strokeWidth}

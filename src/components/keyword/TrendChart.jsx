@@ -72,7 +72,7 @@ export default function TrendChart({ data, label = '월간 검색량 추이' }) 
 
         {/* Dots */}
         {points.map((p, i) => (
-          <circle key={i} cx={p.x} cy={p.y} r="3" fill="var(--accent)" stroke="var(--surface)" strokeWidth="2" />
+          <circle key={i} cx={p.x} cy={p.y} r="3" fill="var(--accent)" stroke="var(--bg)" strokeWidth="2" />
         ))}
 
         {/* Month labels */}

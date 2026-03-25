@@ -107,8 +107,8 @@ export default function DiscoveryTab() {
   }
 
   const levelColors = {
-    low: 'var(--success)',
-    medium: 'var(--warning)',
+    low: 'var(--accent)',
+    medium: '#FFD000',
     high: 'var(--accent3)',
     very_high: 'var(--accent3)',
   }

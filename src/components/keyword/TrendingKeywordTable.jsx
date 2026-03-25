@@ -1,8 +1,8 @@
 import './TrendingKeywordTable.css'
 
 const levelColors = {
-  low: 'var(--accent)',
-  medium: '#FFD000',
+  low: 'var(--success)',
+  medium: 'var(--warning)',
   high: 'var(--accent3)',
   very_high: 'var(--accent3)',
 }

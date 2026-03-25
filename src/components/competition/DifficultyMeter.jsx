@@ -1,8 +1,8 @@
 import './DifficultyMeter.css'
 
 function getDifficultyColor(score) {
-  if (score <= 3) return 'var(--accent)'
-  if (score <= 6) return '#FFD000'
+  if (score <= 3) return 'var(--success)'
+  if (score <= 6) return 'var(--warning)'
   return 'var(--accent3)'
 }
 

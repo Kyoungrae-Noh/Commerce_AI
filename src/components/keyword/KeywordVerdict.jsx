@@ -1,16 +1,16 @@
 import './KeywordVerdict.css'
 
 const VERDICT_MAP = {
-  recommended: { label: '진입 추천', color: 'var(--accent)' },
-  hold: { label: '보류', color: '#FFD000' },
+  recommended: { label: '진입 추천', color: 'var(--success)' },
+  hold: { label: '보류', color: 'var(--warning)' },
   not_recommended: { label: '비추천', color: 'var(--accent3)' },
 }
 
 const SCORE_BARS = [
-  { key: 'demand', label: '수요', color: 'var(--accent2)' },
-  { key: 'competition', label: '경쟁', color: 'var(--accent)' },
-  { key: 'margin', label: '마진', color: '#FFD000' },
-  { key: 'trend', label: '트렌드', color: '#A78BFA' },
+  { key: 'demand', label: '수요', color: 'var(--accent)' },
+  { key: 'competition', label: '경쟁', color: 'var(--success)' },
+  { key: 'margin', label: '마진', color: 'var(--warning)' },
+  { key: 'trend', label: '트렌드', color: '#8b5cf6' },
 ]
 
 function generateComment(scores, verdict) {

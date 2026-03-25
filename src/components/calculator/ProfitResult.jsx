@@ -1,8 +1,8 @@
 import './ProfitResult.css'
 
 function getMarginColor(rate) {
-  if (rate >= 30) return 'var(--accent)'
-  if (rate >= 15) return '#FFD000'
+  if (rate >= 30) return 'var(--success)'
+  if (rate >= 15) return 'var(--warning)'
   return 'var(--accent3)'
 }
 
@@ -16,7 +16,7 @@ export default function ProfitResult({ result }) {
       <div className="profit-main-cards">
         <div className="profit-card highlight">
           <span className="profit-card-label">예상 순이익</span>
-          <span className="profit-card-value" style={{ color: result.netProfit >= 0 ? 'var(--accent)' : 'var(--accent3)' }}>
+          <span className="profit-card-value" style={{ color: result.netProfit >= 0 ? 'var(--success)' : 'var(--accent3)' }}>
             ₩{result.netProfit.toLocaleString()}
           </span>
         </div>

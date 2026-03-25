@@ -1,64 +1,32 @@
-import { BrowserRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import analysisHtml from '../design/analysis.html?raw'
-import notiHtml from '../design/noti.html?raw'
-import settingHtml from '../design/setting.html?raw'
-import subscriptionHtml from '../design/subscription.html?raw'
-import supportHtml from '../design/support.html?raw'
-import './App.css'
-
-const designPages = [
-  { path: '/analysis', label: 'analysis', title: '상품 분석', html: analysisHtml },
-  { path: '/noti', label: 'noti', title: '알림 센터', html: notiHtml },
-  { path: '/setting', label: 'setting', title: '설정', html: settingHtml },
-  { path: '/subscription', label: 'subscription', title: '이용권 안내', html: subscriptionHtml },
-  { path: '/support', label: 'support', title: '문의하기', html: supportHtml },
-]
-
-function DesignFrame({ html, title }) {
-  return (
-    <iframe
-      className="design-frame"
-      srcDoc={html}
-      title={title}
-    />
-  )
-}
-
-function DesignSwitcher() {
-  const location = useLocation()
-  const navigate = useNavigate()
-
-  return (
-    <div className="design-switcher">
-      {designPages.map((page) => (
-        <button
-          key={page.path}
-          className={location.pathname === page.path ? 'design-switcher-button active' : 'design-switcher-button'}
-          onClick={() => navigate(page.path)}
-          type="button"
-        >
-          {page.label}
-        </button>
-      ))}
-    </div>
-  )
-}
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import AppLayout from './components/layout/AppLayout'
+import Landing from './pages/Landing'
+import Dashboard from './pages/Dashboard'
+import Calculator from './pages/Calculator'
+import AnalysisPage from './pages/AnalysisPage'
+import NotificationsPage from './pages/NotificationsPage'
+import SettingsPage from './pages/SettingsPage'
+import SubscriptionPage from './pages/SubscriptionPage'
+import SupportPage from './pages/SupportPage'
 
 function AppRoutes() {
   return (
-    <div className="design-app-shell">
-      <DesignSwitcher />
-      <Routes>
-        <Route path="/" element={<Navigate to="/analysis" replace />} />
-        {designPages.map((page) => (
-          <Route
-            key={page.path}
-            path={page.path}
-            element={<DesignFrame html={page.html} title={page.title} />}
-          />
-        ))}
-      </Routes>
-    </div>
+    <Routes>
+      {/* Landing page - no sidebar layout */}
+      <Route path="/" element={<Landing />} />
+
+      {/* All app pages with shared layout */}
+      <Route element={<AppLayout />}>
+        <Route path="/dashboard" element={<Navigate to="/dashboard/recommendations" replace />} />
+        <Route path="/dashboard/:tab" element={<Dashboard />} />
+        <Route path="/calculator" element={<Calculator />} />
+        <Route path="/analysis" element={<AnalysisPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/subscription" element={<SubscriptionPage />} />
+        <Route path="/support" element={<SupportPage />} />
+      </Route>
+    </Routes>
   )
 }
 

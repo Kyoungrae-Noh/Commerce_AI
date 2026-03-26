@@ -1,8 +1,4 @@
-import OpenAI from 'openai'
-
 export async function generateAnalysis(env, { keyword, scoring, keywordData, competitionData, sourcingCost, marginByPlatform }) {
-  const openai = new OpenAI({ apiKey: env.OPENAI_API_KEY })
-
   const prompt = `당신은 한국 이커머스(쿠팡/네이버 스마트스토어) 상품 소싱 전문 분석가입니다.
 다음 데이터를 기반으로 이 키워드의 상품 진입 가능성을 분석해주세요.
 
@@ -28,12 +24,25 @@ ${Object.entries(marginByPlatform).map(([name, m]) => `- ${name}: 순이익 ${m.
   "entryStrategy": "이 상품에 진입한다면 어떤 전략이 좋을지 2-3문장으로 제안."
 }`
 
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: [{ role: 'user', content: prompt }],
-    temperature: 0.7,
-    response_format: { type: 'json_object' },
+  const res = await fetch('https://api.openai.com/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: 'gpt-4o-mini',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.7,
+      response_format: { type: 'json_object' },
+    }),
   })
 
-  return JSON.parse(response.choices[0].message.content)
+  if (!res.ok) {
+    const err = await res.text()
+    throw new Error(`OpenAI API error: ${res.status} ${err}`)
+  }
+
+  const data = await res.json()
+  return JSON.parse(data.choices[0].message.content)
 }

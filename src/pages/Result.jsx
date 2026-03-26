@@ -159,21 +159,21 @@ export default function Result() {
           </div>
 
           <div className="result-ai-block">
-            <h3>추천 이유</h3>
+            <h3 className="ai-heading-reasons">추천 이유</h3>
             <ul>
               {ai.reasons?.map((r, i) => <li key={i}>{r}</li>)}
             </ul>
           </div>
 
           <div className="result-ai-block">
-            <h3>리스크</h3>
+            <h3 className="ai-heading-risks">리스크</h3>
             <ul>
               {ai.risks?.map((r, i) => <li key={i}>{r}</li>)}
             </ul>
           </div>
 
           <div className="result-ai-block">
-            <h3>진입 전략</h3>
+            <h3 className="ai-heading-strategy">진입 전략</h3>
             <p>{ai.entryStrategy}</p>
           </div>
         </section>

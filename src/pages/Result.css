@@ -295,9 +295,13 @@
 .result-ai-block h3 {
   font-size: 14px;
   font-weight: 600;
-  color: #3b82f6;
+  color: #e2e8f0;
   margin: 0 0 8px;
 }
+
+.ai-heading-reasons { color: #22C55E; }
+.ai-heading-risks { color: #EF4444; }
+.ai-heading-strategy { color: #F59E0B; }
 
 .result-ai-block p {
   font-size: 14px;

@@ -90,6 +90,13 @@
   cursor: not-allowed;
 }
 
+.home-hint {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+  text-align: center;
+}
+
 .home-categories {
   display: flex;
   gap: 8px;

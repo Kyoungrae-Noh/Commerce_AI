@@ -112,8 +112,8 @@ export default function Result() {
       {/* Data cards */}
       <section className="result-data-cards">
         <div className="result-card">
-          <span className="result-card-label">월간 검색량</span>
-          <span className="result-card-value">{resData.monthlyVolume?.toLocaleString() ?? '추정 불가'}</span>
+          <span className="result-card-label">검색 트렌드</span>
+          <span className="result-card-value">{resData.trendRatio >= 70 ? '높음' : resData.trendRatio >= 40 ? '보통' : resData.trendRatio != null ? '낮음' : '데이터 없음'}</span>
         </div>
         <div className="result-card">
           <span className="result-card-label">경쟁 상품 수</span>

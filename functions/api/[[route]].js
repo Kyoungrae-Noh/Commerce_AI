@@ -162,6 +162,7 @@ app.post('/ai/analyze', async (c) => {
       scores: scoring.scores,
       data: {
         monthlyVolume: keywordData.monthlyVolume,
+        trendRatio: keywordData.monthlyTrend?.length > 0 ? keywordData.monthlyTrend[keywordData.monthlyTrend.length - 1].ratio : null,
         competitorCount: keywordData.competitorCount,
         avgPrice: keywordData.avgPrice,
         difficulty: competitionData.difficulty?.overall,

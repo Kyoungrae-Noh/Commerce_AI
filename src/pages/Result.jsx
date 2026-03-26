@@ -17,6 +17,8 @@ const verdictClass = {
 
 const scoreLabels = { demand: '시장 관심도 (추정)', competition: '경쟁 강도 (상품 수 기반)', margin: '마진 (추정 소싱가 기반)', trend: '트렌드' }
 
+const platformNames = { smartStore: '스마트스토어', coupangRocket: '쿠팡 로켓그로스' }
+
 export default function Result() {
   const [params] = useSearchParams()
   const navigate = useNavigate()
@@ -135,7 +137,7 @@ export default function Result() {
           <div className="result-margin-table">
             {Object.entries(resData.marginByPlatform).map(([name, m]) => (
               <div key={name} className="result-margin-row">
-                <span className="result-margin-name">{name}</span>
+                <span className="result-margin-name">{platformNames[name] || name}</span>
                 <span className={`result-margin-profit ${m.netProfit >= 0 ? 'positive' : 'negative'}`}>
                   {m.netProfit?.toLocaleString()}원
                 </span>

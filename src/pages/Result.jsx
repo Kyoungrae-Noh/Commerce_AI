@@ -15,7 +15,7 @@ const verdictClass = {
   not_recommended: 'verdict-bad',
 }
 
-const scoreLabels = { demand: '수요', competition: '경쟁', margin: '마진', trend: '트렌드' }
+const scoreLabels = { demand: '시장 관심도 (추정)', competition: '경쟁 강도 (상품 수 기반)', margin: '마진 (추정 소싱가 기반)', trend: '트렌드' }
 
 export default function Result() {
   const [params] = useSearchParams()
@@ -122,7 +122,7 @@ export default function Result() {
           <span className="result-card-value">{resData.avgPrice?.toLocaleString()}원</span>
         </div>
         <div className="result-card">
-          <span className="result-card-label">경쟁 난이도</span>
+          <span className="result-card-label">경쟁 강도 (상품 수 기반)</span>
           <span className="result-card-value">{resData.difficulty ?? 'N/A'}/10</span>
         </div>
       </section>
@@ -131,6 +131,7 @@ export default function Result() {
       {resData.marginByPlatform && (
         <section className="result-section">
           <h2 className="result-section-title">플랫폼별 예상 마진</h2>
+          <p className="result-estimate-warning">소싱가는 판매가의 약 30%로 추정한 값입니다. 실제 소싱가와 다를 수 있습니다.</p>
           <div className="result-margin-table">
             {Object.entries(resData.marginByPlatform).map(([name, m]) => (
               <div key={name} className="result-margin-row">

@@ -230,6 +230,16 @@
   margin: 0 0 16px;
 }
 
+.result-estimate-warning {
+  font-size: 13px;
+  color: #f59e0b;
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  background: rgba(245, 158, 11, 0.08);
+  border-radius: 8px;
+  border-left: 3px solid #f59e0b;
+}
+
 /* Margin table */
 .result-margin-table {
   display: flex;

@@ -299,6 +299,7 @@
   margin: 0 0 8px;
 }
 
+.ai-heading-conclusion { color: #3b82f6; }
 .ai-heading-reasons { color: #22C55E; }
 .ai-heading-risks { color: #EF4444; }
 .ai-heading-strategy { color: #F59E0B; }

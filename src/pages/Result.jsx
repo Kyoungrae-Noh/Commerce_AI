@@ -154,7 +154,7 @@ export default function Result() {
           <h2 className="result-section-title">AI 분석</h2>
 
           <div className="result-ai-block">
-            <h3>종합 결론</h3>
+            <h3 className="ai-heading-conclusion">종합 결론</h3>
             <p>{ai.conclusion}</p>
           </div>
 

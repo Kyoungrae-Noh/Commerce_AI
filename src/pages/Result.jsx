@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { analyzeKeyword } from '../api/ai'
 import './Result.css'
@@ -15,9 +15,35 @@ const verdictClass = {
   not_recommended: 'verdict-bad',
 }
 
-const scoreLabels = { demand: '시장 관심도', competition: '진입 난이도', margin: '마진 (추정)', trend: '트렌드' }
-
 const platformNames = { smartStore: '스마트스토어', coupangRocket: '쿠팡 로켓그로스' }
+
+const PLATFORM_FEES = {
+  smartStore: { commissionRate: 0.055, fulfillmentFee: 0 },
+  coupangRocket: { commissionRate: 0.108, fulfillmentFee: 3500 },
+}
+
+function calcMarginScore(bestMargin) {
+  if (bestMargin >= 40) return 95
+  if (bestMargin >= 30) return 80
+  if (bestMargin >= 20) return 65
+  if (bestMargin >= 10) return 45
+  if (bestMargin >= 0) return 25
+  return 10
+}
+
+function recalcMargin(avgPrice, sourcingPrice, shippingEstimate) {
+  const marginByPlatform = {}
+  let bestMargin = 0
+  for (const [name, fee] of Object.entries(PLATFORM_FEES)) {
+    const commission = Math.round(avgPrice * fee.commissionRate)
+    const totalCost = sourcingPrice + shippingEstimate + 3000 + commission + fee.fulfillmentFee
+    const netProfit = avgPrice - totalCost
+    const marginRate = avgPrice > 0 ? Math.round((netProfit / avgPrice) * 1000) / 10 : 0
+    marginByPlatform[name] = { commission, fulfillmentFee: fee.fulfillmentFee, totalCost, netProfit, marginRate }
+    if (marginRate > bestMargin) bestMargin = marginRate
+  }
+  return { marginByPlatform, marginScore: calcMarginScore(bestMargin) }
+}
 
 export default function Result() {
   const [params] = useSearchParams()
@@ -27,6 +53,7 @@ export default function Result() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [customSourcingCost, setCustomSourcingCost] = useState('')
 
   useEffect(() => {
     if (!keyword) return
@@ -73,7 +100,37 @@ export default function Result() {
     )
   }
 
-  const { sourcelyScore, verdict, scores, data: resData, ai } = data
+  const { sourcelyScore: origScore, verdict: origVerdict, scores: origScores, data: resData, ai } = data
+
+  const isCustom = customSourcingCost !== '' && !isNaN(Number(customSourcingCost))
+  const customPrice = isCustom ? Number(customSourcingCost) : null
+
+  const { scores, sourcelyScore, verdict, marginByPlatform } = useMemo(() => {
+    if (!isCustom) {
+      return {
+        scores: origScores,
+        sourcelyScore: origScore,
+        verdict: origVerdict,
+        marginByPlatform: resData.marginByPlatform,
+      }
+    }
+    const { marginByPlatform: newMargin, marginScore } = recalcMargin(
+      resData.avgPrice, customPrice, resData.sourcingCost?.shippingEstimate || 3000
+    )
+    const newScores = { ...origScores, margin: marginScore }
+    const newTotal = Math.round(
+      newScores.demand * 0.25 + newScores.competition * 0.25 + newScores.margin * 0.30 + newScores.trend * 0.20
+    )
+    const newVerdict = newTotal >= 75 ? 'recommended' : newTotal >= 50 ? 'hold' : 'not_recommended'
+    return { scores: newScores, sourcelyScore: newTotal, verdict: newVerdict, marginByPlatform: newMargin }
+  }, [origScores, origScore, origVerdict, resData, isCustom, customPrice])
+
+  const scoreLabels = {
+    demand: '시장 관심도',
+    competition: '진입 난이도',
+    margin: <span>마진 <span className={`score-badge ${isCustom ? 'badge-real' : 'badge-estimate'}`}>{isCustom ? '실제값' : '추정값'}</span></span>,
+    trend: '트렌드',
+  }
 
   return (
     <div className="result-page">
@@ -130,12 +187,27 @@ export default function Result() {
       </section>
 
       {/* Platform margins */}
-      {resData.marginByPlatform && (
+      {marginByPlatform && (
         <section className="result-section">
           <h2 className="result-section-title">플랫폼별 예상 마진</h2>
-          <p className="result-estimate-warning">소싱가는 판매가의 약 30%로 추정한 값입니다. 실제 소싱가와 다를 수 있습니다.</p>
+          <div className="sourcing-input-row">
+            <label className="sourcing-input-label">소싱가 직접 입력</label>
+            <div className="sourcing-input-wrap">
+              <input
+                type="number"
+                className="sourcing-input"
+                placeholder={`추정 ${resData.sourcingCost?.estimatedPrice?.toLocaleString() || 0}원`}
+                value={customSourcingCost}
+                onChange={(e) => setCustomSourcingCost(e.target.value)}
+              />
+              <span className="sourcing-input-unit">원</span>
+            </div>
+            {!isCustom && (
+              <span className="sourcing-input-hint">실제 소싱가를 입력하면 마진과 총점이 재계산됩니다</span>
+            )}
+          </div>
           <div className="result-margin-table">
-            {Object.entries(resData.marginByPlatform).map(([name, m]) => (
+            {Object.entries(marginByPlatform).map(([name, m]) => (
               <div key={name} className="result-margin-row">
                 <span className="result-margin-name">{platformNames[name] || name}</span>
                 <span className={`result-margin-profit ${m.netProfit >= 0 ? 'positive' : 'negative'}`}>

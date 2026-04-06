@@ -65,7 +65,7 @@ router.post('/analyze', async (req, res) => {
         monthlyVolume: keywordData.monthlyVolume,
         competitorCount: keywordData.competitorCount,
         avgPrice: keywordData.avgPrice,
-        difficulty: competitionData.difficulty?.overall,
+        trendRatio: keywordData.monthlyTrend?.length > 0 ? keywordData.monthlyTrend[keywordData.monthlyTrend.length - 1].ratio : null,
         marginByPlatform,
         sourcingCost,
       },

@@ -4,6 +4,7 @@
  */
 
 const NAVER_API_BASE = 'https://openapi.naver.com'
+const SEARCHAD_API_BASE = 'https://api.searchad.naver.com'
 
 // ── Naver Adapter (Workers 호환) ──
 
@@ -12,10 +13,13 @@ class WorkerNaverAdapter {
     this.name = 'Naver'
     this.clientId = env.NAVER_CLIENT_ID
     this.clientSecret = env.NAVER_CLIENT_SECRET
+    this.searchAdApiKey = env.NAVER_SEARCHAD_API_KEY
+    this.searchAdSecretKey = env.NAVER_SEARCHAD_SECRET_KEY
+    this.searchAdCustomerId = env.NAVER_SEARCHAD_CUSTOMER_ID
   }
 
   get hasSearchAdApi() {
-    return false // MVP: SearchAd 비활성 (crypto.createHmac 미지원)
+    return !!(this.searchAdApiKey && this.searchAdSecretKey && this.searchAdCustomerId)
   }
 
   get headers() {
@@ -25,8 +29,45 @@ class WorkerNaverAdapter {
     }
   }
 
-  async getKeywordStats() {
-    return null // SearchAd 비활성
+  /** Web Crypto API 기반 HMAC-SHA256 서명 생성 (Workers 호환) */
+  async _generateSearchAdSignature(timestamp, method, path) {
+    const message = `${timestamp}.${method}.${path}`
+    const encoder = new TextEncoder()
+    const key = await crypto.subtle.importKey(
+      'raw', encoder.encode(this.searchAdSecretKey),
+      { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
+    )
+    const signature = await crypto.subtle.sign('HMAC', key, encoder.encode(message))
+    return btoa(String.fromCharCode(...new Uint8Array(signature)))
+  }
+
+  /** 검색광고 API 헤더 */
+  async _getSearchAdHeaders(method, path) {
+    const timestamp = String(Date.now())
+    return {
+      'X-API-KEY': this.searchAdApiKey,
+      'X-Customer': this.searchAdCustomerId,
+      'X-Timestamp': timestamp,
+      'X-Signature': await this._generateSearchAdSignature(timestamp, method, path),
+    }
+  }
+
+  /** 검색광고 키워드 도구 API */
+  async getKeywordStats(keyword) {
+    if (!this.hasSearchAdApi) return null
+
+    const path = '/keywordstool'
+    const url = `${SEARCHAD_API_BASE}${path}?hintKeywords=${keyword.replace(/ /g, '')}&showDetail=1`
+
+    try {
+      const res = await fetch(url, {
+        headers: await this._getSearchAdHeaders('GET', path),
+      })
+      if (!res.ok) return null
+      return res.json()
+    } catch {
+      return null
+    }
   }
 
   async searchShopping(keyword, display = 40) {

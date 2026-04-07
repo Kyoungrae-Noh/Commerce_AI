@@ -59,11 +59,37 @@ export default function Result() {
     if (!keyword) return
     setLoading(true)
     setError(null)
+    setCustomSourcingCost('')
     analyzeKeyword(keyword)
       .then(setData)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [keyword])
+
+  const isCustom = customSourcingCost !== '' && !isNaN(Number(customSourcingCost))
+  const customPrice = isCustom ? Number(customSourcingCost) : null
+
+  const computed = useMemo(() => {
+    if (!data) return null
+    const { sourcelyScore: origScore, verdict: origVerdict, scores: origScores, data: resData } = data
+    if (!isCustom) {
+      return {
+        scores: origScores,
+        sourcelyScore: origScore,
+        verdict: origVerdict,
+        marginByPlatform: resData.marginByPlatform,
+      }
+    }
+    const { marginByPlatform: newMargin, marginScore } = recalcMargin(
+      resData.avgPrice, customPrice, resData.sourcingCost?.shippingEstimate || 3000
+    )
+    const newScores = { ...origScores, margin: marginScore }
+    const newTotal = Math.round(
+      newScores.demand * 0.25 + newScores.competition * 0.25 + newScores.margin * 0.30 + newScores.trend * 0.20
+    )
+    const newVerdict = newTotal >= 75 ? 'recommended' : newTotal >= 50 ? 'hold' : 'not_recommended'
+    return { scores: newScores, sourcelyScore: newTotal, verdict: newVerdict, marginByPlatform: newMargin }
+  }, [data, isCustom, customPrice])
 
   if (!keyword) {
     return (
@@ -100,30 +126,8 @@ export default function Result() {
     )
   }
 
-  const { sourcelyScore: origScore, verdict: origVerdict, scores: origScores, data: resData, ai } = data
-
-  const isCustom = customSourcingCost !== '' && !isNaN(Number(customSourcingCost))
-  const customPrice = isCustom ? Number(customSourcingCost) : null
-
-  const { scores, sourcelyScore, verdict, marginByPlatform } = useMemo(() => {
-    if (!isCustom) {
-      return {
-        scores: origScores,
-        sourcelyScore: origScore,
-        verdict: origVerdict,
-        marginByPlatform: resData.marginByPlatform,
-      }
-    }
-    const { marginByPlatform: newMargin, marginScore } = recalcMargin(
-      resData.avgPrice, customPrice, resData.sourcingCost?.shippingEstimate || 3000
-    )
-    const newScores = { ...origScores, margin: marginScore }
-    const newTotal = Math.round(
-      newScores.demand * 0.25 + newScores.competition * 0.25 + newScores.margin * 0.30 + newScores.trend * 0.20
-    )
-    const newVerdict = newTotal >= 75 ? 'recommended' : newTotal >= 50 ? 'hold' : 'not_recommended'
-    return { scores: newScores, sourcelyScore: newTotal, verdict: newVerdict, marginByPlatform: newMargin }
-  }, [origScores, origScore, origVerdict, resData, isCustom, customPrice])
+  const { data: resData, ai } = data
+  const { scores, sourcelyScore, verdict, marginByPlatform } = computed
 
   const scoreLabels = {
     demand: '시장 관심도',

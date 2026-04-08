@@ -35,10 +35,10 @@ function calcCompetitionScore(competitorCount, monthlyVolume) {
   const ratio = competitorCount / monthlyVolume
 
   if (ratio <= 1) return 95
-  if (ratio <= 3) return 80
-  if (ratio <= 10) return 65
+  if (ratio <= 5) return 80
+  if (ratio <= 15) return 65
   if (ratio <= 30) return 50
-  if (ratio <= 100) return 35
+  if (ratio <= 50) return 35
   return 15
 }
 

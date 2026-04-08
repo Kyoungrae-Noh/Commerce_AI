@@ -7,22 +7,16 @@ import { generateAnalysis } from '../_shared/ai.js'
 // ── 순수 함수 (서버 코드와 동일) ──
 
 function calcDemandScore(keywordData) {
-  const { competitorCount, monthlyTrend } = keywordData
-  let score = 50
-  if (competitorCount >= 1000 && competitorCount <= 50000) score += 30
-  else if (competitorCount >= 50000 && competitorCount <= 200000) score += 20
-  else if (competitorCount < 1000) score += 10
-  else score += 5
-  if (monthlyTrend && monthlyTrend.length >= 6) {
-    const recent = monthlyTrend.slice(-3)
-    const previous = monthlyTrend.slice(-6, -3)
-    const recentAvg = recent.reduce((a, b) => a + b.ratio, 0) / 3
-    const previousAvg = previous.reduce((a, b) => a + b.ratio, 0) / 3
-    if (recentAvg > previousAvg * 1.1) score += 20
-    else if (recentAvg > previousAvg) score += 10
-    else if (recentAvg < previousAvg * 0.9) score -= 10
-  }
-  return Math.max(0, Math.min(100, score))
+  const { monthlyVolume } = keywordData
+
+  if (monthlyVolume == null) return 0
+  if (monthlyVolume >= 100000) return 100
+  if (monthlyVolume >= 50000) return 85
+  if (monthlyVolume >= 20000) return 70
+  if (monthlyVolume >= 10000) return 55
+  if (monthlyVolume >= 5000) return 40
+  if (monthlyVolume >= 1000) return 25
+  return 10
 }
 
 function calcCompetitionScore(competitionData) {
@@ -200,7 +194,7 @@ app.get('/keywords/search', async (c) => {
     const sourcingCost = await ali1688.getEstimatedCost(keyword, { avgSellingPrice: data.avgPrice, category })
     const platformFees = registry.getAllPlatformFees()
     const scoring = analyzeProduct({
-      keywordData: { competitorCount: data.competitorCount, monthlyTrend: data.monthlyTrend, avgPrice: data.avgPrice },
+      keywordData: { monthlyVolume: data.monthlyVolume, competitorCount: data.competitorCount, monthlyTrend: data.monthlyTrend, avgPrice: data.avgPrice },
       competitionData, sourcingCost, platformFees,
     })
     const marginByPlatform = calcMarginByPlatform(data.avgPrice, sourcingCost, platformFees)

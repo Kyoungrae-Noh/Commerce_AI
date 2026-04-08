@@ -7,32 +7,19 @@
 
 /**
  * 수요 점수 (25%)
- * - 경쟁자 수가 적절한 범위에 있으면 높은 점수
- * - 트렌드 상승 시 가산점
+ * - 월간 검색량 구간별 직접 점수 할당
  */
 function calcDemandScore(keywordData) {
-  const { competitorCount, monthlyTrend } = keywordData
-  let score = 50
+  const { monthlyVolume } = keywordData
 
-  // 경쟁 상품 수 기반 (너무 적으면 수요 없음, 너무 많으면 레드오션)
-  if (competitorCount >= 1000 && competitorCount <= 50000) score += 30
-  else if (competitorCount >= 50000 && competitorCount <= 200000) score += 20
-  else if (competitorCount < 1000) score += 10
-  else score += 5
-
-  // 트렌드 상승 여부 (최근 3개월 vs 이전 3개월)
-  if (monthlyTrend && monthlyTrend.length >= 6) {
-    const recent = monthlyTrend.slice(-3)
-    const previous = monthlyTrend.slice(-6, -3)
-    const recentAvg = recent.reduce((a, b) => a + b.ratio, 0) / 3
-    const previousAvg = previous.reduce((a, b) => a + b.ratio, 0) / 3
-
-    if (recentAvg > previousAvg * 1.1) score += 20       // 10% 이상 성장
-    else if (recentAvg > previousAvg) score += 10          // 소폭 성장
-    else if (recentAvg < previousAvg * 0.9) score -= 10    // 하락
-  }
-
-  return Math.max(0, Math.min(100, score))
+  if (monthlyVolume == null) return 0
+  if (monthlyVolume >= 100000) return 100
+  if (monthlyVolume >= 50000) return 85
+  if (monthlyVolume >= 20000) return 70
+  if (monthlyVolume >= 10000) return 55
+  if (monthlyVolume >= 5000) return 40
+  if (monthlyVolume >= 1000) return 25
+  return 10
 }
 
 /**

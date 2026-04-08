@@ -19,16 +19,17 @@ function calcDemandScore(keywordData) {
   return 10
 }
 
-function calcCompetitionScore(competitionData) {
-  const { difficulty, topSellers } = competitionData
-  let score = 100
-  score -= difficulty.overall * 8
-  if (topSellers && topSellers.length >= 3) {
-    const top3Products = topSellers.slice(0, 3).reduce((a, b) => a + b.productCount, 0)
-    const totalProducts = topSellers.reduce((a, b) => a + b.productCount, 0)
-    if (totalProducts > 0 && top3Products / totalProducts > 0.5) score -= 15
-  }
-  return Math.max(0, Math.min(100, score))
+function calcCompetitionScore(competitorCount, monthlyVolume) {
+  if (!monthlyVolume) return 50
+
+  const ratio = competitorCount / monthlyVolume
+
+  if (ratio <= 1) return 95
+  if (ratio <= 3) return 80
+  if (ratio <= 10) return 65
+  if (ratio <= 30) return 50
+  if (ratio <= 100) return 35
+  return 15
 }
 
 function calcMarginScore(avgPrice, sourcingCost, platformFees) {
@@ -64,7 +65,7 @@ function calcTrendScore(monthlyTrend) {
 
 function analyzeProduct({ keywordData, competitionData, sourcingCost, platformFees }) {
   const demandScore = calcDemandScore(keywordData)
-  const competitionScore = calcCompetitionScore(competitionData)
+  const competitionScore = calcCompetitionScore(keywordData.competitorCount, keywordData.monthlyVolume)
   const marginScore = calcMarginScore(keywordData.avgPrice, sourcingCost, platformFees)
   const trendScore = calcTrendScore(keywordData.monthlyTrend)
   const sourcelyScore = Math.round(demandScore * 0.25 + competitionScore * 0.25 + marginScore * 0.30 + trendScore * 0.20)

@@ -129,9 +129,14 @@ export default function Result() {
   const { data: resData, ai } = data
   const { scores, sourcelyScore, verdict, marginByPlatform } = computed
 
+  const scoreTooltips = {
+    demand: '월간 검색량 기반. 검색량이 많을수록 높은 점수',
+    competition: '경쟁 상품수 / 월간 검색량 비율 기반. 점수 높을수록 진입 쉬움',
+  }
+
   const scoreLabels = {
-    demand: '시장 관심도',
-    competition: '진입 난이도',
+    demand: <span>시장 관심도<span className="score-tooltip-wrap"><span className="score-tooltip-icon">?</span><span className="score-tooltip">{scoreTooltips.demand}</span></span></span>,
+    competition: <span>진입 난이도<span className="score-tooltip-wrap"><span className="score-tooltip-icon">?</span><span className="score-tooltip">{scoreTooltips.competition}</span></span></span>,
     margin: <span>마진 <span className={`score-badge ${isCustom ? 'badge-real' : 'badge-estimate'}`}>{isCustom ? '실제값' : '추정값'}</span></span>,
     trend: '트렌드',
   }

@@ -24,26 +24,22 @@ function calcDemandScore(keywordData) {
 
 /**
  * 경쟁 점수 (25%)
- * - 난이도가 낮을수록 높은 점수
- * - 상위 셀러 집중도가 낮을수록 진입 가능
+ * - 경쟁 상품수 / 월간 검색량 비율 기반
+ * - 비율이 낮을수록 진입 쉬움 (높은 점수)
  */
-function calcCompetitionScore(competitionData) {
-  const { difficulty, topSellers } = competitionData
-  let score = 100
+function calcCompetitionScore(competitorCount, monthlyVolume) {
 
-  // 난이도 기반 감점
-  score -= difficulty.overall * 8 // 난이도 10이면 -80
+  // 검색량 데이터 없으면 중립
+  if (!monthlyVolume) return 50
 
-  // 상위 셀러 집중도 (상위 3개가 전체의 50% 이상이면 감점)
-  if (topSellers && topSellers.length >= 3) {
-    const top3Products = topSellers.slice(0, 3).reduce((a, b) => a + b.productCount, 0)
-    const totalProducts = topSellers.reduce((a, b) => a + b.productCount, 0)
-    if (totalProducts > 0 && top3Products / totalProducts > 0.5) {
-      score -= 15
-    }
-  }
+  const ratio = competitorCount / monthlyVolume
 
-  return Math.max(0, Math.min(100, score))
+  if (ratio <= 1) return 95
+  if (ratio <= 3) return 80
+  if (ratio <= 10) return 65
+  if (ratio <= 30) return 50
+  if (ratio <= 100) return 35
+  return 15
 }
 
 /**
@@ -97,7 +93,7 @@ function calcTrendScore(monthlyTrend) {
  */
 export function analyzeProduct({ keywordData, competitionData, sourcingCost, platformFees }) {
   const demandScore = calcDemandScore(keywordData)
-  const competitionScore = calcCompetitionScore(competitionData)
+  const competitionScore = calcCompetitionScore(keywordData.competitorCount, keywordData.monthlyVolume)
   const marginScore = calcMarginScore(keywordData.avgPrice, sourcingCost, platformFees)
   const trendScore = calcTrendScore(keywordData.monthlyTrend)
 

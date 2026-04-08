@@ -323,6 +323,49 @@
   margin-bottom: 4px;
 }
 
+/* Score tooltip */
+.score-tooltip-wrap {
+  position: relative;
+  display: inline-block;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+
+.score-tooltip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: help;
+}
+
+.score-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e293b;
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+  z-index: 10;
+}
+
+.score-tooltip-wrap:hover .score-tooltip {
+  display: block;
+}
+
 /* Score badge */
 .score-badge {
   font-size: 11px;

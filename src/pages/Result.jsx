@@ -227,7 +227,13 @@ export default function Result() {
               <span className="result-card-value">{resData.competitorCount?.toLocaleString()}개</span>
             </div>
             <div className="result-card">
-              <span className="result-card-label">경쟁 강도</span>
+              <span className="result-card-label">
+                경쟁 강도
+                <span className="score-tooltip-wrap">
+                  <span className="score-tooltip-icon">?</span>
+                  <span className="score-tooltip">경쟁 상품 수 / 월간 검색량</span>
+                </span>
+              </span>
               <span className="result-card-value">{competitionIntensity}</span>
             </div>
           </div>

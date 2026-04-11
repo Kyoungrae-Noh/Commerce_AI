@@ -115,8 +115,8 @@ export default class NaverAdapter extends SalesPlatformAdapter {
     const prices = items.map(i => parseInt(i.lprice)).filter(p => p > 0)
     const avgPrice = prices.length > 0 ? Math.round(prices.reduce((a, b) => a + b, 0) / prices.length) : 0
 
-    // 트렌드 데이터 변환
-    const trendData = trend.results?.[0]?.data || []
+    // 트렌드 데이터 변환 (진행 중인 당월은 미집계 상태이므로 제외)
+    const trendData = (trend.results?.[0]?.data || []).slice(0, -1)
     const monthlyTrend = trendData.map(d => ({
       month: d.period,
       ratio: d.ratio,

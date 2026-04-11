@@ -113,7 +113,7 @@ class WorkerNaverAdapter {
     const prices = items.map(i => parseInt(i.lprice)).filter(p => p > 0)
     const avgPrice = prices.length > 0 ? Math.round(prices.reduce((a, b) => a + b, 0) / prices.length) : 0
 
-    const trendData = trend.results?.[0]?.data || []
+    const trendData = (trend.results?.[0]?.data || []).slice(0, -1)
     const monthlyTrend = trendData.map(d => ({ month: d.period, ratio: d.ratio }))
     const competitorCount = shopping.total || 0
 

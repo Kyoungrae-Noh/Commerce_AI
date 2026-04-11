@@ -226,11 +226,12 @@
   border-radius: 10px;
   padding: 14px 6px;
   min-width: 0;
+  height: 96px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 8px;
+  gap: 0;
 }
 
 .result-card-label {
@@ -239,6 +240,11 @@
   font-weight: 500;
   text-align: center;
   white-space: nowrap;
+  line-height: 1.4;
+  height: 34px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .result-card-value {
@@ -247,6 +253,8 @@
   color: #ffffff;
   text-align: center;
   white-space: nowrap;
+  margin-top: auto;
+  padding-bottom: 4px;
 }
 
 /* Sections */

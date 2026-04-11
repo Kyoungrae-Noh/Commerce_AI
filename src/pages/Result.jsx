@@ -130,12 +130,10 @@ export default function Result() {
   const { scores, sourcelyScore, verdict, marginByPlatform } = computed
 
   const scoreTooltips = {
-    demand: '월간 검색량 기반. 검색량이 많을수록 높은 점수',
     competition: '경쟁 상품수 / 월간 검색량 비율 기반. 점수 높을수록 진입 쉬움',
   }
 
   const scoreLabels = {
-    demand: <span>시장 관심도<span className="score-tooltip-wrap"><span className="score-tooltip-icon">?</span><span className="score-tooltip">{scoreTooltips.demand}</span></span></span>,
     competition: <span>진입 난이도<span className="score-tooltip-wrap"><span className="score-tooltip-icon">?</span><span className="score-tooltip">{scoreTooltips.competition}</span></span></span>,
     margin: <span>마진 <span className={`score-badge ${isCustom ? 'badge-real' : 'badge-estimate'}`}>{isCustom ? '실제값' : '추정값'}</span></span>,
     trend: '트렌드',
@@ -161,7 +159,7 @@ export default function Result() {
         </div>
 
         <div className="result-sub-scores">
-          {Object.entries(scores).map(([key, val]) => (
+          {Object.entries(scores).filter(([key]) => key !== 'demand').map(([key, val]) => (
             <div key={key} className="result-sub-score">
               <div className="result-sub-bar-bg">
                 <div className="result-sub-bar" style={{ width: `${val}%` }} />
@@ -190,7 +188,7 @@ export default function Result() {
           <span className="result-card-value">{resData.avgPrice?.toLocaleString()}원</span>
         </div>
         <div className="result-card">
-          <span className="result-card-label">월간 검색량</span>
+          <span className="result-card-label">월간 검색량 (네이버 기준)</span>
           <span className="result-card-value">{resData.monthlyVolume ? resData.monthlyVolume.toLocaleString() + '회' : '데이터 없음'}</span>
         </div>
       </section>

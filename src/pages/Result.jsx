@@ -131,7 +131,6 @@ export default function Result() {
 
   const scoreLabels = {
     margin: <span>마진 <span className={`score-badge ${isCustom ? 'badge-real' : 'badge-estimate'}`}>{isCustom ? '실제값' : '추정값'}</span></span>,
-    trend: '트렌드',
   }
 
   const competitionIntensity = (() => {
@@ -140,6 +139,16 @@ export default function Result() {
     if (ratio <= 5) return '낮음'
     if (ratio <= 30) return '보통'
     return '높음'
+  })()
+
+  const growthLabel = (() => {
+    const g = resData.trendGrowthRate
+    if (g == null) return '데이터 없음'
+    if (g >= 15) return '급상승'
+    if (g >= 5) return '상승'
+    if (g >= -5) return '유지'
+    if (g >= -15) return '하락'
+    return '급하락'
   })()
 
   return (
@@ -162,7 +171,7 @@ export default function Result() {
         </div>
 
         <div className="result-sub-scores">
-          {Object.entries(scores).filter(([key]) => key === 'margin' || key === 'trend').map(([key, val]) => (
+          {Object.entries(scores).filter(([key]) => key === 'margin').map(([key, val]) => (
             <div key={key} className="result-sub-score">
               <div className="result-sub-bar-bg">
                 <div className="result-sub-bar" style={{ width: `${val}%` }} />
@@ -181,6 +190,10 @@ export default function Result() {
         <div className="result-card">
           <span className="result-card-label">검색 트렌드</span>
           <span className="result-card-value">{resData.trendRatio >= 70 ? '높음' : resData.trendRatio >= 40 ? '보통' : resData.trendRatio != null ? '낮음' : '데이터 없음'}</span>
+        </div>
+        <div className="result-card">
+          <span className="result-card-label">성장세</span>
+          <span className="result-card-value">{growthLabel}</span>
         </div>
         <div className="result-card">
           <span className="result-card-label">경쟁 상품 수</span>

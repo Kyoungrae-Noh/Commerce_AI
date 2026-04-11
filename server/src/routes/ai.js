@@ -56,6 +56,15 @@ router.post('/analyze', async (req, res) => {
       marginByPlatform,
     })
 
+    // 트렌드 성장률 계산 (최근 3개월 vs 이전 3개월 평균 비교)
+    let trendGrowthRate = null
+    const mt = keywordData.monthlyTrend
+    if (mt && mt.length >= 6) {
+      const recentAvg = mt.slice(-3).reduce((a, b) => a + b.ratio, 0) / 3
+      const olderAvg = mt.slice(-6, -3).reduce((a, b) => a + b.ratio, 0) / 3
+      if (olderAvg > 0) trendGrowthRate = ((recentAvg - olderAvg) / olderAvg) * 100
+    }
+
     res.json({
       keyword,
       sourcelyScore: scoring.sourcelyScore,
@@ -65,7 +74,8 @@ router.post('/analyze', async (req, res) => {
         monthlyVolume: keywordData.monthlyVolume,
         competitorCount: keywordData.competitorCount,
         avgPrice: keywordData.avgPrice,
-        trendRatio: keywordData.monthlyTrend?.length > 0 ? keywordData.monthlyTrend[keywordData.monthlyTrend.length - 1].ratio : null,
+        trendRatio: mt?.length > 0 ? mt[mt.length - 1].ratio : null,
+        trendGrowthRate,
         marginByPlatform,
         sourcingCost,
       },

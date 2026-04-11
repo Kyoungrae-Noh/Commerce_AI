@@ -89,13 +89,17 @@ class WorkerNaverAdapter {
       keywordGroups: [{ groupName: keyword, keywords: [keyword] }],
     }
 
-    const res = await fetch(`${NAVER_API_BASE}/v1/datalab/search`, {
-      method: 'POST',
-      headers: { ...this.headers, 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
-    if (!res.ok) throw new Error(`Naver DataLab API error: ${res.status}`)
-    return res.json()
+    try {
+      const res = await fetch(`${NAVER_API_BASE}/v1/datalab/search`, {
+        method: 'POST',
+        headers: { ...this.headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+      if (!res.ok) return { results: [{ data: [] }] }
+      return res.json()
+    } catch {
+      return { results: [{ data: [] }] }
+    }
   }
 
   async searchKeyword(keyword) {

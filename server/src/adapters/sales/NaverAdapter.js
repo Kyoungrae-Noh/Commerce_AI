@@ -86,13 +86,21 @@ export default class NaverAdapter extends SalesPlatformAdapter {
       ],
     }
 
-    const res = await fetch(`${NAVER_API_BASE}/v1/datalab/search`, {
-      method: 'POST',
-      headers: { ...this.headers, 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
-    if (!res.ok) throw new Error(`Naver DataLab API error: ${res.status}`)
-    return res.json()
+    try {
+      const res = await fetch(`${NAVER_API_BASE}/v1/datalab/search`, {
+        method: 'POST',
+        headers: { ...this.headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      })
+      if (!res.ok) {
+        console.warn(`Naver DataLab API error: ${res.status}`)
+        return { results: [{ data: [] }] }
+      }
+      return res.json()
+    } catch (err) {
+      console.warn('Naver DataLab API failed:', err.message)
+      return { results: [{ data: [] }] }
+    }
   }
 
   /** searchKeyword 구현 */

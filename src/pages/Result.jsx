@@ -127,11 +127,7 @@ export default function Result() {
   }
 
   const { data: resData, ai } = data
-  const { scores, sourcelyScore, verdict, marginByPlatform } = computed
-
-  const scoreLabels = {
-    margin: <span>마진 <span className={`score-badge ${isCustom ? 'badge-real' : 'badge-estimate'}`}>{isCustom ? '실제값' : '추정값'}</span></span>,
-  }
+  const { sourcelyScore, verdict, marginByPlatform } = computed
 
   const competitionIntensity = (() => {
     if (!resData.monthlyVolume || !resData.competitorCount) return '데이터 없음'
@@ -168,20 +164,6 @@ export default function Result() {
           <span className={`result-verdict ${verdictClass[verdict] || ''}`}>
             {verdictLabel[verdict] || verdict}
           </span>
-        </div>
-
-        <div className="result-sub-scores">
-          {Object.entries(scores).filter(([key]) => key === 'margin').map(([key, val]) => (
-            <div key={key} className="result-sub-score">
-              <div className="result-sub-bar-bg">
-                <div className="result-sub-bar" style={{ width: `${val}%` }} />
-              </div>
-              <div className="result-sub-label">
-                <span>{scoreLabels[key] || key}</span>
-                <span className="result-sub-val">{val}</span>
-              </div>
-            </div>
-          ))}
         </div>
       </section>
 

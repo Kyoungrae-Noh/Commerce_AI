@@ -204,7 +204,7 @@ export default function Result() {
           <span className="result-card-value">{resData.avgPrice?.toLocaleString()}원</span>
         </div>
         <div className="result-card">
-          <span className="result-card-label">월간 검색량 (네이버 기준)</span>
+          <span className="result-card-label">월간 검색량<br />(네이버 기준)</span>
           <span className="result-card-value">{resData.monthlyVolume ? resData.monthlyVolume.toLocaleString() + '회' : '데이터 없음'}</span>
         </div>
       </section>

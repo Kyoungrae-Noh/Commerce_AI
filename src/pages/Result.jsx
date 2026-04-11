@@ -200,8 +200,16 @@ export default function Result() {
           <span className="result-card-value">{competitionIntensity}</span>
         </div>
         <div className="result-card">
+          <span className="result-card-label">최저가</span>
+          <span className="result-card-value">{resData.minPrice?.toLocaleString()}원</span>
+        </div>
+        <div className="result-card">
           <span className="result-card-label">평균 판매가</span>
           <span className="result-card-value">{resData.avgPrice?.toLocaleString()}원</span>
+        </div>
+        <div className="result-card">
+          <span className="result-card-label">최고가</span>
+          <span className="result-card-value">{resData.maxPrice?.toLocaleString()}원</span>
         </div>
         <div className="result-card">
           <span className="result-card-label">월간 검색량<br />(네이버 기준)</span>

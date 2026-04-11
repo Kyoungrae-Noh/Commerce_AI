@@ -74,6 +74,8 @@ router.post('/analyze', async (req, res) => {
         monthlyVolume: keywordData.monthlyVolume,
         competitorCount: keywordData.competitorCount,
         avgPrice: keywordData.avgPrice,
+        minPrice: keywordData.minPrice,
+        maxPrice: keywordData.maxPrice,
         trendRatio: mt?.length > 0 ? mt[mt.length - 1].ratio : null,
         trendGrowthRate,
         marginByPlatform,

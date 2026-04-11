@@ -170,6 +170,8 @@ app.post('/ai/analyze', async (c) => {
         trendGrowthRate,
         competitorCount: keywordData.competitorCount,
         avgPrice: keywordData.avgPrice,
+        minPrice: keywordData.minPrice,
+        maxPrice: keywordData.maxPrice,
         difficulty: competitionData.difficulty?.overall,
         marginByPlatform,
         sourcingCost,

@@ -6,8 +6,9 @@ async function request(path, options = {}) {
     ...options,
   })
   if (!res.ok) {
-    const err = await res.json().catch(() => ({ error: res.statusText }))
-    throw new Error(err.error || 'API 요청 실패')
+    const err = await res.json().catch(() => null)
+    const detail = err?.error || res.statusText || `HTTP ${res.status}`
+    throw new Error(`[${res.status}] ${detail}`)
   }
   return res.json()
 }

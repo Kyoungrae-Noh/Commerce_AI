@@ -187,8 +187,8 @@
   max-width: 800px;
   margin: 0 auto 32px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
 }
 
 .result-card {

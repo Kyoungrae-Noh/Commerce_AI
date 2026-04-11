@@ -129,15 +129,18 @@ export default function Result() {
   const { data: resData, ai } = data
   const { scores, sourcelyScore, verdict, marginByPlatform } = computed
 
-  const scoreTooltips = {
-    competition: '경쟁 상품수 / 월간 검색량 비율 기반. 점수 높을수록 진입 쉬움',
-  }
-
   const scoreLabels = {
-    competition: <span>진입 난이도<span className="score-tooltip-wrap"><span className="score-tooltip-icon">?</span><span className="score-tooltip">{scoreTooltips.competition}</span></span></span>,
     margin: <span>마진 <span className={`score-badge ${isCustom ? 'badge-real' : 'badge-estimate'}`}>{isCustom ? '실제값' : '추정값'}</span></span>,
     trend: '트렌드',
   }
+
+  const competitionIntensity = (() => {
+    if (!resData.monthlyVolume || !resData.competitorCount) return '데이터 없음'
+    const ratio = resData.competitorCount / resData.monthlyVolume
+    if (ratio <= 5) return '낮음'
+    if (ratio <= 30) return '보통'
+    return '높음'
+  })()
 
   return (
     <div className="result-page">
@@ -159,7 +162,7 @@ export default function Result() {
         </div>
 
         <div className="result-sub-scores">
-          {Object.entries(scores).filter(([key]) => key !== 'demand').map(([key, val]) => (
+          {Object.entries(scores).filter(([key]) => key === 'margin' || key === 'trend').map(([key, val]) => (
             <div key={key} className="result-sub-score">
               <div className="result-sub-bar-bg">
                 <div className="result-sub-bar" style={{ width: `${val}%` }} />
@@ -182,6 +185,10 @@ export default function Result() {
         <div className="result-card">
           <span className="result-card-label">경쟁 상품 수</span>
           <span className="result-card-value">{resData.competitorCount?.toLocaleString()}개</span>
+        </div>
+        <div className="result-card">
+          <span className="result-card-label">경쟁 강도</span>
+          <span className="result-card-value">{competitionIntensity}</span>
         </div>
         <div className="result-card">
           <span className="result-card-label">평균 판매가</span>

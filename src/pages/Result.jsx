@@ -188,12 +188,16 @@ export default function Result() {
       {/* Data cards */}
       <section className="result-data-cards">
         <div className="result-card">
-          <span className="result-card-label">성장세</span>
-          <span className="result-card-value">{growthLabel}</span>
+          <span className="result-card-label">월간 검색량<br />(네이버 기준)</span>
+          <span className="result-card-value">{resData.monthlyVolume ? resData.monthlyVolume.toLocaleString() + '회' : '데이터 없음'}</span>
         </div>
         <div className="result-card">
           <span className="result-card-label">경쟁 상품 수</span>
           <span className="result-card-value">{resData.competitorCount?.toLocaleString()}개</span>
+        </div>
+        <div className="result-card">
+          <span className="result-card-label">평균 판매가</span>
+          <span className="result-card-value">{resData.avgPrice?.toLocaleString()}원</span>
         </div>
         <div className="result-card">
           <span className="result-card-label">경쟁 강도</span>
@@ -204,16 +208,12 @@ export default function Result() {
           <span className="result-card-value">{resData.minPrice?.toLocaleString()}원</span>
         </div>
         <div className="result-card">
-          <span className="result-card-label">평균 판매가</span>
-          <span className="result-card-value">{resData.avgPrice?.toLocaleString()}원</span>
-        </div>
-        <div className="result-card">
           <span className="result-card-label">최고가</span>
           <span className="result-card-value">{resData.maxPrice?.toLocaleString()}원</span>
         </div>
         <div className="result-card">
-          <span className="result-card-label">월간 검색량<br />(네이버 기준)</span>
-          <span className="result-card-value">{resData.monthlyVolume ? resData.monthlyVolume.toLocaleString() + '회' : '데이터 없음'}</span>
+          <span className="result-card-label">성장세</span>
+          <span className="result-card-value">{growthLabel}</span>
         </div>
       </section>
 

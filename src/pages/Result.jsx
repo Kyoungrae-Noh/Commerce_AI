@@ -22,27 +22,16 @@ const PLATFORM_FEES = {
   coupangRocket: { commissionRate: 0.108, fulfillmentFee: 3500 },
 }
 
-function calcMarginScore(bestMargin) {
-  if (bestMargin >= 40) return 95
-  if (bestMargin >= 30) return 80
-  if (bestMargin >= 20) return 65
-  if (bestMargin >= 10) return 45
-  if (bestMargin >= 0) return 25
-  return 10
-}
-
 function recalcMargin(avgPrice, sourcingPrice, shippingEstimate) {
   const marginByPlatform = {}
-  let bestMargin = 0
   for (const [name, fee] of Object.entries(PLATFORM_FEES)) {
     const commission = Math.round(avgPrice * fee.commissionRate)
     const totalCost = sourcingPrice + shippingEstimate + 3000 + commission + fee.fulfillmentFee
     const netProfit = avgPrice - totalCost
     const marginRate = avgPrice > 0 ? Math.round((netProfit / avgPrice) * 1000) / 10 : 0
     marginByPlatform[name] = { commission, fulfillmentFee: fee.fulfillmentFee, totalCost, netProfit, marginRate }
-    if (marginRate > bestMargin) bestMargin = marginRate
   }
-  return { marginByPlatform, marginScore: calcMarginScore(bestMargin) }
+  return { marginByPlatform }
 }
 
 export default function Result() {
@@ -71,24 +60,18 @@ export default function Result() {
 
   const computed = useMemo(() => {
     if (!data) return null
-    const { sourcelyScore: origScore, verdict: origVerdict, scores: origScores, data: resData } = data
+    const { sourcelyScore: origScore, verdict: origVerdict, data: resData } = data
     if (!isCustom) {
       return {
-        scores: origScores,
         sourcelyScore: origScore,
         verdict: origVerdict,
         marginByPlatform: resData.marginByPlatform,
       }
     }
-    const { marginByPlatform: newMargin, marginScore } = recalcMargin(
+    const { marginByPlatform: newMargin } = recalcMargin(
       resData.avgPrice, customPrice, resData.sourcingCost?.shippingEstimate || 3000
     )
-    const newScores = { ...origScores, margin: marginScore }
-    const newTotal = Math.round(
-      newScores.demand * 0.25 + newScores.competition * 0.25 + newScores.margin * 0.30 + newScores.trend * 0.20
-    )
-    const newVerdict = newTotal >= 75 ? 'recommended' : newTotal >= 50 ? 'hold' : 'not_recommended'
-    return { scores: newScores, sourcelyScore: newTotal, verdict: newVerdict, marginByPlatform: newMargin }
+    return { sourcelyScore: origScore, verdict: origVerdict, marginByPlatform: newMargin }
   }, [data, isCustom, customPrice])
 
   if (!keyword) {

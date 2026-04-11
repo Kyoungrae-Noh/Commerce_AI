@@ -68,7 +68,7 @@ function analyzeProduct({ keywordData, competitionData, sourcingCost, platformFe
   const competitionScore = calcCompetitionScore(keywordData.competitorCount, keywordData.monthlyVolume)
   const marginScore = calcMarginScore(keywordData.avgPrice, sourcingCost, platformFees)
   const trendScore = calcTrendScore(keywordData.monthlyTrend)
-  const sourcelyScore = Math.round(demandScore * 0.25 + competitionScore * 0.25 + marginScore * 0.30 + trendScore * 0.20)
+  const sourcelyScore = Math.round(demandScore * 0.33 + competitionScore * 0.34 + trendScore * 0.33)
   let verdict
   if (sourcelyScore >= 75) verdict = 'recommended'
   else if (sourcelyScore >= 50) verdict = 'hold'

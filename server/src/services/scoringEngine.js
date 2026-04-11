@@ -97,12 +97,11 @@ export function analyzeProduct({ keywordData, competitionData, sourcingCost, pla
   const marginScore = calcMarginScore(keywordData.avgPrice, sourcingCost, platformFees)
   const trendScore = calcTrendScore(keywordData.monthlyTrend)
 
-  // 가중 평균
+  // 가중 평균 (월간검색량 33% + 경쟁강도 34% + 트렌드 33%)
   const sourcelyScore = Math.round(
-    demandScore * 0.25 +
-    competitionScore * 0.25 +
-    marginScore * 0.30 +
-    trendScore * 0.20
+    demandScore * 0.33 +
+    competitionScore * 0.34 +
+    trendScore * 0.33
   )
 
   let verdict

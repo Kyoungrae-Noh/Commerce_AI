@@ -59,16 +59,17 @@ export default function Result() {
       .finally(() => setLoading(false))
   }, [keyword])
 
+  const allFilled = inputSellingPrice !== '' && inputSourcingCost !== '' && inputShippingCost !== ''
+
   const computed = useMemo(() => {
     if (!data) return null
-    const { sourcelyScore, verdict, data: resData } = data
-    const defaultShipping = (resData.sourcingCost?.shippingEstimate || 3000) + 3000
-    const sellingPrice = inputSellingPrice !== '' ? Number(inputSellingPrice) : resData.avgPrice
-    const sourcingCost = inputSourcingCost !== '' ? Number(inputSourcingCost) : resData.sourcingCost?.estimatedPrice || 0
-    const shippingCost = inputShippingCost !== '' ? Number(inputShippingCost) : defaultShipping
-    const marginByPlatform = calcMarginByPlatform(sellingPrice, sourcingCost, shippingCost)
-    return { sourcelyScore, verdict, marginByPlatform, defaults: { sellingPrice: resData.avgPrice, sourcingCost: resData.sourcingCost?.estimatedPrice || 0, shippingCost: defaultShipping } }
-  }, [data, inputSellingPrice, inputSourcingCost, inputShippingCost])
+    const { sourcelyScore, verdict } = data
+    if (!allFilled) {
+      return { sourcelyScore, verdict, marginByPlatform: null }
+    }
+    const marginByPlatform = calcMarginByPlatform(Number(inputSellingPrice), Number(inputSourcingCost), Number(inputShippingCost))
+    return { sourcelyScore, verdict, marginByPlatform }
+  }, [data, allFilled, inputSellingPrice, inputSourcingCost, inputShippingCost])
 
   if (!keyword) {
     return (
@@ -220,50 +221,50 @@ export default function Result() {
       )}
 
       {/* Platform margins */}
-      {marginByPlatform && (
-        <section className="result-section">
-          <h2 className="result-section-title">플랫폼별 예상 마진</h2>
-          <div className="margin-inputs">
-            <div className="sourcing-input-row">
-              <label className="sourcing-input-label">판매가</label>
-              <div className="sourcing-input-wrap">
-                <input
-                  type="number"
-                  className="sourcing-input"
-                  placeholder={computed.defaults.sellingPrice.toLocaleString()}
-                  value={inputSellingPrice}
-                  onChange={(e) => setInputSellingPrice(e.target.value)}
-                />
-                <span className="sourcing-input-unit">원</span>
-              </div>
-            </div>
-            <div className="sourcing-input-row">
-              <label className="sourcing-input-label">소싱가</label>
-              <div className="sourcing-input-wrap">
-                <input
-                  type="number"
-                  className="sourcing-input"
-                  placeholder={computed.defaults.sourcingCost.toLocaleString()}
-                  value={inputSourcingCost}
-                  onChange={(e) => setInputSourcingCost(e.target.value)}
-                />
-                <span className="sourcing-input-unit">원</span>
-              </div>
-            </div>
-            <div className="sourcing-input-row">
-              <label className="sourcing-input-label">배송비</label>
-              <div className="sourcing-input-wrap">
-                <input
-                  type="number"
-                  className="sourcing-input"
-                  placeholder={computed.defaults.shippingCost.toLocaleString()}
-                  value={inputShippingCost}
-                  onChange={(e) => setInputShippingCost(e.target.value)}
-                />
-                <span className="sourcing-input-unit">원</span>
-              </div>
+      <section className="result-section">
+        <h2 className="result-section-title">플랫폼별 예상 마진</h2>
+        <div className="margin-inputs">
+          <div className="sourcing-input-row">
+            <label className="sourcing-input-label">판매가</label>
+            <div className="sourcing-input-wrap">
+              <input
+                type="number"
+                className="sourcing-input"
+                placeholder="판매 예정가 입력"
+                value={inputSellingPrice}
+                onChange={(e) => setInputSellingPrice(e.target.value)}
+              />
+              <span className="sourcing-input-unit">원</span>
             </div>
           </div>
+          <div className="sourcing-input-row">
+            <label className="sourcing-input-label">소싱가</label>
+            <div className="sourcing-input-wrap">
+              <input
+                type="number"
+                className="sourcing-input"
+                placeholder="소싱가 입력"
+                value={inputSourcingCost}
+                onChange={(e) => setInputSourcingCost(e.target.value)}
+              />
+              <span className="sourcing-input-unit">원</span>
+            </div>
+          </div>
+          <div className="sourcing-input-row">
+            <label className="sourcing-input-label">배송비</label>
+            <div className="sourcing-input-wrap">
+              <input
+                type="number"
+                className="sourcing-input"
+                placeholder="배송비 입력"
+                value={inputShippingCost}
+                onChange={(e) => setInputShippingCost(e.target.value)}
+              />
+              <span className="sourcing-input-unit">원</span>
+            </div>
+          </div>
+        </div>
+        {marginByPlatform ? (
           <div className="result-margin-table">
             {Object.entries(marginByPlatform).map(([name, m]) => (
               <div key={name} className="result-margin-row">
@@ -275,8 +276,10 @@ export default function Result() {
               </div>
             ))}
           </div>
-        </section>
-      )}
+        ) : (
+          <p className="margin-empty-hint">입력 후 계산됩니다</p>
+        )}
+      </section>
 
       {/* Data cards */}
       <section className="result-data-groups">

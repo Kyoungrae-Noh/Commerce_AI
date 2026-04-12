@@ -160,24 +160,62 @@ export default function Result() {
             <p>{ai.conclusion}</p>
           </div>
 
-          <div className="result-ai-block">
-            <h3 className="ai-heading-reasons">추천 이유</h3>
-            <ul>
-              {ai.reasons?.map((r, i) => <li key={i}>{r}</li>)}
-            </ul>
-          </div>
+          {sourcelyScore >= 70 && (
+            <>
+              <div className="result-ai-block">
+                <h3 className="ai-heading-reasons">추천 이유</h3>
+                <ul>
+                  {ai.reasons?.map((r, i) => <li key={i}>{r}</li>)}
+                </ul>
+              </div>
+              <div className="result-ai-block">
+                <h3 className="ai-heading-risks">리스크</h3>
+                <ul>
+                  {ai.risks?.map((r, i) => <li key={i}>{r}</li>)}
+                </ul>
+              </div>
+              <div className="result-ai-block">
+                <h3 className="ai-heading-strategy">진입 전략</h3>
+                <p>{ai.entryStrategy}</p>
+              </div>
+            </>
+          )}
 
-          <div className="result-ai-block">
-            <h3 className="ai-heading-risks">리스크</h3>
-            <ul>
-              {ai.risks?.map((r, i) => <li key={i}>{r}</li>)}
-            </ul>
-          </div>
+          {sourcelyScore >= 40 && sourcelyScore < 70 && (
+            <>
+              <div className="result-ai-block">
+                <h3 className="ai-heading-reasons">긍정 요소</h3>
+                <ul>
+                  {ai.positives?.map((r, i) => <li key={i}>{r}</li>)}
+                </ul>
+              </div>
+              <div className="result-ai-block">
+                <h3 className="ai-heading-risks">리스크</h3>
+                <ul>
+                  {ai.risks?.map((r, i) => <li key={i}>{r}</li>)}
+                </ul>
+              </div>
+              <div className="result-ai-block">
+                <h3 className="ai-heading-strategy">진입 전략</h3>
+                <p>{ai.entryStrategy}</p>
+              </div>
+            </>
+          )}
 
-          <div className="result-ai-block">
-            <h3 className="ai-heading-strategy">진입 전략</h3>
-            <p>{ai.entryStrategy}</p>
-          </div>
+          {sourcelyScore < 40 && (
+            <>
+              <div className="result-ai-block">
+                <h3 className="ai-heading-risks">리스크</h3>
+                <ul>
+                  {ai.risks?.map((r, i) => <li key={i}>{r}</li>)}
+                </ul>
+              </div>
+              <div className="result-ai-block">
+                <h3 className="ai-heading-strategy">그럼에도 진입한다면</h3>
+                <p>{ai.ifEntry}</p>
+              </div>
+            </>
+          )}
         </section>
       )}
 

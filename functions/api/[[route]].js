@@ -147,7 +147,7 @@ app.post('/ai/analyze', async (c) => {
     const aiAnalysis = await generateAnalysis(c.env, {
       keyword, scoring,
       keywordData: { monthlyVolume: keywordData.monthlyVolume, competitorCount: keywordData.competitorCount, avgPrice: keywordData.avgPrice },
-      competitionData, sourcingCost, marginByPlatform,
+      competitionData,
     })
 
     // 트렌드 성장률 계산 (최근 3개월 vs 이전 3개월 평균 비교)

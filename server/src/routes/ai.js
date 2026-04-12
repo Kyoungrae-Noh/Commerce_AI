@@ -52,8 +52,6 @@ router.post('/analyze', async (req, res) => {
         avgPrice: keywordData.avgPrice,
       },
       competitionData,
-      sourcingCost,
-      marginByPlatform,
     })
 
     // 트렌드 성장률 계산 (최근 3개월 vs 이전 3개월 평균 비교)

@@ -139,6 +139,9 @@ export default function Result() {
 
       {/* Score overview */}
       <section className="result-score-section">
+        <span className={`result-verdict ${verdictClass[verdict] || ''}`}>
+          {verdictLabel[verdict] || verdict}
+        </span>
         <div className="result-main-score">
           <div className="result-score-ring">
             <span className="result-score-number">{sourcelyScore}</span>
@@ -148,9 +151,6 @@ export default function Result() {
               <span className="score-tooltip">월간검색량(33%) + 경쟁강도(34%) + 트렌드(33%) 가중평균</span>
             </span>
           </div>
-          <span className={`result-verdict ${verdictClass[verdict] || ''}`}>
-            {verdictLabel[verdict] || verdict}
-          </span>
         </div>
       </section>
 

@@ -375,6 +375,12 @@
   display: block;
 }
 
+.score-tooltip-topright {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
 /* Sourcing input */
 .sourcing-input-row {
   margin-bottom: 16px;

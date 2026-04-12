@@ -142,14 +142,14 @@ export default function Result() {
         <span className={`result-verdict ${verdictClass[verdict] || ''}`}>
           {verdictLabel[verdict] || verdict}
         </span>
+        <span className="score-tooltip-wrap score-tooltip-topright">
+          <span className="score-tooltip-icon">?</span>
+          <span className="score-tooltip">월간검색량(33%) + 경쟁강도(34%) + 트렌드(33%)</span>
+        </span>
         <div className="result-main-score">
           <div className="result-score-ring">
             <span className="result-score-number">{sourcelyScore}</span>
             <span className="result-score-max">/100</span>
-            <span className="score-tooltip-wrap">
-              <span className="score-tooltip-icon">?</span>
-              <span className="score-tooltip">월간검색량(33%) + 경쟁강도(34%) + 트렌드(33%) 가중평균</span>
-            </span>
           </div>
         </div>
       </section>

@@ -22,16 +22,16 @@ const PLATFORM_FEES = {
   coupangRocket: { commissionRate: 0.108, fulfillmentFee: 3500 },
 }
 
-function recalcMargin(avgPrice, sourcingPrice, shippingEstimate) {
+function calcMarginByPlatform(sellingPrice, sourcingPrice, shippingCost) {
   const marginByPlatform = {}
   for (const [name, fee] of Object.entries(PLATFORM_FEES)) {
-    const commission = Math.round(avgPrice * fee.commissionRate)
-    const totalCost = sourcingPrice + shippingEstimate + 3000 + commission + fee.fulfillmentFee
-    const netProfit = avgPrice - totalCost
-    const marginRate = avgPrice > 0 ? Math.round((netProfit / avgPrice) * 1000) / 10 : 0
+    const commission = Math.round(sellingPrice * fee.commissionRate)
+    const totalCost = sourcingPrice + shippingCost + commission + fee.fulfillmentFee
+    const netProfit = sellingPrice - totalCost
+    const marginRate = sellingPrice > 0 ? Math.round((netProfit / sellingPrice) * 1000) / 10 : 0
     marginByPlatform[name] = { commission, fulfillmentFee: fee.fulfillmentFee, totalCost, netProfit, marginRate }
   }
-  return { marginByPlatform }
+  return marginByPlatform
 }
 
 export default function Result() {
@@ -42,37 +42,33 @@ export default function Result() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [customSourcingCost, setCustomSourcingCost] = useState('')
+  const [inputSellingPrice, setInputSellingPrice] = useState('')
+  const [inputSourcingCost, setInputSourcingCost] = useState('')
+  const [inputShippingCost, setInputShippingCost] = useState('')
 
   useEffect(() => {
     if (!keyword) return
     setLoading(true)
     setError(null)
-    setCustomSourcingCost('')
+    setInputSellingPrice('')
+    setInputSourcingCost('')
+    setInputShippingCost('')
     analyzeKeyword(keyword)
       .then(setData)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [keyword])
 
-  const isCustom = customSourcingCost !== '' && !isNaN(Number(customSourcingCost))
-  const customPrice = isCustom ? Number(customSourcingCost) : null
-
   const computed = useMemo(() => {
     if (!data) return null
-    const { sourcelyScore: origScore, verdict: origVerdict, data: resData } = data
-    if (!isCustom) {
-      return {
-        sourcelyScore: origScore,
-        verdict: origVerdict,
-        marginByPlatform: resData.marginByPlatform,
-      }
-    }
-    const { marginByPlatform: newMargin } = recalcMargin(
-      resData.avgPrice, customPrice, resData.sourcingCost?.shippingEstimate || 3000
-    )
-    return { sourcelyScore: origScore, verdict: origVerdict, marginByPlatform: newMargin }
-  }, [data, isCustom, customPrice])
+    const { sourcelyScore, verdict, data: resData } = data
+    const defaultShipping = (resData.sourcingCost?.shippingEstimate || 3000) + 3000
+    const sellingPrice = inputSellingPrice !== '' ? Number(inputSellingPrice) : resData.avgPrice
+    const sourcingCost = inputSourcingCost !== '' ? Number(inputSourcingCost) : resData.sourcingCost?.estimatedPrice || 0
+    const shippingCost = inputShippingCost !== '' ? Number(inputShippingCost) : defaultShipping
+    const marginByPlatform = calcMarginByPlatform(sellingPrice, sourcingCost, shippingCost)
+    return { sourcelyScore, verdict, marginByPlatform, defaults: { sellingPrice: resData.avgPrice, sourcingCost: resData.sourcingCost?.estimatedPrice || 0, shippingCost: defaultShipping } }
+  }, [data, inputSellingPrice, inputSourcingCost, inputShippingCost])
 
   if (!keyword) {
     return (
@@ -227,21 +223,46 @@ export default function Result() {
       {marginByPlatform && (
         <section className="result-section">
           <h2 className="result-section-title">플랫폼별 예상 마진</h2>
-          <div className="sourcing-input-row">
-            <label className="sourcing-input-label">소싱가 직접 입력</label>
-            <div className="sourcing-input-wrap">
-              <input
-                type="number"
-                className="sourcing-input"
-                placeholder={`추정 ${resData.sourcingCost?.estimatedPrice?.toLocaleString() || 0}원`}
-                value={customSourcingCost}
-                onChange={(e) => setCustomSourcingCost(e.target.value)}
-              />
-              <span className="sourcing-input-unit">원</span>
+          <div className="margin-inputs">
+            <div className="sourcing-input-row">
+              <label className="sourcing-input-label">판매가</label>
+              <div className="sourcing-input-wrap">
+                <input
+                  type="number"
+                  className="sourcing-input"
+                  placeholder={computed.defaults.sellingPrice.toLocaleString()}
+                  value={inputSellingPrice}
+                  onChange={(e) => setInputSellingPrice(e.target.value)}
+                />
+                <span className="sourcing-input-unit">원</span>
+              </div>
             </div>
-            {!isCustom && (
-              <span className="sourcing-input-hint">실제 소싱가를 입력하면 마진이 재계산됩니다</span>
-            )}
+            <div className="sourcing-input-row">
+              <label className="sourcing-input-label">소싱가</label>
+              <div className="sourcing-input-wrap">
+                <input
+                  type="number"
+                  className="sourcing-input"
+                  placeholder={computed.defaults.sourcingCost.toLocaleString()}
+                  value={inputSourcingCost}
+                  onChange={(e) => setInputSourcingCost(e.target.value)}
+                />
+                <span className="sourcing-input-unit">원</span>
+              </div>
+            </div>
+            <div className="sourcing-input-row">
+              <label className="sourcing-input-label">배송비</label>
+              <div className="sourcing-input-wrap">
+                <input
+                  type="number"
+                  className="sourcing-input"
+                  placeholder={computed.defaults.shippingCost.toLocaleString()}
+                  value={inputShippingCost}
+                  onChange={(e) => setInputShippingCost(e.target.value)}
+                />
+                <span className="sourcing-input-unit">원</span>
+              </div>
+            </div>
           </div>
           <div className="result-margin-table">
             {Object.entries(marginByPlatform).map(([name, m]) => (

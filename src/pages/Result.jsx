@@ -150,13 +150,84 @@ export default function Result() {
         </div>
       </section>
 
+      {/* AI Analysis */}
+      {ai && (
+        <section className="result-section result-ai">
+          <h2 className="result-section-title">AI 분석</h2>
+
+          <div className="result-ai-block">
+            <h3 className="ai-heading-conclusion">종합 결론</h3>
+            <p>{ai.conclusion}</p>
+          </div>
+
+          <div className="result-ai-block">
+            <h3 className="ai-heading-reasons">추천 이유</h3>
+            <ul>
+              {ai.reasons?.map((r, i) => <li key={i}>{r}</li>)}
+            </ul>
+          </div>
+
+          <div className="result-ai-block">
+            <h3 className="ai-heading-risks">리스크</h3>
+            <ul>
+              {ai.risks?.map((r, i) => <li key={i}>{r}</li>)}
+            </ul>
+          </div>
+
+          <div className="result-ai-block">
+            <h3 className="ai-heading-strategy">진입 전략</h3>
+            <p>{ai.entryStrategy}</p>
+          </div>
+        </section>
+      )}
+
+      {/* Platform margins */}
+      {marginByPlatform && (
+        <section className="result-section">
+          <h2 className="result-section-title">플랫폼별 예상 마진</h2>
+          <div className="sourcing-input-row">
+            <label className="sourcing-input-label">소싱가 직접 입력</label>
+            <div className="sourcing-input-wrap">
+              <input
+                type="number"
+                className="sourcing-input"
+                placeholder={`추정 ${resData.sourcingCost?.estimatedPrice?.toLocaleString() || 0}원`}
+                value={customSourcingCost}
+                onChange={(e) => setCustomSourcingCost(e.target.value)}
+              />
+              <span className="sourcing-input-unit">원</span>
+            </div>
+            {!isCustom && (
+              <span className="sourcing-input-hint">실제 소싱가를 입력하면 마진이 재계산됩니다</span>
+            )}
+          </div>
+          <div className="result-margin-table">
+            {Object.entries(marginByPlatform).map(([name, m]) => (
+              <div key={name} className="result-margin-row">
+                <span className="result-margin-name">{platformNames[name] || name}</span>
+                <span className={`result-margin-profit ${m.netProfit >= 0 ? 'positive' : 'negative'}`}>
+                  {m.netProfit?.toLocaleString()}원
+                </span>
+                <span className="result-margin-rate">{m.marginRate}%</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Data cards */}
       <section className="result-data-groups">
         <div className="result-card-group group-search">
           <h3 className="result-group-label">검색</h3>
           <div className="result-group-cards">
             <div className="result-card">
-              <span className="result-card-label">월간 검색량<br />(네이버 기준)</span>
+              <span className="result-card-label">
+                월간 검색량
+                <span className="score-tooltip-wrap">
+                  <span className="score-tooltip-icon">?</span>
+                  <span className="score-tooltip">네이버 통합검색 기준 (PC+모바일)</span>
+                </span>
+              </span>
               <span className="result-card-value">{resData.monthlyVolume ? resData.monthlyVolume.toLocaleString() + '회' : '데이터 없음'}</span>
             </div>
             <div className="result-card">
@@ -188,7 +259,13 @@ export default function Result() {
           <h3 className="result-group-label">경쟁</h3>
           <div className="result-group-cards">
             <div className="result-card">
-              <span className="result-card-label">경쟁 상품 수</span>
+              <span className="result-card-label">
+                경쟁 상품 수
+                <span className="score-tooltip-wrap">
+                  <span className="score-tooltip-icon">?</span>
+                  <span className="score-tooltip">네이버 쇼핑 전체 기준 (스마트스토어, 쿠팡, 11번가 등 포함)</span>
+                </span>
+              </span>
               <span className="result-card-value">{resData.competitorCount?.toLocaleString()}개</span>
             </div>
             <div className="result-card">
@@ -204,71 +281,6 @@ export default function Result() {
           </div>
         </div>
       </section>
-
-      {/* Platform margins */}
-      {marginByPlatform && (
-        <section className="result-section">
-          <h2 className="result-section-title">플랫폼별 예상 마진</h2>
-          <div className="sourcing-input-row">
-            <label className="sourcing-input-label">소싱가 직접 입력</label>
-            <div className="sourcing-input-wrap">
-              <input
-                type="number"
-                className="sourcing-input"
-                placeholder={`추정 ${resData.sourcingCost?.estimatedPrice?.toLocaleString() || 0}원`}
-                value={customSourcingCost}
-                onChange={(e) => setCustomSourcingCost(e.target.value)}
-              />
-              <span className="sourcing-input-unit">원</span>
-            </div>
-            {!isCustom && (
-              <span className="sourcing-input-hint">실제 소싱가를 입력하면 마진과 총점이 재계산됩니다</span>
-            )}
-          </div>
-          <div className="result-margin-table">
-            {Object.entries(marginByPlatform).map(([name, m]) => (
-              <div key={name} className="result-margin-row">
-                <span className="result-margin-name">{platformNames[name] || name}</span>
-                <span className={`result-margin-profit ${m.netProfit >= 0 ? 'positive' : 'negative'}`}>
-                  {m.netProfit?.toLocaleString()}원
-                </span>
-                <span className="result-margin-rate">{m.marginRate}%</span>
-              </div>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {/* AI Analysis */}
-      {ai && (
-        <section className="result-section result-ai">
-          <h2 className="result-section-title">AI 분석</h2>
-
-          <div className="result-ai-block">
-            <h3 className="ai-heading-conclusion">종합 결론</h3>
-            <p>{ai.conclusion}</p>
-          </div>
-
-          <div className="result-ai-block">
-            <h3 className="ai-heading-reasons">추천 이유</h3>
-            <ul>
-              {ai.reasons?.map((r, i) => <li key={i}>{r}</li>)}
-            </ul>
-          </div>
-
-          <div className="result-ai-block">
-            <h3 className="ai-heading-risks">리스크</h3>
-            <ul>
-              {ai.risks?.map((r, i) => <li key={i}>{r}</li>)}
-            </ul>
-          </div>
-
-          <div className="result-ai-block">
-            <h3 className="ai-heading-strategy">진입 전략</h3>
-            <p>{ai.entryStrategy}</p>
-          </div>
-        </section>
-      )}
     </div>
   )
 }

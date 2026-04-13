@@ -15,23 +15,12 @@ const verdictClass = {
   not_recommended: 'verdict-bad',
 }
 
-const platformNames = { smartStore: '스마트스토어', coupangRocket: '쿠팡 로켓그로스' }
-
-const PLATFORM_FEES = {
-  smartStore: { commissionRate: 0.055, fulfillmentFee: 0 },
-  coupangRocket: { commissionRate: 0.108, fulfillmentFee: 3500 },
-}
-
-function calcMarginByPlatform(sellingPrice, sourcingPrice, shippingCost) {
-  const marginByPlatform = {}
-  for (const [name, fee] of Object.entries(PLATFORM_FEES)) {
-    const commission = Math.round(sellingPrice * fee.commissionRate)
-    const totalCost = sourcingPrice + shippingCost + commission + fee.fulfillmentFee
-    const netProfit = sellingPrice - totalCost
-    const marginRate = sellingPrice > 0 ? Math.round((netProfit / sellingPrice) * 1000) / 10 : 0
-    marginByPlatform[name] = { commission, fulfillmentFee: fee.fulfillmentFee, totalCost, netProfit, marginRate }
-  }
-  return marginByPlatform
+function calcMargin(sellingPrice, sourcingCost, shippingCost, commissionRate) {
+  const commission = Math.round(sellingPrice * (commissionRate / 100))
+  const totalCost = sourcingCost + shippingCost + commission
+  const netProfit = sellingPrice - totalCost
+  const marginRate = sellingPrice > 0 ? Math.round((netProfit / sellingPrice) * 1000) / 10 : 0
+  return { netProfit, marginRate }
 }
 
 export default function Result() {
@@ -45,6 +34,7 @@ export default function Result() {
   const [inputSellingPrice, setInputSellingPrice] = useState('')
   const [inputSourcingCost, setInputSourcingCost] = useState('')
   const [inputShippingCost, setInputShippingCost] = useState('')
+  const [inputCommissionRate, setInputCommissionRate] = useState('')
 
   useEffect(() => {
     if (!keyword) return
@@ -53,23 +43,24 @@ export default function Result() {
     setInputSellingPrice('')
     setInputSourcingCost('')
     setInputShippingCost('')
+    setInputCommissionRate('')
     analyzeKeyword(keyword)
       .then(setData)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))
   }, [keyword])
 
-  const allFilled = inputSellingPrice !== '' && inputSourcingCost !== '' && inputShippingCost !== ''
+  const allFilled = inputSellingPrice !== '' && inputSourcingCost !== '' && inputShippingCost !== '' && inputCommissionRate !== ''
 
   const computed = useMemo(() => {
     if (!data) return null
     const { sourcelyScore, verdict } = data
     if (!allFilled) {
-      return { sourcelyScore, verdict, marginByPlatform: null }
+      return { sourcelyScore, verdict, margin: null }
     }
-    const marginByPlatform = calcMarginByPlatform(Number(inputSellingPrice), Number(inputSourcingCost), Number(inputShippingCost))
-    return { sourcelyScore, verdict, marginByPlatform }
-  }, [data, allFilled, inputSellingPrice, inputSourcingCost, inputShippingCost])
+    const margin = calcMargin(Number(inputSellingPrice), Number(inputSourcingCost), Number(inputShippingCost), Number(inputCommissionRate))
+    return { sourcelyScore, verdict, margin }
+  }, [data, allFilled, inputSellingPrice, inputSourcingCost, inputShippingCost, inputCommissionRate])
 
   if (!keyword) {
     return (
@@ -107,7 +98,7 @@ export default function Result() {
   }
 
   const { data: resData, ai } = data
-  const { sourcelyScore, verdict, marginByPlatform } = computed
+  const { sourcelyScore, verdict, margin } = computed
 
   const competitionIntensity = (() => {
     if (!resData.monthlyVolume || !resData.competitorCount) return '데이터 없음'
@@ -220,9 +211,9 @@ export default function Result() {
         </section>
       )}
 
-      {/* Platform margins */}
+      {/* Margin calculator */}
       <section className="result-section">
-        <h2 className="result-section-title">플랫폼별 예상 마진</h2>
+        <h2 className="result-section-title">마진 계산기</h2>
         <div className="margin-inputs">
           <div className="sourcing-input-row">
             <label className="sourcing-input-label">판매가</label>
@@ -263,22 +254,34 @@ export default function Result() {
               <span className="sourcing-input-unit">원</span>
             </div>
           </div>
+          <div className="sourcing-input-row">
+            <label className="sourcing-input-label">수수료율</label>
+            <div className="sourcing-input-wrap">
+              <input
+                type="number"
+                className="sourcing-input"
+                placeholder="수수료율 입력"
+                value={inputCommissionRate}
+                onChange={(e) => setInputCommissionRate(e.target.value)}
+              />
+              <span className="sourcing-input-unit">%</span>
+            </div>
+          </div>
         </div>
-        {marginByPlatform ? (
+        {margin ? (
           <div className="result-margin-table">
-            {Object.entries(marginByPlatform).map(([name, m]) => (
-              <div key={name} className="result-margin-row">
-                <span className="result-margin-name">{platformNames[name] || name}</span>
-                <span className={`result-margin-profit ${m.netProfit >= 0 ? 'positive' : 'negative'}`}>
-                  {m.netProfit?.toLocaleString()}원
-                </span>
-                <span className="result-margin-rate">{m.marginRate}%</span>
-              </div>
-            ))}
+            <div className="result-margin-row">
+              <span className="result-margin-name">순이익</span>
+              <span className={`result-margin-profit ${margin.netProfit >= 0 ? 'positive' : 'negative'}`}>
+                {margin.netProfit.toLocaleString()}원
+              </span>
+              <span className="result-margin-rate">{margin.marginRate}%</span>
+            </div>
           </div>
         ) : (
           <p className="margin-empty-hint">입력 후 계산됩니다</p>
         )}
+        <p className="margin-fee-notice">수수료는 각 플랫폼 약관 기준으로 직접 입력해주세요</p>
       </section>
 
       {/* Data cards */}

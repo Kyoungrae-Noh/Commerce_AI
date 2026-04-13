@@ -36,7 +36,7 @@ export async function generateAnalysis(env, { keyword, scoring, keywordData, com
 
 키워드: ${keyword}
 Sourcely Score: ${scoring.sourcelyScore}/100 (판정: ${scoring.verdict})
-세부 점수: 수요 ${scoring.scores.demand}/100, 경쟁 ${scoring.scores.competition}/100, 트렌드 ${scoring.scores.trend}/100
+세부 점수: 수요 ${scoring.scores.demand}/100, 경쟁강도 ${scoring.scores.competition}/100 (높을수록 경쟁 치열), 트렌드 ${scoring.scores.trend}/100
 
 월간 검색량: ${keywordData.monthlyVolume || '추정 불가'}
 경쟁 상품 수: ${keywordData.competitorCount}개

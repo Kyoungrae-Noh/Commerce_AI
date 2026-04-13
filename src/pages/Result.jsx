@@ -132,7 +132,7 @@ export default function Result() {
         </span>
         <span className="score-tooltip-wrap score-tooltip-topright">
           <span className="score-tooltip-icon">?</span>
-          <span className="score-tooltip">월간검색량(33%) + 경쟁강도(34%) + 트렌드(33%)</span>
+          <span className="score-tooltip">월간검색량(33%) + 경쟁용이도(34%) + 트렌드(33%)</span>
         </span>
         <div className="result-main-score">
           <div className="result-score-ring">

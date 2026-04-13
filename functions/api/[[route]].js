@@ -24,12 +24,12 @@ function calcCompetitionScore(competitorCount, monthlyVolume) {
 
   const ratio = competitorCount / monthlyVolume
 
-  if (ratio <= 1) return 95
-  if (ratio <= 5) return 80
-  if (ratio <= 15) return 65
-  if (ratio <= 30) return 50
-  if (ratio <= 50) return 35
-  return 15
+  if (ratio <= 1) return 15
+  if (ratio <= 5) return 35
+  if (ratio <= 15) return 50
+  if (ratio <= 30) return 65
+  if (ratio <= 50) return 80
+  return 95
 }
 
 function calcMarginScore(avgPrice, sourcingCost, platformFees) {
@@ -68,7 +68,7 @@ function analyzeProduct({ keywordData, competitionData, sourcingCost, platformFe
   const competitionScore = calcCompetitionScore(keywordData.competitorCount, keywordData.monthlyVolume)
   const marginScore = calcMarginScore(keywordData.avgPrice, sourcingCost, platformFees)
   const trendScore = calcTrendScore(keywordData.monthlyTrend)
-  const sourcelyScore = Math.round(demandScore * 0.33 + competitionScore * 0.34 + trendScore * 0.33)
+  const sourcelyScore = Math.round(demandScore * 0.33 + (100 - competitionScore) * 0.34 + trendScore * 0.33)
   let verdict
   if (sourcelyScore >= 75) verdict = 'recommended'
   else if (sourcelyScore >= 50) verdict = 'hold'

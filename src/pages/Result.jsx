@@ -277,7 +277,9 @@ export default function Result() {
             ))}
           </div>
         ) : (
-          <p className="margin-empty-hint">입력 후 계산됩니다</p>
+          <div className="margin-empty-card">
+            <p className="margin-empty-hint">입력 후 계산됩니다</p>
+          </div>
         )}
       </section>
 

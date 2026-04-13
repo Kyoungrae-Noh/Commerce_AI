@@ -383,13 +383,14 @@
 
 /* Margin inputs */
 .margin-inputs {
-  display: flex;
-  gap: 16px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
   margin-bottom: 16px;
 }
 
 .sourcing-input-row {
-  flex: 1;
+  min-width: 0;
 }
 
 .sourcing-input-label {
@@ -407,8 +408,10 @@
 }
 
 .sourcing-input {
-  width: 180px;
-  padding: 8px 12px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 8px 10px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.06);
@@ -465,6 +468,10 @@
 
   .result-data-groups {
     flex-direction: column;
+  }
+
+  .margin-inputs {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .result-keyword {

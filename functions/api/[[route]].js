@@ -149,8 +149,9 @@ app.post('/ai/analyze', async (c) => {
     const scoring = analyzeProduct({ keywordData, competitionData, sourcingCost, platformFees })
     const marginByPlatform = calcMarginByPlatform(keywordData.avgPrice, sourcingCost, platformFees)
 
+    const category = detectCategory(keyword)
     const aiAnalysis = await generateAnalysis(c.env, {
-      keyword, scoring,
+      keyword, scoring, category,
       keywordData: { monthlyVolume: keywordData.monthlyVolume, competitorCount: keywordData.competitorCount, avgPrice: keywordData.avgPrice },
       competitionData,
     })

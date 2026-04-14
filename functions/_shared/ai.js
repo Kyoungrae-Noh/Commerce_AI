@@ -22,7 +22,7 @@ function buildJsonSchema(score) {
 }`
 }
 
-export async function generateAnalysis(env, { keyword, scoring, keywordData, competitionData }) {
+export async function generateAnalysis(env, { keyword, scoring, category, keywordData, competitionData }) {
   const jsonSchema = buildJsonSchema(scoring.sourcelyScore)
 
   const prompt = `당신은 한국 이커머스 상품 소싱 데이터 분석기입니다.
@@ -37,6 +37,7 @@ export async function generateAnalysis(env, { keyword, scoring, keywordData, com
 
 데이터:
 - 키워드: ${keyword}
+- 카테고리: ${category || '일반'}
 - 종합 점수: ${scoring.sourcelyScore}/100
 - 월간 검색량: ${keywordData.monthlyVolume?.toLocaleString() || '데이터 없음'}회 (수요 점수 ${scoring.scores.demand}/100)
 - 경쟁 상품 수: ${keywordData.competitorCount?.toLocaleString()}개 (경쟁강도 점수 ${scoring.scores.competition}/100, 높을수록 치열)
@@ -55,7 +56,7 @@ ${jsonSchema}`
     body: JSON.stringify({
       model: 'gpt-4o-mini',
       messages: [{ role: 'user', content: prompt }],
-      temperature: 0.5,
+      temperature: 0.3,
       response_format: { type: 'json_object' },
     }),
   })

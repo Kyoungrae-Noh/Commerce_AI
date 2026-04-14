@@ -7,7 +7,7 @@ function buildJsonSchema(score) {
   "entryStrategy": "진입 전략은 반드시 위 데이터(검색량, 경쟁수, 트렌드, 카테고리, 경쟁강도 비율)에서 직접 도출된 구체적 행동을 제시합니다. '차별화', '마케팅 강화' 같은 추상적 표현 금지. 예: 경쟁이 치열하면 롱테일 키워드 구체 예시, 트렌드 하락이면 시즌성 기획 구체 예시."
 }`
   }
-  if (score >= 40) {
+  if (score >= 50) {
     return `{
   "conclusion": "키워드명과 핵심 숫자(검색량, 경쟁상품수)를 직접 인용하며 2-3문장으로 현황을 서술합니다.",
   "positives": ["데이터 숫자를 근거로 긍정적 사실 2-3가지. 각각 한 문장."],
@@ -42,7 +42,6 @@ export async function generateAnalysis(env, { keyword, scoring, category, compet
 - 종합 점수: ${scoring.sourcelyScore}/100
 - 월간 검색량: ${keywordData.monthlyVolume?.toLocaleString() || '데이터 없음'}회 (수요 점수 ${scoring.scores.demand}/100)
 - 경쟁 상품 수: ${keywordData.competitorCount?.toLocaleString()}개 (경쟁강도 점수 ${scoring.scores.competition}/100, 높을수록 치열)
-- 경쟁강도 비율: 검색 1회당 경쟁상품 ${competitionRatio ?? '데이터 없음'}개
 - 트렌드: 최근 3개월 성장률 기준 트렌드 점수 ${scoring.scores.trend}/100 (50=유지, 65+=상승, 35-=하락)
 - 평균 판매가: ${keywordData.avgPrice?.toLocaleString()}원
 

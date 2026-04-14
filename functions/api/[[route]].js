@@ -4,6 +4,10 @@ import { cors } from 'hono/cors'
 import { createPlatformRegistry } from '../_shared/platformRegistry.js'
 import { generateAnalysis } from '../_shared/ai.js'
 
+function normalizeKeyword(raw) {
+  return raw.trim().toLowerCase().replace(/[^a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ]/g, '')
+}
+
 // ── 순수 함수 (서버 코드와 동일) ──
 
 function calcDemandScore(keywordData) {
@@ -127,7 +131,8 @@ app.get('/health', (c) => c.json({ status: 'ok' }))
 
 app.post('/ai/analyze', async (c) => {
   try {
-    const { keyword } = await c.req.json()
+    const body = await c.req.json()
+    const keyword = normalizeKeyword(body.keyword || '')
     if (!keyword) return c.json({ error: '키워드를 입력하세요' }, 400)
 
     const registry = createPlatformRegistry(c.env)

@@ -5,10 +5,14 @@ import { generateAnalysis } from '../services/aiAnalysis.js'
 
 const router = Router()
 
+function normalizeKeyword(raw) {
+  return raw.trim().toLowerCase().replace(/[^a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ]/g, '')
+}
+
 // POST /api/ai/analyze  { keyword: "미니 가습기" }
 router.post('/analyze', async (req, res) => {
   try {
-    const { keyword } = req.body
+    const keyword = normalizeKeyword(req.body.keyword || '')
     if (!keyword) return res.status(400).json({ error: '키워드를 입력하세요' })
 
     const naver = getSalesAdapter('naver')

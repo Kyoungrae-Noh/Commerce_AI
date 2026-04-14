@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { categories } from '../data/mockData'
 import './Home.css'
 
+function normalizeKeyword(raw) {
+  return raw.trim().toLowerCase().replace(/[^a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ]/g, '')
+}
+
 export default function Home() {
   const [keyword, setKeyword] = useState('')
   const [category, setCategory] = useState('all')
@@ -10,9 +14,9 @@ export default function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const trimmed = keyword.trim()
-    if (!trimmed) return
-    const params = new URLSearchParams({ keyword: trimmed, category })
+    const normalized = normalizeKeyword(keyword)
+    if (!normalized) return
+    const params = new URLSearchParams({ keyword: normalized, category })
     navigate(`/result?${params}`)
   }
 

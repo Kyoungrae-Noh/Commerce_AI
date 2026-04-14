@@ -57,7 +57,7 @@ class WorkerNaverAdapter {
     if (!this.hasSearchAdApi) return null
 
     const path = '/keywordstool'
-    const url = `${SEARCHAD_API_BASE}${path}?hintKeywords=${keyword.replace(/ /g, '')}&showDetail=1`
+    const url = `${SEARCHAD_API_BASE}${path}?hintKeywords=${encodeURIComponent(keyword)}&showDetail=1`
 
     try {
       const res = await fetch(url, {

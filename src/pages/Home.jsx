@@ -27,7 +27,7 @@ export default function Home() {
           Source<span>ly</span>
         </h1>
         <p className="home-tagline">AI 상품 소싱 판단 보조 서비스</p>
-        <p className="home-desc">키워드를 입력하면 검색량, 경쟁 강도, 예상 마진, 트렌드를 분석하고<br />AI가 진입 전략까지 제안합니다.</p>
+        <p className="home-desc">키워드를 입력하면 검색량, 경쟁 강도, 트렌드를 분석하고<br />AI가 시장 진입 가능성을 제안합니다.</p>
 
         <form className="home-form" onSubmit={handleSubmit}>
           <div className="home-input-row">

@@ -44,7 +44,7 @@ export default function Home() {
             </button>
           </div>
 
-          <p className="home-hint">💡 브랜드명을 함께 입력하면 더 정확한 분석이 가능해요</p>
+          <p className="home-hint">💡 구체적인 키워드일수록 정확해요</p>
 
           <div className="home-categories">
             {categories.map((cat) => (

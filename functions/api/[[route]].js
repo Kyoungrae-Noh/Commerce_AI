@@ -150,8 +150,9 @@ app.post('/ai/analyze', async (c) => {
     const marginByPlatform = calcMarginByPlatform(keywordData.avgPrice, sourcingCost, platformFees)
 
     const category = detectCategory(keyword)
+    const competitionRatio = keywordData.monthlyVolume > 0 ? Math.round(keywordData.competitorCount / keywordData.monthlyVolume * 10) / 10 : null
     const aiAnalysis = await generateAnalysis(c.env, {
-      keyword, scoring, category,
+      keyword, scoring, category, competitionRatio,
       keywordData: { monthlyVolume: keywordData.monthlyVolume, competitorCount: keywordData.competitorCount, avgPrice: keywordData.avgPrice },
       competitionData,
     })

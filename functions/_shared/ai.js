@@ -22,7 +22,7 @@ function buildJsonSchema(score) {
 }`
 }
 
-export async function generateAnalysis(env, { keyword, scoring, category, keywordData, competitionData }) {
+export async function generateAnalysis(env, { keyword, scoring, category, competitionRatio, keywordData, competitionData }) {
   const jsonSchema = buildJsonSchema(scoring.sourcelyScore)
 
   const prompt = `당신은 한국 이커머스 상품 소싱 데이터 분석기입니다.
@@ -41,6 +41,7 @@ export async function generateAnalysis(env, { keyword, scoring, category, keywor
 - 종합 점수: ${scoring.sourcelyScore}/100
 - 월간 검색량: ${keywordData.monthlyVolume?.toLocaleString() || '데이터 없음'}회 (수요 점수 ${scoring.scores.demand}/100)
 - 경쟁 상품 수: ${keywordData.competitorCount?.toLocaleString()}개 (경쟁강도 점수 ${scoring.scores.competition}/100, 높을수록 치열)
+- 경쟁강도 비율: 검색 1회당 경쟁상품 ${competitionRatio ?? '데이터 없음'}개
 - 트렌드: 최근 3개월 성장률 기준 트렌드 점수 ${scoring.scores.trend}/100 (50=유지, 65+=상승, 35-=하락)
 - 평균 판매가: ${keywordData.avgPrice?.toLocaleString()}원
 

@@ -27,6 +27,7 @@ export default function Result() {
   const [params] = useSearchParams()
   const navigate = useNavigate()
   const keyword = params.get('keyword') || ''
+  const category = params.get('category') || 'all'
 
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -44,7 +45,7 @@ export default function Result() {
     setInputSourcingCost('')
     setInputShippingCost('')
     setInputCommissionRate('')
-    analyzeKeyword(keyword)
+    analyzeKeyword(keyword, category)
       .then(setData)
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false))

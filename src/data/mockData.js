@@ -1,12 +1,14 @@
 // ── 카테고리 ──
 export const categories = [
   { id: 'all', label: '전체' },
-  { id: 'living', label: '생활용품' },
-  { id: 'electronics', label: '전자기기' },
-  { id: 'beauty', label: '뷰티' },
-  { id: 'fashion', label: '패션' },
-  { id: 'food', label: '식품' },
+  { id: 'electronics', label: '전자기기/디지털' },
+  { id: 'fashion', label: '패션/의류' },
+  { id: 'beauty', label: '뷰티/헬스' },
+  { id: 'living', label: '생활용품/인테리어' },
   { id: 'pet', label: '반려동물' },
+  { id: 'food', label: '식품/음료' },
+  { id: 'sports', label: '스포츠/아웃도어' },
+  { id: 'kids', label: '유아/완구' },
 ]
 
 // ── 상품 추천 ──

@@ -37,6 +37,15 @@ export async function generateAnalysis(env, { keyword, scoring, category, compet
 6. 모든 문장은 ~습니다 체로 통일하세요.
 7. 전문 용어(롱테일 키워드, 포지셔닝 등)는 사용하지 말고 초보 셀러도 바로 이해할 수 있는 말로 풀어서 쓰세요.
 8. '세트 구성', '인테리어 컨셉 포지셔닝' 같은 추상적 표현 대신 실제 행동을 구체적으로 쓰세요. 예: '머그컵 2개+받침대를 묶어서 선물세트로 판매하세요'
+9. 현재 월(\${new Date().getMonth() + 1}월)을 기준으로 계절성을 판단하세요. 소싱은 실제 수요보다 1~2달 앞서야 하므로, 아래 기준으로 판단하세요. 계절과 무관한 상품은 계절성 언급을 하지 마세요.
+
+[계절성 판단 기준]
+- 봄 시즌 준비(2~3월): 봄 의류/아웃도어 장비/꽃/가드닝 용품/봄 화장품(가벼운 텍스처)
+- 여름 시즌 준비(4~5월): 선풍기/손풍기/수영복/냉감 침구/자외선차단제/아이스 음료용품/캠핑용품/여름 과일
+- 가을 시즌 준비(7~8월): 가을 의류/트렌치코트/핫팩/가을 화장품(보습)/캠핑/등산용품
+- 겨울 시즌 준비(9~11월): 극세사 이불/파자마/전기장판/방한용품/겨울 의류/보습 크림/따뜻한 음료용품
+- 연말/설 시즌 준비(11~12월): 선물세트/포장용품/명절 식품
+- 봄/신학기 준비(1~2월): 학용품/책상/수납용품/새학기 의류
 
 진입 전략 작성 규칙:
 반드시 아래 조건을 조합하여 이 키워드에만 해당하는 구체적 전략을 2-3문장으로 작성하세요.
@@ -68,6 +77,7 @@ export async function generateAnalysis(env, { keyword, scoring, category, compet
 - 월간 검색량: ${keywordData.monthlyVolume?.toLocaleString() || '데이터 없음'}회 (수요 점수 ${scoring.scores.demand}/100)
 - 경쟁 상품 수: ${keywordData.competitorCount?.toLocaleString()}개 (경쟁강도 점수 ${scoring.scores.competition}/100, 높을수록 치열)
 - 트렌드: 최근 3개월 성장률 기준 트렌드 점수 ${scoring.scores.trend}/100 (50=유지, 65+=상승, 35-=하락)
+- 현재 월: ${new Date().getMonth() + 1}월
 - 평균 판매가: ${keywordData.avgPrice?.toLocaleString()}원
 
 다음 JSON 형식으로만 답변하세요:

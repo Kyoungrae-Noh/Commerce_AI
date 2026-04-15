@@ -176,12 +176,14 @@ export default function Result() {
 
           {sourcelyScore >= 40 && sourcelyScore < 70 && (
             <>
-              <div className="result-ai-block">
-                <h3 className="ai-heading-reasons">긍정 요소</h3>
-                <ul>
-                  {ai.positives?.map((r, i) => <li key={i}>{r}</li>)}
-                </ul>
-              </div>
+              {ai.positives?.length > 0 && (
+                <div className="result-ai-block">
+                  <h3 className="ai-heading-reasons">긍정 요소</h3>
+                  <ul>
+                    {ai.positives.map((r, i) => <li key={i}>{r}</li>)}
+                  </ul>
+                </div>
+              )}
               <div className="result-ai-block">
                 <h3 className="ai-heading-risks">리스크</h3>
                 <ul>

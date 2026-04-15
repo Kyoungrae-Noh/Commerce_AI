@@ -197,7 +197,7 @@ export default function Result() {
             </>
           )}
 
-          {sourcelyScore < 50 && (
+          {sourcelyScore < 40 && (
             <>
               <div className="result-ai-block">
                 <h3 className="ai-heading-risks">리스크</h3>

@@ -34,11 +34,11 @@ function calcCompetitionScore(competitorCount, monthlyVolume) {
 
   const ratio = competitorCount / monthlyVolume
 
-  if (ratio <= 1) return 15
-  if (ratio <= 5) return 35
-  if (ratio <= 15) return 50
-  if (ratio <= 30) return 65
-  if (ratio <= 50) return 80
+  if (ratio <= 5) return 15
+  if (ratio <= 20) return 35
+  if (ratio <= 50) return 50
+  if (ratio <= 100) return 65
+  if (ratio <= 200) return 80
   return 95
 }
 
@@ -97,12 +97,12 @@ export function analyzeProduct({ keywordData, competitionData, sourcingCost, pla
   const marginScore = calcMarginScore(keywordData.avgPrice, sourcingCost, platformFees)
   const trendScore = calcTrendScore(keywordData.monthlyTrend)
 
-  // 가중 평균 (월간검색량 33% + 경쟁강도 34% + 트렌드 33%)
+  // 가중 평균 (수요 35% + 경쟁 45% + 트렌드 20%)
   // 경쟁강도는 높을수록 치열하므로 (100 - score) 사용
   const sourcelyScore = Math.round(
-    demandScore * 0.33 +
-    (100 - competitionScore) * 0.34 +
-    trendScore * 0.33
+    demandScore * 0.35 +
+    (100 - competitionScore) * 0.45 +
+    trendScore * 0.20
   )
 
   let verdict

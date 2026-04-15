@@ -2,7 +2,7 @@ import './KeywordVerdict.css'
 
 const VERDICT_MAP = {
   recommended: { label: '진입 추천', color: 'var(--accent)' },
-  hold: { label: '보류', color: '#FFD000' },
+  hold: { label: '보통', color: '#FFD000' },
   not_recommended: { label: '비추천', color: 'var(--accent3)' },
 }
 

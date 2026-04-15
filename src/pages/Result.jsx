@@ -5,7 +5,7 @@ import './Result.css'
 
 const verdictLabel = {
   recommended: '추천',
-  hold: '보류',
+  hold: '보통',
   not_recommended: '비추천',
 }
 

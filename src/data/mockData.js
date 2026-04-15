@@ -5,10 +5,10 @@ export const categories = [
   { id: 'fashion', label: '패션/의류' },
   { id: 'beauty', label: '뷰티/헬스' },
   { id: 'living', label: '생활용품/인테리어' },
-  { id: 'pet', label: '반려동물' },
   { id: 'food', label: '식품/음료' },
   { id: 'sports', label: '스포츠/아웃도어' },
   { id: 'kids', label: '유아/완구' },
+  { id: 'pet', label: '반려동물' },
 ]
 
 // ── 상품 추천 ──

@@ -1,18 +1,32 @@
 import { Hono } from 'hono'
 import { handle } from 'hono/cloudflare-pages'
 import { cors } from 'hono/cors'
+import { createClient } from '@supabase/supabase-js'
 import { createPlatformRegistry } from '../_shared/platformRegistry.js'
 import { generateAnalysis } from '../_shared/ai.js'
+
+function getSupabase(env) {
+  return createClient(env.SUPABASE_URL, env.SUPABASE_ANON_KEY)
+}
 
 function normalizeKeyword(raw) {
   return raw.trim().toLowerCase().replace(/[^a-z0-9가-힣ㄱ-ㅎㅏ-ㅣ]/g, '')
 }
 
-// ── 순수 함수 (서버 코드와 동일) ──
+function getFingerprint(req) {
+  const ip = req.headers.get('cf-connecting-ip') || req.headers.get('x-forwarded-for') || ''
+  const ua = req.headers.get('user-agent') || ''
+  const raw = ip + ua
+  let hash = 0
+  for (let i = 0; i < raw.length; i++) {
+    hash = ((hash << 5) - hash) + raw.charCodeAt(i)
+    hash |= 0
+  }
+  return Math.abs(hash).toString(36)
+}
 
 function calcDemandScore(keywordData) {
   const { monthlyVolume } = keywordData
-
   if (monthlyVolume == null) return 0
   if (monthlyVolume >= 100000) return 100
   if (monthlyVolume >= 50000) return 85
@@ -25,9 +39,7 @@ function calcDemandScore(keywordData) {
 
 function calcCompetitionScore(competitorCount, monthlyVolume) {
   if (!monthlyVolume) return 50
-
   const ratio = competitorCount / monthlyVolume
-
   if (ratio <= 5) return 15
   if (ratio <= 20) return 35
   if (ratio <= 50) return 50
@@ -88,8 +100,6 @@ function calcPlatformProfit(values, platformFee) {
   return { commission, fulfillmentFee: platformFee.fulfillmentFee, totalCost, netProfit, marginRate }
 }
 
-// ── 유틸 ──
-
 const CATEGORY_KEYWORDS = {
   electronics: ['이어폰', '충전', '블루투스', '스피커', '케이블', '보조배터리', '마우스', '키보드', 'USB', '가습기', '선풍기', '공기청정기'],
   fashion: ['가방', '지갑', '모자', '양말', '장갑', '스카프', '벨트', '시계', '선글라스', '의류', '티셔츠', '바지'],
@@ -118,13 +128,23 @@ function calcMarginByPlatform(avgPrice, sourcingCost, platformFees) {
   return marginByPlatform
 }
 
+const CATEGORY_MAP = {
+  '전자기기/디지털': 'electronics',
+  '패션/의류': 'fashion',
+  '뷰티/헬스': 'beauty',
+  '생활용품/인테리어': 'living',
+  '식품/음료': 'food',
+  '스포츠/아웃도어': 'sports',
+  '유아/완구': 'kids',
+  '반려동물': 'pet',
+}
+
 // ── Hono App ──
 
 const app = new Hono().basePath('/api')
 
 app.use('/*', cors())
 
-// Health check
 app.get('/health', (c) => c.json({ status: 'ok' }))
 
 // ── AI 분석 ──
@@ -132,9 +152,37 @@ app.get('/health', (c) => c.json({ status: 'ok' }))
 app.post('/ai/analyze', async (c) => {
   try {
     const body = await c.req.json()
-    const keyword = normalizeKeyword(body.keyword || '')
+    const keywordRaw = (body.keyword || '').trim()
+    const keyword = normalizeKeyword(keywordRaw)
+    const userCategory = body.category || null
+
     if (!keyword) return c.json({ error: '키워드를 입력하세요' }, 400)
 
+    const supabase = getSupabase(c.env)
+
+    // ── 1. 캐시 조회 (24시간 이내) ──
+    const { data: cached } = await supabase
+      .from('searches')
+      .select('*')
+      .eq('keyword', keyword)
+      .gte('searched_at', new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString())
+      .order('searched_at', { ascending: false })
+      .limit(1)
+      .single()
+
+    if (cached) {
+      return c.json({
+        keyword: cached.keyword,
+        sourcelyScore: cached.total_score,
+        verdict: cached.verdict,
+        scores: cached.ai_analysis?.scores,
+        data: cached.ai_analysis?.data,
+        ai: cached.ai_analysis?.ai,
+        fromCache: true,
+      })
+    }
+
+    // ── 2. 네이버 API 호출 ──
     const registry = createPlatformRegistry(c.env)
     const naver = registry.getSalesAdapter('naver')
     const sourcing = registry.getSourcingAdapter('ali1688')
@@ -149,15 +197,32 @@ app.post('/ai/analyze', async (c) => {
     const scoring = analyzeProduct({ keywordData, competitionData, sourcingCost, platformFees })
     const marginByPlatform = calcMarginByPlatform(keywordData.avgPrice, sourcingCost, platformFees)
 
-    const category = detectCategory(keyword)
-    const competitionRatio = keywordData.monthlyVolume > 0 ? Math.round(keywordData.competitorCount / keywordData.monthlyVolume * 10) / 10 : null
-    const aiAnalysis = await generateAnalysis(c.env, {
+    // ── 3. 카테고리 결정 ──
+    let category
+    if (userCategory && userCategory !== '전체') {
+      category = CATEGORY_MAP[userCategory] || detectCategory(keyword)
+    } else {
+      category = detectCategory(keyword)
+    }
+
+    const competitionRatio = keywordData.monthlyVolume > 0
+      ? Math.round(keywordData.competitorCount / keywordData.monthlyVolume * 10) / 10
+      : null
+
+    // ── 4. AI 분석 ──
+    const aiResult = await generateAnalysis(c.env, {
       keyword, scoring, category, competitionRatio,
-      keywordData: { monthlyVolume: keywordData.monthlyVolume, competitorCount: keywordData.competitorCount, avgPrice: keywordData.avgPrice },
+      keywordData: {
+        monthlyVolume: keywordData.monthlyVolume,
+        competitorCount: keywordData.competitorCount,
+        avgPrice: keywordData.avgPrice,
+      },
       competitionData,
     })
 
-    // 트렌드 성장률 계산 (최근 3개월 vs 이전 3개월 평균 비교)
+    const finalCategory = aiResult.detectedCategory || category
+
+    // 트렌드 성장률
     let trendGrowthRate = null
     const mt = keywordData.monthlyTrend
     if (mt && mt.length >= 6) {
@@ -166,25 +231,54 @@ app.post('/ai/analyze', async (c) => {
       if (olderAvg > 0) trendGrowthRate = ((recentAvg - olderAvg) / olderAvg) * 100
     }
 
+    const responseData = {
+      monthlyVolume: keywordData.monthlyVolume,
+      trendRatio: mt?.length > 0 ? mt[mt.length - 1].ratio : null,
+      trendGrowthRate,
+      competitorCount: keywordData.competitorCount,
+      avgPrice: keywordData.avgPrice,
+      minPrice: keywordData.minPrice,
+      maxPrice: keywordData.maxPrice,
+      difficulty: competitionData.difficulty?.overall,
+      marginByPlatform,
+      sourcingCost,
+    }
+
+    // ── 5. Supabase insert ──
+    const fingerprint = getFingerprint(c.req.raw)
+    const sessionId = body.sessionId || null
+
+    await supabase.from('searches').insert({
+      keyword,
+      keyword_raw: keywordRaw,
+      category: finalCategory,
+      monthly_search: keywordData.monthlyVolume,
+      product_count: keywordData.competitorCount,
+      avg_price: keywordData.avgPrice,
+      min_price: keywordData.minPrice,
+      max_price: keywordData.maxPrice,
+      trend_score: scoring.scores.trend,
+      total_score: scoring.sourcelyScore,
+      verdict: scoring.verdict,
+      ai_analysis: {
+        scores: scoring.scores,
+        data: responseData,
+        ai: aiResult,
+      },
+      session_id: sessionId,
+      user_fingerprint: fingerprint,
+    })
+
     return c.json({
       keyword,
       sourcelyScore: scoring.sourcelyScore,
       verdict: scoring.verdict,
       scores: scoring.scores,
-      data: {
-        monthlyVolume: keywordData.monthlyVolume,
-        trendRatio: mt?.length > 0 ? mt[mt.length - 1].ratio : null,
-        trendGrowthRate,
-        competitorCount: keywordData.competitorCount,
-        avgPrice: keywordData.avgPrice,
-        minPrice: keywordData.minPrice,
-        maxPrice: keywordData.maxPrice,
-        difficulty: competitionData.difficulty?.overall,
-        marginByPlatform,
-        sourcingCost,
-      },
-      ai: aiAnalysis,
+      data: responseData,
+      ai: aiResult,
+      fromCache: false,
     })
+
   } catch (err) {
     return c.json({ error: err.message || 'AI 분석 중 오류가 발생했습니다' }, 500)
   }
@@ -234,8 +328,6 @@ app.get('/keywords/search', async (c) => {
     return c.json({ error: err.message }, 500)
   }
 })
-
-// ── 키워드 트렌딩 (MVP: 빈 결과) ──
 
 app.get('/keywords/trending', (c) => {
   return c.json({ daily: [], weekly: [], monthly: [], lastUpdated: null, categories: [] })
@@ -468,8 +560,6 @@ app.post('/products/analyze', async (c) => {
     return c.json({ error: err.message }, 500)
   }
 })
-
-// ── 트렌딩 (MVP: 빈 결과) ──
 
 app.get('/products/trending', (c) => {
   return c.json({ items: [], lastUpdated: null, categories: [] })

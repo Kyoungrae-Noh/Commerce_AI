@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { analyzeKeyword } from '../api/ai'
+import Footer from '../components/shared/Footer'
 import './Result.css'
 
 const verdictLabel = {
@@ -353,6 +354,7 @@ export default function Result() {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   )
 }

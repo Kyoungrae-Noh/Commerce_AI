@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { categories } from '../data/mockData'
+import Footer from '../components/shared/Footer'
 import './Home.css'
 
 function normalizeKeyword(raw) {
@@ -60,6 +61,7 @@ export default function Home() {
           </div>
         </form>
       </div>
+      <Footer />
     </div>
   )
 }

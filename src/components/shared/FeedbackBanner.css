@@ -1,0 +1,67 @@
+.feedback-banner {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.feedback-banner-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0 0 14px;
+}
+
+.feedback-banner-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.feedback-btn {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.feedback-btn:hover {
+  opacity: 0.85;
+}
+
+.feedback-btn-bug {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.feedback-btn-feature {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.feedback-btn-kakao {
+  background: #fee500;
+  color: #191919;
+}
+
+@media (max-width: 480px) {
+  .feedback-banner-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .feedback-btn {
+    width: 100%;
+    max-width: 200px;
+    text-align: center;
+  }
+}

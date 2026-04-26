@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { useSearchParams, useNavigate } from 'react-router-dom'
 import { analyzeKeyword } from '../api/ai'
 import Footer from '../components/shared/Footer'
+import FeedbackBanner from '../components/shared/FeedbackBanner'
 import './Result.css'
 
 const verdictLabel = {
@@ -214,6 +215,8 @@ export default function Result() {
           )}
         </section>
       )}
+
+      <FeedbackBanner message="분석 결과가 도움이 됐나요? 피드백을 남겨주세요!" />
 
       {/* Margin calculator */}
       <section className="result-section">

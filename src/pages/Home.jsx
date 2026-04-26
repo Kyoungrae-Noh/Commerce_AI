@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { categories } from '../data/mockData'
 import Footer from '../components/shared/Footer'
+import FeedbackBanner from '../components/shared/FeedbackBanner'
 import './Home.css'
 
 function normalizeKeyword(raw) {
@@ -61,6 +62,7 @@ export default function Home() {
           </div>
         </form>
       </div>
+      <FeedbackBanner message="서비스 개선에 함께해 주세요!" />
       <Footer />
     </div>
   )

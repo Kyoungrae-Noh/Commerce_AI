@@ -332,6 +332,10 @@
   margin-bottom: 4px;
 }
 
+.result-page .feedback-banner {
+  margin-bottom: 24px;
+}
+
 /* Score tooltip */
 .score-tooltip-wrap {
   position: relative;

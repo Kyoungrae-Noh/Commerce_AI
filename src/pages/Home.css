@@ -8,6 +8,10 @@
   padding: 24px;
 }
 
+.home-page .feedback-banner {
+  margin-top: 40px;
+}
+
 .home-page .site-footer {
   width: 100%;
 }
